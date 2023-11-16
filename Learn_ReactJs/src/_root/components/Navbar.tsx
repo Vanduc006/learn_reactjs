@@ -20,11 +20,11 @@ return (
         IMASIS
       </div>
       
-      <div onClick={()=>setOpen(!open)} className='absolute right-8 top-3 cursor-pointer md:hidden'>
+      <div onClick={()=>setOpen(!open)} className='absolute right-8 top-3 cursor-pointer md:hidden text-black'>
         <Button name={open ? 'close':'menu'}><FaBars /></Button>     
       </div>
       
-      <ul className={`md:flex md:items-center md:pb-0 pb-12 md:bg-white bg-slate-100 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-20 ':'top-[-490px]'}`}>
+      <ul className={`md:flex md:items-center md:pb-0 pb-12 md:bg-white bg-slate-100 absolute md:static md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${open ? 'top-0 ':'top-[-490px]'}`}>
         {
           Links.map((link)=>(
             <li key={link.name} className='md:ml-8 text-xl md:my-0 my-7'>
@@ -36,7 +36,7 @@ return (
         
         <a className='md:ml-8 md:my-0'>
         <Button variant="outline" className="text-black" >
-          <Link to="sign-in">Đăng nhập</Link>
+          <Link to="sign-in">Đăng  nhập</Link>
         </Button>
         </a>
       </ul>
