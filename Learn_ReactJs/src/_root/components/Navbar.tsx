@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { FaBars } from "react-icons/fa6";
-import React, { useState } from 'react'
+import { useState } from 'react'
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   let Links =[
@@ -13,7 +14,7 @@ const Navbar = () => {
 return (
 
     <div className='md:flex items-center justify-between py-4 md:px-10 px-7 bg-white'>
-      <div className='font-bold text-2xl cursor-pointer flex items-center'>
+      <div className='font-bold text-2xl cursor-pointer flex items-center text-black'>
         <span className='text-3xl text-indigo-600 mr-1 pt-2'>
         </span>
         IMASIS
@@ -33,8 +34,10 @@ return (
           ))
         }
         
-        <a href="sign-in" className='md:ml-8 md:my-0'>
-        <Button >Login</Button>
+        <a className='md:ml-8 md:my-0'>
+        <Button variant="outline" className="text-black" >
+          <Link to="sign-in">Đăng nhập</Link>
+        </Button>
         </a>
       </ul>
       

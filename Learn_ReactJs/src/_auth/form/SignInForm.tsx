@@ -1,9 +1,5 @@
-
-import React from 'react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -15,61 +11,120 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-const formSchema = z.object({
-  username: z.string().min(2).max(50),
-})
-const SignInForm = () => {
+import { z } from "zod"
+import { SignUpValdition } from "@/lib/valdition"
+import { Loader2 } from "lucide-react"
+import { Link } from "react-router-dom"
 
+
+const SignInForm = () => {
+  let IsLoading = false;
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof SignUpValdition>>({
+    resolver: zodResolver(SignUpValdition),
     defaultValues: {
       username: "",
+      fullname: "",
+      email: "",
+      password: "",
     },
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof SignUpValdition>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values)
+    const data = await values
+    console.log(data)
+    
   }
+
+
   return (
+    
     <main>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="username"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Họ và tên</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
+        <div className="sm:w-420 flex-center flex-col">
+          <span className="h3-bold md:h2-bold pt-5 sm:pt-12">
+          <Link to="/">IMASIS</Link>
+          </span>
+          <span>Chào mừng bạn quay trở lại</span>
+        
+          <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-5 justify-center flex-col w-full mt-5">
+            {/* <FormField
+              control={form.control}
+              name="fullname"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Họ và tên</FormLabel>
+                  <FormControl>
+                    <Input className="text-black" placeholder="Nguyễn Văn A" {...field} title="Họ và tên"/>
+                  </FormControl>
 
-              </FormControl>
-              
-              <FormLabel>Username</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+            {/* <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tên tài khoản</FormLabel>
+                  <FormControl>
+                    <Input className="text-black" placeholder="Ví dụ: duchandsome" {...field} title="Tên người dùng"/>
+                  </FormControl>
 
-              </FormControl>
-
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="shadcn" {...field} />
-
-              </FormControl>
-
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">Submit</Button>
-      </form>
+                  <FormMessage />
+                </FormItem>
+              )}
+            /> */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Địa chỉ email</FormLabel>
+                  <FormControl>
+                    <Input type="email" className="text-black" placeholder="Ví dụ: abc@gmail.com" {...field} title="Địa chỉ email"/>
+                  </FormControl>
+                  {/* <FormDescription>
+                    This is your public display name.
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Mật khẩu</FormLabel>
+                  <FormControl>
+                    <Input type="password" className="text-black" placeholder="" {...field} title="Mật khẩu"/>
+                  </FormControl>
+                  {/* <FormDescription>
+                    This is your public display name.
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" variant="outline">
+              {IsLoading ? (
+                <div className="flex-center gap-2">
+                  Loading<Loader2 className="h-4 w-4 animate-spin" />
+                </div>
+              ) : "Đăng nhập"}
+             
+            
+            </Button>
+            <span className="flex justify-center">
+              Bạn chưa có tài khoản? Hãy <Link to='/sign-up' className="ml-1 text-slate-500"> đăng kí. </Link>
+            </span>
+          </form>
+      </div>
     </Form>
 
     </main>

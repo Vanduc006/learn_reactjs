@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Outlet,Navigate } from 'react-router-dom'
 
 const AuthLayout = () => {
@@ -9,8 +9,10 @@ const AuthLayout = () => {
         <Navigate to="/" />
       ) : (
         <>
-          <section className="flex flex-1 justify-center items-center flex-col py-10">
+          <section className="flex flex-1 justify-center items-center flex-col">
+            
             <Outlet />
+
           </section>
 
           <img
