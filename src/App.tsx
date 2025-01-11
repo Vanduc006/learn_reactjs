@@ -7,6 +7,7 @@ import SignUpForm from './_auth/form/SignUpForm'
 import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
 import GenImage from './_root/page/GenImage'
+import PhatNguoi from './_root/page/PhatNguoi'
 
 
 const App = () => {
@@ -20,7 +21,6 @@ const App = () => {
         <Route path='sign-in' element={<SignInForm/>}/>
         
         <Route path='sign-up' element={<SignUpForm/>}/>
-
       </Route>
   
       {/* If user not login yet*/}
@@ -28,6 +28,8 @@ const App = () => {
         <Route index element={<Home/>}/>
         <Route path='gen-pic' element={<GenImage/>}/>
       </Route>
+
+      <Route path="/phatnguoi" element={<PhatNguoi />} />
 
     </Routes>
   </main>
