@@ -1,34 +1,34 @@
-import React, { useRef, useState } from 'react';
-import Earth from '@/components/uilayout/globe';
-import { MeshGradientRenderer } from '@johnn-e/react-mesh-gradient';
+import { useState } from 'react';
+// import Earth from '@/components/uilayout/globe';
+// import { MeshGradientRenderer } from '@johnn-e/react-mesh-gradient';
 import ScrollBaseAnimation from '@/components/uilayout/text-marquee';
-import TypingAnimation from '@/components/ui/typing-animation';
-import { RandomizedTextEffect } from '@/components/uilayout/text-randomized';
-import Blocks from '@/components/uilayout/beam';
+// import TypingAnimation from '@/components/ui/typing-animation';
+// import { RandomizedTextEffect } from '@/components/uilayout/text-randomized';
+// import Blocks from '@/components/uilayout/beam';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Car } from 'lucide-react';
+// import { Button } from '@/components/ui/button';
+// import { Label } from "@/components/ui/label";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import { Car } from 'lucide-react';
 import { CarFront } from 'lucide-react';
 import { Bike } from 'lucide-react';
 import { Zap } from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
-import { ReactLenis } from 'lenis/react';
+// import { ReactLenis } from 'lenis/react';
 import smoothscroll from 'smoothscroll-polyfill';
-import ScrollElement from '@/components/uilayout/scroll-element';
+// import ScrollElement from '@/components/uilayout/scroll-element';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import Ripple from '@/components/ui/ripple';
-import { WarpBackground } from '@/components/ui/warp-background';
+// import Ripple from '@/components/ui/ripple';
+// import { WarpBackground } from '@/components/ui/warp-background';
 import SparklesText from '@/components/ui/sparkles-text';
-import ScrollProgress from '@/components/ui/scroll-progress';
-import ShineBorder from '@/components/ui/shine-border';
+// import ScrollProgress from '@/components/ui/scroll-progress';
+// import ShineBorder from '@/components/ui/shine-border';
 
 // Initialize smooth scroll polyfill
 smoothscroll.polyfill();
 
 export default function PhatNguoi() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  // const containerRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<string>("");
 
   const handleSelect = (vehicle: string) => {
