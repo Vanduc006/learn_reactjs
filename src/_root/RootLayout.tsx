@@ -1,7 +1,7 @@
 
 import Navbar from '../components/all/Navbar';
 import Home from './page/Home';
-import PhatNguoi from './page/PhatNguoi';
+// import PhatNguoi from './page/PhatNguoi';
 
 import { Outlet } from 'react-router-dom';
 const RootLayout = () => {
