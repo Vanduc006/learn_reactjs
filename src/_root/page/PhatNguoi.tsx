@@ -1,7 +1,6 @@
 import { useState } from 'react';
 // import Earth from '@/components/uilayout/globe';
 // import { MeshGradientRenderer } from '@johnn-e/react-mesh-gradient';
-import ScrollBaseAnimation from '@/components/uilayout/text-marquee';
 // import TypingAnimation from '@/components/ui/typing-animation';
 // import { RandomizedTextEffect } from '@/components/uilayout/text-randomized';
 // import Blocks from '@/components/uilayout/beam';
@@ -17,8 +16,8 @@ import { ArrowRight } from 'lucide-react';
 import { Github } from 'lucide-react';
 import { Instagram } from 'lucide-react';
 import { Linkedin } from 'lucide-react';
-import { Wallet } from 'lucide-react';
-import { ShieldAlert } from 'lucide-react';
+// import { Wallet } from 'lucide-react';
+// import { ShieldAlert } from 'lucide-react';
 // import { ReactLenis } from 'lenis/react';
 import smoothscroll from 'smoothscroll-polyfill';
 // import ScrollElement from '@/components/uilayout/scroll-element';
@@ -29,7 +28,7 @@ import SparklesText from '@/components/ui/sparkles-text';
 // import ScrollProgress from '@/components/ui/scroll-progress';
 // import ShineBorder from '@/components/ui/shine-border';
 // import FetchPhatNguoi from './FetchPhatNguoi';
-import { Badge } from "@/components/ui/badge"
+// import { Badge } from "@/components/ui/badge"
 import Marquee from "react-fast-marquee";
 import React from 'react';
 
@@ -65,9 +64,9 @@ type DataType = {
   code: '1' | number;
 };
 
-type Whatcode = {
-  code: string;
-}
+// type Whatcode = {
+//   code: string;
+// }
 
 export default function PhatNguoi() {
   const [data, setData] = useState<DataType | null>(null);
