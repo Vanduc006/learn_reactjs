@@ -31,6 +31,7 @@ import SparklesText from '@/components/ui/sparkles-text';
 // import { Badge } from "@/components/ui/badge"
 import Marquee from "react-fast-marquee";
 import React from 'react';
+// import axios from "axios";
 
 // Initialize smooth scroll polyfill
 smoothscroll.polyfill();
@@ -70,9 +71,9 @@ type DataType = {
 
 export default function PhatNguoi() {
   const [data, setData] = useState<DataType | null>(null);
-
-  const isPunish = 'ĐÃ XỬ PHẠT'
   
+  
+  const isPunish = 'ĐÃ XỬ PHẠT'
   const fetchData = () => {
     const jsonData: DataType = {
       biensoxe: "63B-020.28",
@@ -146,19 +147,21 @@ export default function PhatNguoi() {
 
         <div className="flex items-center justify-center md:m-0 m-5 cursor-pointer text-black">
           <div className="bg-white shadow-lg rounded-lg w-full max-w-lg p-8">
+            
             <Input placeholder="Nhập biển số xe của bạn" className='border-solid border-2' />
-            <div className="flex flex-row items-center space-x-4 mt-2">
-
+            <div className="flex overflow-x-auto whitespace-nowrap space-x-4 mt-2">
+              
               <div
-                className={`flex items-center text-sm md:text-base border-2 rounded-[10px] p-2 ${
+                className={`flex items-center text-xs md:text-base border-2 rounded-[10px] p-2 ${
                   selected === "car" ? "border-[#263381]" : "border-slate-200"
                 }`}
                 onClick={() => handleSelect("car")}
               >
                 <CarFront className="mr-2 h-4 w-4" /> Ôtô
               </div>
+
               <div
-                className={`flex items-center text-sm md:text-base border-2 rounded-[10px] p-2 ${
+                className={`flex items-center text-xs md:text-base border-2 rounded-[10px] p-2 ${
                   selected === "bike" ? "border-[#263381]" : "border-slate-200"
                 }`}
                 onClick={() => handleSelect("bike")}
@@ -166,12 +169,20 @@ export default function PhatNguoi() {
                 <Bike className="mr-2 h-4 w-4" /> Xe Máy
               </div>
               <div
-                className={`flex items-center text-sm md:text-base border-2 rounded-[10px] p-2 ${
+                className={`flex items-center text-xs md:text-base border-2 rounded-[10px] p-2 ${
                   selected === "electric-bike" ? "border-[#263381]" : "border-slate-200"
                 }`}
                 onClick={() => handleSelect("electric-bike")}
               >
                 <Zap className="mr-2 h-4 w-4" /> Xe Máy Điện
+              </div>
+              <div
+                className={`flex items-center text-xs md:text-base border-2 rounded-[10px] p-2 ${
+                  selected === "auto-vehicle" ? "border-[#263381]" : "border-slate-200"
+                }`}
+                onClick={() => handleSelect("auto-vehicle")}
+              >
+                Tự phân loại
               </div>
 
             </div>
@@ -201,6 +212,7 @@ export default function PhatNguoi() {
                   </a>
                 </p>
             </div>
+            
           </div>
         </div>
         
@@ -210,7 +222,7 @@ export default function PhatNguoi() {
           <div> 
             {Whatcode === 1 ?
             <>
-              <div className="flex items-center justify-center md:m-0 m-5 cursor-pointer text-black">
+              <div className="flex items-center justify-center md:m-0 m-5 text-black">
                   <div className="bg-white shadow-lg rounded-lg w-full max-w-lg p-2 mt-2">
                   
                       <div className=''>
