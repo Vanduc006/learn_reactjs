@@ -1,0 +1,4 @@
+force prompt with button
+ 1 translate, options user nation, translate nation, uniqe prompt
+ 2 what in image, list imagem, show link if this ís product
+ 3 from pic gen image with options style
