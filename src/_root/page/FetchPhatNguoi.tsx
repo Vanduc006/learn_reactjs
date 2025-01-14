@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 
 const data = {
     "biensoxe": "63B-020.28",
