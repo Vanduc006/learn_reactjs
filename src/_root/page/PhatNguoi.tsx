@@ -31,6 +31,8 @@ import SparklesText from '@/components/ui/sparkles-text';
 // import { Badge } from "@/components/ui/badge"
 import Marquee from "react-fast-marquee";
 import React from 'react';
+import { string } from 'zod';
+
 // import axios from "axios";
 
 // Initialize smooth scroll polyfill
@@ -68,64 +70,97 @@ type DataType = {
 // type Whatcode = {
 //   code: string;
 // }
-
+async function GetData() {
+  // try {
+  //   const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
+  //   if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //   }
+  //   const data = await response.json() // Assuming the server returns JSON
+  //   console.log('Response Data:', data);
+  // } catch (error) {
+  //   console.error('Error fetching data:', error);
+  // }
+  const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
+  const data = await response.json();
+  console.log(data)
+}
 export default function PhatNguoi() {
-  const [data, setData] = useState<DataType | null>(null);
-  
-  
+  // GetData()
+  const [data, setData] = useState< DataType | null>(null);
+  const [input, setInput] = useState< string | string>('');
   const isPunish = 'ĐÃ XỬ PHẠT'
-  const fetchData = () => {
-    const jsonData: DataType = {
-      biensoxe: "63B-020.28",
-      totalViolations: 2,
-      is_new: true,
-      handledCount: 1,
-      unhandledCount: 1,
-      updated_at: "2025-01-06 09:45:29",
-      violations: [
-        {
-          trang_thai: "ĐÃ XỬ PHẠT",
-          bien_kiem_sat: "63B02028",
-          mau_bien: "Nền màu vàng, chữ và số màu đen",
-          loai_phuong_tien: "Ô tô",
-          thoi_gian_vi_pham: "10:48, 01/04/2023",
-          dia_diem_vi_pham: "Km1762+150, Quốc lộ 1A - Bình Thuận",
-          hanh_vi_vi_pham:
-            "12321.5.3.a.01.Điều khiển xe chạy quá tốc độ quy định từ 05 km/h đến dưới 10 km/h",
-          don_vi_phat_hien_vi_pham:
-            "ĐỘI TT, ĐTGQTNGT VÀ XLVP - PHÒNG CSGT BÌNH THUẬN",
-          noi_giai_quyet_vu_viec:
-            "\\n 1. ĐỘI TT, ĐTGQTNGT VÀ XLVP - PHÒNG CSGT BÌNH THUẬN\\nĐịa chỉ: 115 Tôn Đức Thắng, TP. Phan Thiết\\nSố điện thoại liên hệ: 0693428184\\n2. Đội Cảnh sát giao thông, Trật tự - Công an huyện Chợ Gạo - Tỉnh Tiền Giang\\nĐịa chỉ: huyện Chợ Gạo\\n",
-          so_dien_thoai: "0693428184",
-          muc_phat:
-            "Theo Nghị định 100/2019/NĐ-CP, mức phạt cho lỗi điều khiển xe chạy quá tốc độ quy định từ 05 km/h đến dưới 10 km/h là 800,000-1,000,000 đồng đối với xe ô tô.",
-        },
-        {
-          trang_thai: "CHƯA XỬ PHẠT",
-          bien_kiem_sat: "63B-020.28",
-          mau_bien: "Nền mầu trắng, chữ và số màu đen",
-          loai_phuong_tien: "Ô tô",
-          thoi_gian_vi_pham: "17:48, 10/07/2019",
-          dia_diem_vi_pham: "Bạc Liêu",
-          hanh_vi_vi_pham: null,
-          don_vi_phat_hien_vi_pham: "Đội 5, Công an  Bạc Liêu",
-          noi_giai_quyet_vu_viec:
-            "\\n1. Đội 5, Công an  Bạc Liêu\\nĐịa chỉ: 593 Đường Trần Phú, Khóm 1, Phường 7, TP Bạc Liêu\\nSố điện thoại liên hệ: 02913678988\\n",
-          so_dien_thoai: "02913678988",
-        },
-      ],
-      attempts: null,
-      mdk: null,
-      maubien: null,
-      data_dangkiem: null,
-      code: 1,
-    };
+  const fetchData = async(license_plate: string) => {
+    const url = 'https://ducvan-backend.onrender.com/phatnguoi?bienso='+license_plate
+    const response = await fetch(url);
+    const data = await response.json();
+    const jsonData: DataType = data
+    // const jsonData: DataType = {
+    //   biensoxe: "63B-020.28",
+    //   totalViolations: 2,
+    //   is_new: true,
+    //   handledCount: 1,
+    //   unhandledCount: 1,
+    //   updated_at: "2025-01-06 09:45:29",
+    //   violations: [
+    //     {
+    //       trang_thai: "ĐÃ XỬ PHẠT",
+    //       bien_kiem_sat: "63B02028",
+    //       mau_bien: "Nền màu vàng, chữ và số màu đen",
+    //       loai_phuong_tien: "Ô tô",
+    //       thoi_gian_vi_pham: "10:48, 01/04/2023",
+    //       dia_diem_vi_pham: "Km1762+150, Quốc lộ 1A - Bình Thuận",
+    //       hanh_vi_vi_pham:
+    //         "12321.5.3.a.01.Điều khiển xe chạy quá tốc độ quy định từ 05 km/h đến dưới 10 km/h",
+    //       don_vi_phat_hien_vi_pham:
+    //         "ĐỘI TT, ĐTGQTNGT VÀ XLVP - PHÒNG CSGT BÌNH THUẬN",
+    //       noi_giai_quyet_vu_viec:
+    //         "\\n 1. ĐỘI TT, ĐTGQTNGT VÀ XLVP - PHÒNG CSGT BÌNH THUẬN\\nĐịa chỉ: 115 Tôn Đức Thắng, TP. Phan Thiết\\nSố điện thoại liên hệ: 0693428184\\n2. Đội Cảnh sát giao thông, Trật tự - Công an huyện Chợ Gạo - Tỉnh Tiền Giang\\nĐịa chỉ: huyện Chợ Gạo\\n",
+    //       so_dien_thoai: "0693428184",
+    //       muc_phat:
+    //         "Theo Nghị định 100/2019/NĐ-CP, mức phạt cho lỗi điều khiển xe chạy quá tốc độ quy định từ 05 km/h đến dưới 10 km/h là 800,000-1,000,000 đồng đối với xe ô tô.",
+    //     },
+    //     {
+    //       trang_thai: "CHƯA XỬ PHẠT",
+    //       bien_kiem_sat: "63B-020.28",
+    //       mau_bien: "Nền mầu trắng, chữ và số màu đen",
+    //       loai_phuong_tien: "Ô tô",
+    //       thoi_gian_vi_pham: "17:48, 10/07/2019",
+    //       dia_diem_vi_pham: "Bạc Liêu",
+    //       hanh_vi_vi_pham: null,
+    //       don_vi_phat_hien_vi_pham: "Đội 5, Công an  Bạc Liêu",
+    //       noi_giai_quyet_vu_viec:
+    //         "\\n1. Đội 5, Công an  Bạc Liêu\\nĐịa chỉ: 593 Đường Trần Phú, Khóm 1, Phường 7, TP Bạc Liêu\\nSố điện thoại liên hệ: 02913678988\\n",
+    //       so_dien_thoai: "02913678988",
+    //     },
+    //   ],
+    //   attempts: null,
+    //   mdk: null,
+    //   maubien: null,
+    //   data_dangkiem: null,
+    //   code: 1,
+    // };
 
     setData(jsonData);
 
     // console.log(jsonData.code)
   };
-
+  const motorbikeRegex = /^\d{2}[A-Z]{1,2}\d{4,5}$/; // Xe máy
+  const carRegex = /^\d{2}[A-Z]\d{4,5}$/;            // Ô tô
+  const electricVehicleRegex = /^\d{2}E\d{4,5}$/;    // Xe điện
+  const Filter = () => {
+    // if (motorbikeRegex.test(input)) {
+    //   console.log("Xe máy");
+    // } else if (carRegex.test(input)) {
+    //   console.log("Ô tô");
+    // } else if (electricVehicleRegex.test(input)) {
+    //   console.log("Xe điện");
+    // } else {
+    //   console.log("Biển số không hợp lệ");
+    // }
+    console.log(input)
+    fetchData(input)
+  }
   // const containerRef = useRef<HTMLDivElement>(null);
   const [selected, setSelected] = useState<string>("");
   const handleSelect = (vehicle: string) => {
@@ -135,7 +170,7 @@ export default function PhatNguoi() {
   
   return (
    
-      <main className="min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-slate-100 ">
+      <main className="min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-[#f0e6dc] ">
 
         {/* Background set on main, ensuring it covers the viewport */}
         <div className='rounded-md m-5 text-[#263381] items-center justify-content-center'>
@@ -147,8 +182,13 @@ export default function PhatNguoi() {
 
         <div className="flex items-center justify-center md:m-0 m-5 cursor-pointer text-black">
           <div className="bg-white shadow-lg rounded-lg w-full max-w-lg p-8">
-            
-            <Input placeholder="Nhập biển số xe của bạn" className='border-solid border-2' />
+          {/* <p>Chi bien so da dinh danh</p> */}
+          <Input
+            placeholder="Nhập biển số xe của bạn"
+            className="border-solid border-2"
+            value={input ?? ""} // Default to an empty string if input is null
+            onChange={(e) => setInput(e.target.value)}
+          />
             <div className="flex overflow-x-auto whitespace-nowrap space-x-4 mt-2">
               
               <div
@@ -188,7 +228,7 @@ export default function PhatNguoi() {
             </div>
 
 
-            <div className='group relative cursor-pointer p-2 border bg-white overflow-hidden text-black text-center font-semibold rounded-[10px] w-full mt-2' onClick={fetchData}>
+            <div className='group relative cursor-pointer p-2 border bg-white overflow-hidden text-black text-center font-semibold rounded-[10px] w-full mt-2' onClick={Filter}>
               <span className='translate-x-1 group-hover:translate-x-12 group-hover:opacity-0 transition-all duration-300 inline-block'>
                 Tra Cứu
               </span>
@@ -198,6 +238,7 @@ export default function PhatNguoi() {
               </div>
               <div className='absolute group-hover:h-full group-hover:w-full rounded-lg bg-black scale-[1] dark:group-hover:bg-[#e7cb6e] group-hover:bg-[#263381] group-hover:scale-[1.8] transition-all duration-300 group-hover:top-[0%] group-hover:left-[0%] '></div>
             </div>
+
             <div className='mt-2 flex'>
                 Made by Ducnv 💖 
                 <p className='ml-auto flex'>
@@ -235,7 +276,7 @@ export default function PhatNguoi() {
     
                           </ScrollBaseAnimation> */}
                           <Marquee>
-                            <p className='text-xl'>Biển số {data.biensoxe} phát hiện {data.totalViolations} <span className='mr-3'>lỗi</span> </p>
+                            <p className='text-xl'>Biển số {input} phát hiện {data.totalViolations} <span className='mr-3'>lỗi</span> </p>
                           </Marquee>
                       </div>
                   </div>
@@ -287,7 +328,7 @@ export default function PhatNguoi() {
     
                           </ScrollBaseAnimation> */}
                           <Marquee>
-                            <p className='text-xl'>Không có dữ liệu phạt nguội về biển số của bạn 🎉</p>
+                            <p className='text-xl'>Không có dữ liệu phạt nguội về biển số {input} 🎉</p>
                           </Marquee>
                       </div>
                 </div>

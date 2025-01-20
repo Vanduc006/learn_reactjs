@@ -8,6 +8,7 @@ import AuthLayout from './_auth/AuthLayout'
 import RootLayout from './_root/RootLayout'
 import GenImage from './_root/page/GenImage'
 import PhatNguoi from './_root/page/PhatNguoi'
+import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
 
 
 const App = () => {
@@ -30,7 +31,7 @@ const App = () => {
       </Route>
 
       <Route path="/phatnguoi" element={<PhatNguoi />} />
-
+      <Route path="/fetch" element={<FetchPhatNguoi/>}></Route>
     </Routes>
   </main>
   )
