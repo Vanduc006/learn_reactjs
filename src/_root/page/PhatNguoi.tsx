@@ -31,7 +31,7 @@ import SparklesText from '@/components/ui/sparkles-text';
 // import { Badge } from "@/components/ui/badge"
 import Marquee from "react-fast-marquee";
 import React from 'react';
-import { string } from 'zod';
+// import { string } from 'zod';
 
 // import axios from "axios";
 
@@ -70,21 +70,21 @@ type DataType = {
 // type Whatcode = {
 //   code: string;
 // }
-async function GetData() {
-  // try {
-  //   const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
-  //   if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //   }
-  //   const data = await response.json() // Assuming the server returns JSON
-  //   console.log('Response Data:', data);
-  // } catch (error) {
-  //   console.error('Error fetching data:', error);
-  // }
-  const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
-  const data = await response.json();
-  console.log(data)
-}
+// async function GetData() {
+//   // try {
+//   //   const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
+//   //   if (!response.ok) {
+//   //       throw new Error(`HTTP error! Status: ${response.status}`);
+//   //   }
+//   //   const data = await response.json() // Assuming the server returns JSON
+//   //   console.log('Response Data:', data);
+//   // } catch (error) {
+//   //   console.error('Error fetching data:', error);
+//   // }
+//   const response = await fetch('https://ducvan-backend.onrender.com/phatnguoi?bienso=63B02028');
+//   const data = await response.json();
+//   console.log(data)
+// }
 export default function PhatNguoi() {
   // GetData()
   const [data, setData] = useState< DataType | null>(null);
@@ -145,9 +145,9 @@ export default function PhatNguoi() {
 
     // console.log(jsonData.code)
   };
-  const motorbikeRegex = /^\d{2}[A-Z]{1,2}\d{4,5}$/; // Xe máy
-  const carRegex = /^\d{2}[A-Z]\d{4,5}$/;            // Ô tô
-  const electricVehicleRegex = /^\d{2}E\d{4,5}$/;    // Xe điện
+  // const motorbikeRegex = /^\d{2}[A-Z]{1,2}\d{4,5}$/; // Xe máy
+  // const carRegex = /^\d{2}[A-Z]\d{4,5}$/;            // Ô tô
+  // const electricVehicleRegex = /^\d{2}E\d{4,5}$/;    // Xe điện
   const Filter = () => {
     // if (motorbikeRegex.test(input)) {
     //   console.log("Xe máy");
