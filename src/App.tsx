@@ -9,6 +9,8 @@ import RootLayout from './_root/RootLayout'
 import GenImage from './_root/page/GenImage'
 import PhatNguoi from './_root/page/PhatNguoi'
 import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
+import Mind from './_root/page/Mind'
+import NotFound from './_root/page/NotFound'
 
 
 const App = () => {
@@ -28,10 +30,14 @@ const App = () => {
       <Route element={<RootLayout/>}>
         <Route index element={<Home/>}/>
         <Route path='gen-pic' element={<GenImage/>}/>
+        
       </Route>
-
       <Route path="/phatnguoi" element={<PhatNguoi />} />
-      <Route path="/fetch" element={<FetchPhatNguoi/>}></Route>
+      <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
+      <Route path="/mind" element={<Mind/>}> </Route>
+      <Route path="*" element={<NotFound/>} ></Route>
+
+
     </Routes>
   </main>
   )

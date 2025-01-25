@@ -173,22 +173,23 @@ export default function PhatNguoi() {
       <main className="min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-[#f0e6dc] ">
 
         {/* Background set on main, ensuring it covers the viewport */}
-        <div className='rounded-md m-5 text-[#263381] items-center justify-content-center'>
+        <div className='rounded-md m-5 text-[#263381] items-center justify-content-center mt-[50px]'>
           <h1 className='text-xl relative z-10 text-center md:h-auto leading-tight font-bold md:text-4xl'>
             {/* <RandomizedTextEffect text="Tra Cứu Phạt Nguội" loopDelay={5000} /> */}
             <SparklesText text="Tra Cứu Phạt Nguội" className='text-3xl md:text-5xl' sparklesCount={10}/>
+            {/* <p className='text-3xl md:text-5xl font-bold ' >Tra Cứu Phạt Nguội</p> */}
           </h1>
         </div>
 
         <div className="flex items-center justify-center md:m-0 m-5 cursor-pointer text-black">
           <div className="bg-white shadow-lg rounded-lg w-full max-w-lg p-8">
           {/* <p>Chi bien so da dinh danh</p> */}
-          <Input
-            placeholder="Nhập biển số xe của bạn"
-            className="border-solid border-2"
-            value={input ?? ""} // Default to an empty string if input is null
-            onChange={(e) => setInput(e.target.value)}
-          />
+            <Input
+              placeholder="Nhập biển số xe của bạn"
+              className="border-solid border-2"
+              value={input ?? ""} // Default to an empty string if input is null
+              onChange={(e) => setInput(e.target.value)}
+            />
             <div className="flex overflow-x-auto whitespace-nowrap space-x-4 mt-2">
               
               <div
