@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import 
 // React,
- { useState } 
+ { useState, useRef } 
  from 'react'
 import Webcam from "react-webcam";
 // import {
@@ -59,12 +59,20 @@ const list_languages_sp = [
 
 
 const Mind = () => {
+    const [photo, setPhoto] = useState(null);
     const [Open, setOpen] = useState<boolean>(false);
     // const [Usercam, setUsercam] = useState<boolean>(false);
     // const [Environmentcam, setEnvironment] = useState<boolean>(false);
     const [modeCam, setModeCam] = useState<'user' | 'environment'>('user');
     const [mirroredCam, setMirroredCam] = useState(true);
     const [Development, setDevelopment] = useState(false);
+
+    const webcamRef:any = useRef(null);
+    const capturePhoto = () => {
+      const imageSrc = webcamRef.current.getScreenshot();
+      setPhoto(imageSrc); // Save the captured photo to state
+    };
+
     const toogleDevelopment = () => {
         if (Development) {
             setDevelopment(false)
@@ -135,6 +143,7 @@ const Mind = () => {
                         audio={false}
                         screenshotFormat="image/jpeg"
                         videoConstraints={videoConstraints}
+                        ref={webcamRef}
                     />
                     );
                 } else {
@@ -163,8 +172,25 @@ const Mind = () => {
             </div>
             {/* onClick={() => { setVisible(true); } } */}
             {/* onClick={() => { setModecam('environment'); setMirroredcam(true)}} */}
-            <div className='absolute top-0 ml-7 mt-2 text-black bg-white opacity-50 p-1 rounded-xl' onClick={toggleCameraMode} >
+            <div className='absolute top-0 ml-7 mt-2 text-black bg-white p-1 rounded-xl' onClick={toggleCameraMode} >
                 <SwitchCamera className='opacity-100'/>
+
+            </div>
+            {/* <div className='absolute top-0'>
+                <p className='text-center'>only 4 pics with vistor plan</p>
+            </div> */}
+            <div className='absolute top-0 ml-7 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1'>
+                
+                <img
+                    className="w-8"
+                    src={photo || 'https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png'}
+                    alt="Example"
+                />
+                <img
+                    className="w-8"
+                    src={photo || 'https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png'}
+                    alt="Example"
+                />
 
             </div>
             {/* <div className='absolute top-0 left-0 bg-white ml-5 text-black rounded-full p-1'> 
@@ -173,9 +199,9 @@ const Mind = () => {
             </div> */}
             <div className='absolute bottom-0 left-0 right-0 flex items-center justify-center md:m-0 m-5 cursor-pointer text-black'>
 
-                <div className='items-center justify-center ml-5 ' onClick={OpenSheet} >
+                <div className='items-center justify-center ml-5 '>
                     {/* <p className='text-center'>Record</p> */}
-                    <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white shadow-lg text-black rounded-full sshadow-lg">
+                    <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white shadow-lg text-black rounded-full sshadow-lg" onClick={capturePhoto}>
                         <p className='text-center'><Aperture/></p>
                     </div>
                 </div>
@@ -197,7 +223,9 @@ const Mind = () => {
                 </div>
             </div>
         </div>
-        
+        <div className='m-5 bg-white p-2 rounded-xl' onClick={OpenSheet}>
+            <p className='text-center'>Show me the magic</p>
+        </div>
         {/* <BottomSheet /> */}
         <Sheet open={Open} onOpenChange={CloseSheet}>
             {/* <SheetTrigger>Open</SheetTrigger> */}
@@ -244,7 +272,9 @@ const Mind = () => {
                 </div>
             </SheetContent>
         </Sheet>
-        
+        <div className='m-5'>
+            USER section
+        </div>
         <div className='rounded-md m-5 text-[#263381] items-center justify-content-center mt-[50px]'>
             
 
