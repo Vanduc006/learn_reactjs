@@ -44,7 +44,7 @@ import makeAnimated from 'react-select/animated';
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
 
-
+// Năm mới vạn sự hanh thông
 const animatedComponents = makeAnimated();
 const list_languages_sp = [
     {"value":"VN","label":"🇻🇳 Vietnam"},
@@ -70,6 +70,7 @@ const Mind = () => {
     const webcamRef:any = useRef(null);
     const capturePhoto = () => {
       const imageSrc = webcamRef.current.getScreenshot();
+      console.log(JSON.stringify(imageSrc))
       setPhoto(imageSrc); // Save the captured photo to state
     };
 
@@ -191,6 +192,7 @@ const Mind = () => {
                     src={photo || 'https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png'}
                     alt="Example"
                 />
+
 
             </div>
             {/* <div className='absolute top-0 left-0 bg-white ml-5 text-black rounded-full p-1'> 
