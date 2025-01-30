@@ -37,9 +37,10 @@ import {
     SelectValue,
 } from "@/components/ui/select"
   
-import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera} from 'lucide-react';
+import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, Satellite} from 'lucide-react';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
+
 
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -120,19 +121,16 @@ const Mind = () => {
   }, []);
 
   return (
-    <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto '>
-
+    <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
             Sorry, during development imasis mind only support Mobile phones<br />
             Try TraCuuPhatNguoi page if you like, at route /phatnguoi
         </div>
 
         <div className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-slate-300 text-white block sm:hidden'>
-            <div className='text-center bg-slate-300 text-black'>
 
-            </div>
             <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white'>
-                <div className='flex justify-content-center items-center bg-white rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
+                <div className='flex justify-content-center items-center rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
                     
                     <Dialog>    
                             <DialogTrigger><Settings className='flex '/></DialogTrigger>
@@ -175,17 +173,70 @@ const Mind = () => {
                                 </div>
                         ) : (
                             <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-50'>
-                                <p className=''>You can't do anythings</p>
+                                <p className=''>IMASIS can't detect camera</p>
                             </div>
                     )}
                     
                 </div>
                 
             </div>
-            
+
+
+            <div className="">
+                {hasCamera === null ? (
+                    <p></p>
+                        ) : hasCamera ? (
+                            <div className='flex m-5 '>
+                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div>  
+                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                                    <p className='flex'> 
+                                        <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                                        IMASIS CONNECTED TO SERVER
+                                    </p>
+                                    <p className='flex'>
+                                        Waiting for tasks
+                                    </p>
+                                </div> 
+                            </div>
+                        ) : (
+                            <div className='flex m-5 '>
+                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-rose-500 opacity-75'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div>  
+                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                                    <p className='flex'> 
+                                        <Satellite className='bg-rose-500 mr-2 rounded-full p-1'/>
+                                        IMASIS NOT AVAIABLE
+                                    </p>
+                                    <p className='flex'>
+                                        You can't do anythings
+                                    </p>
+                                </div> 
+                            </div>
+                )}
+                {/* <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
+                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                </div>  
+                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                    <p className='flex'> 
+                        <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                        IMASIS CONNECTED TO SERVER
+                    </p>
+                    <p className='flex'>
+                        
+                        Waiting for tasks
+                    </p>
+                </div>   */}
+                
+            </div>
+ 
+
+
             <div className='relative'>
 
-                <div className="flex flex-col items-center justify-center bg-white mt-2 bg-slate-300">
+                <div className="flex flex-col items-center justify-center mt-2 bg-slate-300">
                 {(() => {
                     if (Development) {
                         return (
@@ -231,18 +282,19 @@ const Mind = () => {
                 {/* <div className='absolute top-0'>
                     <p className='text-center'>only 4 pics with vistor plan</p>
                 </div> */}
-                <div className='absolute top-0 ml-7 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl'>
+                <div className='absolute top-0 ml-7 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl rounded-xl'>
                     
                 {Array(4).fill(null).map((_, index) => (
                     <img
                         key={index}
-                        className="w-8 h-8"
+                        className="w-10 h-10"
                         src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
                         alt="Captured"
                     />
                     ))}
 
                 </div>
+
                 {/* <div className='absolute top-0 left-0 bg-white ml-5 text-black rounded-full p-1'> 
                     
                     for top left absolute
@@ -251,10 +303,18 @@ const Mind = () => {
 
                     <div className='items-center justify-center ml-5 '>
                         {/* <p className='text-center'>Record</p> */}
+                    {hasCamera === null ? (
+                        <p></p>
+                        ) : hasCamera ? (
+                            <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white text-black rounded-full drop-shadow-xl" onClick={capturePhoto}>
+                                <p className='text-center'><Aperture/></p>
+                            </div>
+                        ) : (
+                            <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-rose-500 text-black rounded-full drop-shadow-xl">
+                                <p className='text-center'><Aperture/></p>
+                            </div>
+                    )}
 
-                        <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white text-black rounded-full drop-shadow-xl" onClick={capturePhoto}>
-                            <p className='text-center'><Aperture/></p>
-                        </div>
                     </div>
                     <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5 w-full max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden'>
                         <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
@@ -274,7 +334,7 @@ const Mind = () => {
                     </div>
                 </div>
             </div>
-            <div className='m-5 bg-white p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
+            <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
             </div>
             {/* <BottomSheet /> */}
