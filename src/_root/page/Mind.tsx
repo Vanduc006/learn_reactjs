@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import 
-// React,
- { useState, useRef, useEffect } 
+React,
+ { useState, useRef, useEffect, 
+    // useCallback 
+} 
  from 'react'
 import Webcam from "react-webcam";
 // import {
@@ -36,10 +38,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-  
+import { Carousel, CarouselContent, CarouselItem,CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+// import { Card, CardContent } from "@/components/ui/card"
 import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, Satellite} from 'lucide-react';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
+
 
 
 // import BottomSheet from '@/components/all/BottomSheet';
@@ -104,22 +108,39 @@ const Mind = () => {
     };
 
     const [hasCamera, setHasCamera] = useState(false);
+    useEffect(() => {
+        async function checkCamera() {
+        try {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const videoDevices = devices.filter(device => device.kind === "videoinput");
+            setHasCamera(videoDevices.length > 0);
+        } catch (error) {
+            console.error("Error checking camera:", error);
+            setHasCamera(false);
+        }
+        }
 
-  useEffect(() => {
-    async function checkCamera() {
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const videoDevices = devices.filter(device => device.kind === "videoinput");
-        setHasCamera(videoDevices.length > 0);
-      } catch (error) {
-        console.error("Error checking camera:", error);
-        setHasCamera(false);
-      }
+        checkCamera();
+    }, []);
+
+    // const [Api, setApi] = useState<any>()
+    // const [Current, setCurrent] = useState(0)
+    // const scrollPrev = React.useCallback(() => {
+    //     Api?.scrollPrev()
+    // }, [Api])
+    // const scrollNext = React.useCallback(() => {
+    //     Api?.scrollNext()
+    // }, [Api])
+
+    const handleDragStart = (event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+        if (event.type === "touchstart") {
+          document.body.style.overflow = "hidden"
+        }
     }
-
-    checkCamera();
-  }, []);
-
+    
+    const handleDragEnd = () => {
+        document.body.style.overflow = ""
+    }
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -231,112 +252,236 @@ const Mind = () => {
                 </div>   */}
                 
             </div>
- 
-
-
-            <div className='relative'>
-
-                <div className="flex flex-col items-center justify-center mt-2 bg-slate-300">
-                {(() => {
-                    if (Development) {
-                        return (
-                        <Webcam
-                            className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
-                            mirrored={mirroredCam}
-                            audio={false}
-                            screenshotFormat="image/jpeg"
-                            videoConstraints={videoConstraints}
-                            ref={webcamRef}
-                        />
-                        );
-                    } else {
-                        return (
-                        <img
-                            className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
-                            src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
-                            alt="Example"
-                        />
-                        );
-                    }
-                })()}
-                    {/* <img
-                    className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto"
-                    src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
-                    alt="Example"
-                    />
-                    <Webcam
-                        className='rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto'
-                        mirrored={mirroredCam}
-                        audio={false}
-                        screenshotFormat="image/jpeg"
-                        videoConstraints={videoConstraints}
-                    >
-                    </Webcam> */}
-                </div>
-                {/* onClick={() => { setVisible(true); } } */}
-                {/* onClick={() => { setModecam('environment'); setMirroredcam(true)}} */}
-                <div className='absolute top-0 ml-7 mt-2 text-black bg-white p-1 rounded-xl drop-shadow-xl' onClick={toggleCameraMode} >
-                    <SwitchCamera className='opacity-100'/>
-
-                </div>
-                {/* <div className='absolute top-0'>
-                    <p className='text-center'>only 4 pics with vistor plan</p>
-                </div> */}
-                <div className='absolute top-0 ml-7 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl rounded-xl'>
-                    
-                {Array(4).fill(null).map((_, index) => (
-                    <img
-                        key={index}
-                        className="w-10 h-10"
-                        src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
-                        alt="Captured"
-                    />
-                    ))}
-
-                </div>
-
-                {/* <div className='absolute top-0 left-0 bg-white ml-5 text-black rounded-full p-1'> 
-                    
-                    for top left absolute
-                </div> */}
-                <div className='absolute bottom-0 left-0 right-0 flex items-center justify-center md:m-0 m-5 cursor-pointer text-black'>
-
-                    <div className='items-center justify-center ml-5 '>
-                        {/* <p className='text-center'>Record</p> */}
-                    {hasCamera === null ? (
-                        <p></p>
-                        ) : hasCamera ? (
-                            <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white text-black rounded-full drop-shadow-xl" onClick={capturePhoto}>
-                                <p className='text-center'><Aperture/></p>
-                            </div>
-                        ) : (
-                            <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-rose-500 text-black rounded-full drop-shadow-xl">
-                                <p className='text-center'><Aperture/></p>
-                            </div>
-                    )}
-
+            <div 
+                className='m-5'
+                onClick={OpenSheet}
+            >      
+                <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
+                    <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                        <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                    </div>  
+                    <div>
+                        Work status
                     </div>
-                    <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5 w-full max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden'>
-                        <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                            <Mic className='h-4 w-4 mr-2'/> Conservation
-                        </div>
-                        <div className='flex items-center bg-white p-2 rounded-xl'>
-                            <Languages className='h-4 w-4 mr-2'/> Translator
-                        </div>
-                        <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                            <ScanSearch className='h-4 w-4 mr-2'/> Object
-                        </div>
-                        <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                            <Podcast className='h-4 w-4 mr-2'/> Talkback
-                        </div>
-                    
-                        
-                    </div>
+                    {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                        <p className='flex'> 
+                            <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                            IMASIS CONNECTED TO SERVER
+                        </p>
+                        <p className='flex'>
+                            Waiting for tasks
+                        </p>
+                    </div>  */}
                 </div>
-            </div>
-            <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
+
+            </div>     
+
+            {/* <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
-            </div>
+            </div> */}
+
+            <Carousel
+            opts={{
+                align: "start",
+                loop: true,
+            }}
+              
+              className="w-full max-w-sm mx-auto"
+              onMouseDown={handleDragStart}
+              onTouchStart={handleDragStart}
+              onMouseUp={handleDragEnd}
+              onTouchEnd={handleDragEnd}  
+            >
+                <CarouselContent>
+                {/* {cards.map((card, index) => (
+                    <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4 bg-slate-200">
+                        <Card className="cursor-grab active:cursor-grabbing">
+                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                        <div className="text-center">
+                            <h3 className="text-lg font-semibold mb-2">{card.title}</h3>
+                            <p className="text-sm text-muted-foreground">{card.content}</p>
+                            </div>
+                        </CardContent>
+                        </Card>
+                    </CarouselItem>
+                ))} */}
+                    <CarouselItem>
+                        <div className='relative'>
+
+                            <div className="flex flex-col items-center justify-center mt-2 bg-slate-300">
+                            {(() => {
+                                if (Development) {
+                                    return (
+                                    <Webcam
+                                        className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
+                                        mirrored={mirroredCam}
+                                        audio={false}
+                                        screenshotFormat="image/jpeg"
+                                        videoConstraints={videoConstraints}
+                                        ref={webcamRef}
+                                    />
+                                    );
+                                } else {
+                                    return (
+                                    <img
+                                        className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
+                                        src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
+                                        alt="Example"
+                                    />
+                                    );
+                                }
+                            })()}
+                                {/* <img
+                                className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto"
+                                src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
+                                alt="Example"
+                                />
+                                <Webcam
+                                    className='rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto'
+                                    mirrored={mirroredCam}
+                                    audio={false}
+                                    screenshotFormat="image/jpeg"
+                                    videoConstraints={videoConstraints}
+                                >
+                                </Webcam> */}
+                            </div>
+                            {/* onClick={() => { setVisible(true); } } */}
+                            {/* onClick={() => { setModecam('environment'); setMirroredcam(true)}} */}
+                            <div className='absolute top-0 ml-10 mt-3 text-black bg-white p-1 rounded-xl drop-shadow-xl' onClick={toggleCameraMode} >
+                                <SwitchCamera className='opacity-100'/>
+
+                            </div>
+                            {/* <div className='absolute top-0'>
+                                <p className='text-center'>only 4 pics with vistor plan</p>
+                            </div> */}
+                            <div className='absolute top-0 ml-10 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl'>
+                                
+                            {Array(4).fill(null).map((_, index) => (
+                                <img
+
+                                    key={index}
+                                    className="w-8 h-10"
+                                    src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
+                                    alt="Captured"
+                                />
+                                ))}
+
+                            </div>
+
+                            {/* <div className='absolute top-0 left-0 bg-white ml-5 text-black rounded-full p-1'> 
+                                
+                                for top left absolute
+                            </div> */}
+                            <div className='absolute bottom-0 left-0 right-0 flex items-center justify-center md:m-0 m-5 cursor-pointer text-black'>
+
+                                <div className='items-center justify-center ml-5 '>
+                                    {/* <p className='text-center'>Record</p> */}
+                                {hasCamera === null ? (
+                                    <p></p>
+                                    ) : hasCamera ? (
+                                        <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-white text-black rounded-full drop-shadow-xl" onClick={capturePhoto}>
+                                            <p className='text-center'><Aperture/></p>
+                                        </div>
+                                    ) : (
+                                        <div className="flex-shrink-0 flex items-center justify-center w-16 h-16 bg-rose-500 text-black rounded-full drop-shadow-xl">
+                                            <p className='text-center'><Aperture/></p>
+                                        </div>
+                                )}
+
+                                </div>
+                                <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5 w-full max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden'>
+                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                                        <Mic className='h-4 w-4 mr-2'/> Conservation
+                                    </div>
+                                    <div className='flex items-center bg-white p-2 rounded-xl'>
+                                        <Languages className='h-4 w-4 mr-2'/> Translator
+                                    </div>
+                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                                        <ScanSearch className='h-4 w-4 mr-2'/> Object
+                                    </div>
+                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                                        <Podcast className='h-4 w-4 mr-2'/> Talkback
+                                    </div>
+                                
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </CarouselItem>
+                    <CarouselItem>
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[80%]'>
+
+                            <div id='user' className='w-[90%] ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl'>
+                                <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
+                                    <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
+                                </div> 
+                                <div id='user-media' className=''>
+
+                                <Carousel>
+                                        <CarouselContent>
+                                        {/* {Array(4).fill(null).map((_, index) => (
+                                            <img
+
+                                                key={index}
+                                                className="w-8 h-10"
+                                                src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
+                                                alt="Captured"
+                                            />
+                                            ))} */}
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+                                            <CarouselItem>
+                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
+                                            </CarouselItem>
+
+
+                                        </CarouselContent>
+                                        <>
+                                            <CarouselPrevious className="left-2" />
+                                            <CarouselNext className="right-2" />
+                                        </>
+                                    </Carousel>
+                                    
+                                </div>
+
+                            </div>
+                            <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
+                                <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
+                                    <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
+                                </div>    
+                                <p>AI, or Artificial Intelligence, doesn’t work in a single, unified way.  Instead, it encompasses a broad range of techniques and approaches, all aiming to create systems that can perform tasks that typically require human intelligence.  Here’s a breakdown of some core concepts:</p>
+                                <p><strong>1. Data is King:</strong>  At the heart of most AI systems lies vast amounts of data.  This data is used to train the AI, allowing it to learn patterns, relationships, and insights.  The more relevant data, the better the AI’s performance.</p>
+                                <p><strong>2. Algorithms are the Tools:</strong>  Algorithms are sets of rules and instructions that tell the AI how to process and learn from the data. Different types of AI use different algorithms:</p>
+                                <div className='flex mt-5'>
+                                    <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </CarouselItem> 
+
+                </CarouselContent>
+            </Carousel>
+
+            
+
             {/* <BottomSheet /> */}
             <Sheet open={Open} onOpenChange={CloseSheet}>
                 {/* <SheetTrigger>Open</SheetTrigger> */}
@@ -386,6 +531,8 @@ const Mind = () => {
             {/* <div className='m-5 bg-[#4871f7]'>
                 USER section
             </div> */}
+
+            
             <div className='rounded-md m-5 text-[#263381] items-center justify-content-center mt-[50px]'>
                 
 

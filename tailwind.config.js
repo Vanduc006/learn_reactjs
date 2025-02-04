@@ -88,6 +88,11 @@ module.exports = {
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
   			shine: 'shine var(--duration) infinite linear'
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
   		}
   	}
   },
