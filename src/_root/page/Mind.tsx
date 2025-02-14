@@ -360,7 +360,7 @@ const Mind = () => {
                                     // />
                                     <video
                                         className="rounded-[12px] h-[70vh] w-[90%] max-w-[600px] object-cover"
-                                        src="https://videos.pexels.com/video-files/7639979/7639979-hd_1080_1920_30fps.mp4"
+                                        src="/public/7639979-hd_1080_1920_30fps.mp4"
                                         autoPlay
                                         loop
                                         muted
