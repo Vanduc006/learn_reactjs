@@ -38,9 +38,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Carousel, CarouselContent, CarouselItem,CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
+import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
-import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, Satellite} from 'lucide-react';
+import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera } from 'lucide-react';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 
@@ -106,6 +106,14 @@ const Mind = () => {
     const videoConstraints = {
         facingMode: modeCam,
     };
+
+    const speakText = (text:string) => {
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = "en-US"; // Change to "vi-VN" for Vietnamese
+        speech.rate = 1; // Adjust speed
+        window.speechSynthesis.speak(speech);
+    };
+
 
     const [hasCamera, setHasCamera] = useState(false);
     useEffect(() => {
@@ -213,12 +221,32 @@ const Mind = () => {
                                 </div>  
                                 <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
                                     <p className='flex'> 
-                                        <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                                        
                                         IMASIS CONNECTED TO SERVER
                                     </p>
-                                    <p className='flex'>
-                                        Waiting for tasks
-                                    </p>
+                                    <div 
+                                        className='mt-2'
+                                        onClick={OpenSheet}
+                                    >      
+                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
+                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                                            </div>  
+                                            <div>
+                                                Work status
+                                            </div>
+                                            {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                                                <p className='flex'> 
+                                                    <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                                                    IMASIS CONNECTED TO SERVER
+                                                </p>
+                                                <p className='flex'>
+                                                    Waiting for tasks
+                                                </p>
+                                            </div>  */}
+                                        </div>
+
+                                    </div> 
                                 </div> 
                             </div>
                         ) : (
@@ -228,12 +256,32 @@ const Mind = () => {
                                 </div>  
                                 <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
                                     <p className='flex'> 
-                                        <Satellite className='bg-rose-500 mr-2 rounded-full p-1'/>
+                                        
                                         IMASIS NOT AVAIABLE
                                     </p>
-                                    <p className='flex'>
-                                        You can't do anythings
-                                    </p>
+                                    <div 
+                                        className='mt-2'
+                                        onClick={OpenSheet}
+                                    >      
+                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
+                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                                            </div>  
+                                            <div>
+                                                Work status
+                                            </div>
+                                            {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
+                                                <p className='flex'> 
+                                                    <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
+                                                    IMASIS CONNECTED TO SERVER
+                                                </p>
+                                                <p className='flex'>
+                                                    Waiting for tasks
+                                                </p>
+                                            </div>  */}
+                                        </div>
+
+                                    </div> 
                                 </div> 
                             </div>
                 )}
@@ -252,29 +300,7 @@ const Mind = () => {
                 </div>   */}
                 
             </div>
-            <div 
-                className='m-5'
-                onClick={OpenSheet}
-            >      
-                <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
-                    <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                        <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                    </div>  
-                    <div>
-                        Work status
-                    </div>
-                    {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                        <p className='flex'> 
-                            <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
-                            IMASIS CONNECTED TO SERVER
-                        </p>
-                        <p className='flex'>
-                            Waiting for tasks
-                        </p>
-                    </div>  */}
-                </div>
-
-            </div>     
+              
 
             {/* <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
@@ -323,11 +349,24 @@ const Mind = () => {
                                     );
                                 } else {
                                     return (
-                                    <img
-                                        className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
-                                        src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
-                                        alt="Example"
+                                    // <iframe 
+                                    //     src="https://lottie.host/embed/f7ab9b56-215a-481d-8e60-ab8a948b0ade/MjFaD0e0FK.lottie"
+                                    //     className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl "
+                                    // ></iframe>
+                                    // <img
+                                    //     className="rounded-[12px] max-w-full md:w-[500px] w-[90%] h-auto drop-shadow-xl"
+                                    //     src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg"
+                                    //     alt="Example"
+                                    // />
+                                    <video
+                                        className="rounded-[12px] h-[70vh] w-[90%] max-w-[600px] object-cover"
+                                        src="https://videos.pexels.com/video-files/7639979/7639979-hd_1080_1920_30fps.mp4"
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
                                     />
+
                                     );
                                 }
                             })()}
@@ -347,24 +386,23 @@ const Mind = () => {
                             </div>
                             {/* onClick={() => { setVisible(true); } } */}
                             {/* onClick={() => { setModecam('environment'); setMirroredcam(true)}} */}
-                            <div className='absolute top-0 ml-10 mt-3 text-black bg-white p-1 rounded-xl drop-shadow-xl' onClick={toggleCameraMode} >
+                            <div className='absolute top-0 ml-7 mt-3 text-black bg-white p-1 rounded-xl drop-shadow-xl' onClick={toggleCameraMode} >
                                 <SwitchCamera className='opacity-100'/>
-
                             </div>
                             {/* <div className='absolute top-0'>
                                 <p className='text-center'>only 4 pics with vistor plan</p>
                             </div> */}
-                            <div className='absolute top-0 ml-10 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl'>
+                            <div className='absolute top-0 ml-7 mt-[15%] flex flex-col flex-end space-y-2 bg-white p-1 drop-shadow-xl rounded-xl'>
                                 
-                            {Array(4).fill(null).map((_, index) => (
-                                <img
+                                {Array(4).fill(null).map((_, index) => (
+                                    <img
 
-                                    key={index}
-                                    className="w-8 h-10"
-                                    src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
-                                    alt="Captured"
-                                />
-                                ))}
+                                        key={index}
+                                        className="w-8 h-10 rounded-xl bg-slate-200"
+                                        src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
+                                        alt="Captured"
+                                    />
+                                    ))}
 
                             </div>
 
@@ -374,7 +412,7 @@ const Mind = () => {
                             </div> */}
                             <div className='absolute bottom-0 left-0 right-0 flex items-center justify-center md:m-0 m-5 cursor-pointer text-black'>
 
-                                <div className='items-center justify-center ml-5 '>
+                                <div className='' onClick={() => speakText("We’re excited to have you here at IMASIS MIND, your go-to platform for intelligent and seamless AI-powered solutions. Our goal is to provide you with a smart and interactive experience, whether you're looking for assistance, insights, or innovative tools to simplify your tasks.")}> 
                                     {/* <p className='text-center'>Record</p> */}
                                 {hasCamera === null ? (
                                     <p></p>
@@ -389,78 +427,30 @@ const Mind = () => {
                                 )}
 
                                 </div>
-                                <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5 w-full max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden'>
-                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                                        <Mic className='h-4 w-4 mr-2'/> Conservation
-                                    </div>
-                                    <div className='flex items-center bg-white p-2 rounded-xl'>
-                                        <Languages className='h-4 w-4 mr-2'/> Translator
-                                    </div>
-                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                                        <ScanSearch className='h-4 w-4 mr-2'/> Object
-                                    </div>
-                                    <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                                        <Podcast className='h-4 w-4 mr-2'/> Talkback
-                                    </div>
                                 
-                                    
-                                </div>
                             </div>
                         </div>
+                        
                     </CarouselItem>
                     <CarouselItem>
-                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[80%]'>
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[70vh] mt-2 scrollbar-hide md:scrollbar-default'>
 
-                            <div id='user' className='w-[90%] ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl'>
+                            <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                     <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
                                 </div> 
-                                <div id='user-media' className=''>
-
-                                <Carousel>
-                                        <CarouselContent>
-                                        {/* {Array(4).fill(null).map((_, index) => (
-                                            <img
-
-                                                key={index}
-                                                className="w-8 h-10"
-                                                src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
-                                                alt="Captured"
-                                            />
-                                            ))} */}
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-                                            <CarouselItem>
-                                                <img className='max-w-xs rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                            </CarouselItem>
-
-
-                                        </CarouselContent>
-                                        <>
-                                            <CarouselPrevious className="left-2" />
-                                            <CarouselNext className="right-2" />
-                                        </>
-                                    </Carousel>
-                                    
+                                <div id='user-media' className='grid grid-cols-2 gap-2'>
+                                    {[
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg"
+                                    ].map((src, index) => (
+                                        <img key={index} className='w-[100px] h-[100px] rounded-lg object-cover' src={src} alt='' />
+                                    ))}
                                 </div>
-
                             </div>
+
                             <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
                                     <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
@@ -472,15 +462,45 @@ const Mind = () => {
                                     <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
                                 </div>
                             </div>
+
+                            <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
+                                <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
+                                    <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
+                                </div> 
+                                <div id='user-media' className='grid grid-cols-2 gap-2'>
+                                    {[
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
+                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg"
+                                    ].map((src, index) => (
+                                        <img key={index} className='w-[100px] h-[100px] rounded-lg object-cover' src={src} alt='' />
+                                    ))}
+                                </div>
+                            </div>
                             
 
                         </div>
                     </CarouselItem> 
 
+
                 </CarouselContent>
             </Carousel>
+            <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black'>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <Mic className='h-4 w-4 mr-2'/> Conservation
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl'>
+                    <Languages className='h-4 w-4 mr-2'/> Translator
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <ScanSearch className='h-4 w-4 mr-2'/> Object
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <Podcast className='h-4 w-4 mr-2'/> Talkback
+                </div>  
+            </div>
 
-            
 
             {/* <BottomSheet /> */}
             <Sheet open={Open} onOpenChange={CloseSheet}>
