@@ -83,7 +83,8 @@ const Mind = () => {
       console.log(JSON.stringify(imageSrc))
       setPhotos((prevPhotos) => [imageSrc, ...prevPhotos].slice(0, 4));
     };
-
+    // set show user drag to see content
+    const [hidden, setHidden] = useState(false);
     const toogleDevelopment = () => {
         if (Development) {
             setDevelopment(false)
@@ -153,6 +154,8 @@ const Mind = () => {
     const handleDragEnd = () => {
         document.body.style.overflow = ""
     }
+
+    
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -162,14 +165,14 @@ const Mind = () => {
 
         <div className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-slate-300 text-white block sm:hidden'>
 
-            <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white'>
+            <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white mt-5'>
                 <div className='flex justify-content-center items-center rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
                     
                     <Dialog>    
                             <DialogTrigger><Settings className='flex '/></DialogTrigger>
                             <DialogContent className='bg-white text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl absolute top-0 mt-[50%]'>
                                 
-                                <DialogTitle className='mt-5'>Choose support languages fit your context</DialogTitle>
+                                <DialogTitle className='mt-5'>Chọn những ngôn ngữ phù hợp với ngữ cảnh của bạn</DialogTitle>
                                 <Select
                                     className='border-none'
                                     closeMenuOnSelect={false}
@@ -178,11 +181,11 @@ const Mind = () => {
                                     isMulti
                                     options={list_languages_sp}
                                 />
-                                <DialogTitle className='mb-5 mt-5'>Your plan</DialogTitle>
+                                <DialogTitle className='mb-5 mt-5'>Gói đăng kí của bạn</DialogTitle>
                                 
                                 <DialogClose asChild>
                                     <Button type="button" className='bg-[#4871f7] drop-shadow-xl text-white'>
-                                        Ok, Let's try
+                                        Lưu hoặc Đóng
                                     </Button>
                                 </DialogClose>
                             </DialogContent>
@@ -194,11 +197,11 @@ const Mind = () => {
                                 {(() => {
                                     if (Development) {
                                         return (
-                                            <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/>Turn Off Camera</p>
+                                            <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/> Tắt Camera</p>
                                         );
                                     } else {
                                         return (
-                                            <p className='flex items-center'><Camera className='h-4 w-4 mr-2'/> Turn On Camera</p>
+                                            <p className='flex items-center'><Camera className='h-4 w-4 mr-2'/> Bật Camera</p>
                                         );
                                     }
                                 })()}
@@ -206,7 +209,7 @@ const Mind = () => {
                                 </div>
                         ) : (
                             <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-50'>
-                                <p className=''>IMASIS can't detect camera</p>
+                                <p className=''>IMASIS không thấy camera trên thiết bị của bạn</p>
                             </div>
                     )}
                     
@@ -214,110 +217,36 @@ const Mind = () => {
                 
             </div>
 
-
-            <div className="">
-                {hasCamera === null ? (
-                    <p></p>
-                        ) : hasCamera ? (
-                            <div className='flex m-5 '>
-                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
-                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
-                                </div>  
-                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                                    <p className='flex'> 
-                                        
-                                        IMASIS CONNECTED TO SERVER
-                                    </p>
-                                    <div 
-                                        className='mt-2'
-                                        onClick={OpenSheet}
-                                    >      
-                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
-                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                                            </div>  
-                                            <div>
-                                                Work status
-                                            </div>
-                                            {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                                                <p className='flex'> 
-                                                    <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
-                                                    IMASIS CONNECTED TO SERVER
-                                                </p>
-                                                <p className='flex'>
-                                                    Waiting for tasks
-                                                </p>
-                                            </div>  */}
-                                        </div>
-
-                                    </div> 
-                                </div> 
-                            </div>
-                        ) : (
-                            <div className='flex m-5 '>
-                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-rose-500 opacity-75'>
-                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
-                                </div>  
-                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                                    <p className='flex'> 
-                                        
-                                        IMASIS NOT AVAIABLE
-                                    </p>
-                                    <div 
-                                        className='mt-2'
-                                        onClick={OpenSheet}
-                                    >      
-                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
-                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                                            </div>  
-                                            <div>
-                                                Work status
-                                            </div>
-                                            {/* <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                                                <p className='flex'> 
-                                                    <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
-                                                    IMASIS CONNECTED TO SERVER
-                                                </p>
-                                                <p className='flex'>
-                                                    Waiting for tasks
-                                                </p>
-                                            </div>  */}
-                                        </div>
-
-                                    </div> 
-                                </div> 
-                            </div>
-                )}
-                {/* <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
-                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+            <div className='flex overflow-x-auto whitespace-nowrap space-x-2 ml-5 mr-5 mt-2  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black rounded-xl'>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <Mic className='h-4 w-4 mr-2'/> Giao Tiếp
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl'>
+                    <Languages className='h-4 w-4 mr-2'/> Dịch thuật
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <ScanSearch className='h-4 w-4 mr-2'/> Tìm kiếm nâng cao
+                </div>
+                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
+                    <Podcast className='h-4 w-4 mr-2'/> Trợ năng
                 </div>  
-                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl'>
-                    <p className='flex'> 
-                        <Satellite className='bg-green-500 mr-2 rounded-full p-1'/>
-                        IMASIS CONNECTED TO SERVER
-                    </p>
-                    <p className='flex'>
-                        
-                        Waiting for tasks
-                    </p>
-                </div>   */}
-                
             </div>
-              
-
             {/* <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
             </div> */}
-            <motion.div
-                className="flex ml-5 text-black items-center text-lg font-medium"
-                initial={{ x: 0 }}
-                animate={{ x: [0, 8, 0] }}
-                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-            >
-                Drag to see <ChevronsRight />
-
-            </motion.div>
+            <div>
+      {!hidden && (
+        <motion.div
+          className="flex ml-5 text-black items-center text-lg font-medium mt-2 opacity-50 cursor-pointer"
+          initial={{ x: 0 }}
+          animate={{ x: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+          onClick={() => setHidden(true)}
+        >
+          Trượt để xem  <ChevronsRight /> <p className='ml-1 bg-slate-500 rounded-xl pl-1 pr-1'>click để ẩn ?</p>
+        </motion.div>
+      )}
+    </div>
             <Carousel
             opts={{
                 align: "start",
@@ -377,6 +306,7 @@ const Mind = () => {
                                         loop
                                         muted
                                         playsInline
+                                        
                                     />
 
                                     );
@@ -510,21 +440,67 @@ const Mind = () => {
 
                 </CarouselContent>
             </Carousel>
-            <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black rounded-xl'>
-                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                    <Mic className='h-4 w-4 mr-2'/> Conservation
-                </div>
-                <div className='flex items-center bg-white p-2 rounded-xl'>
-                    <Languages className='h-4 w-4 mr-2'/> Translator
-                </div>
-                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                    <ScanSearch className='h-4 w-4 mr-2'/> Object
-                </div>
-                <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                    <Podcast className='h-4 w-4 mr-2'/> Talkback
-                </div>  
-            </div>
+            <div className="">
+                {hasCamera === null ? (
+                    <p></p>
+                        ) : hasCamera ? (
+                            <div className='flex m-5 '>
+                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div>  
+                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
+                                    <div 
+                                        className=''
+                                        onClick={OpenSheet}
+                                    >      
+                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
+                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                                            </div>  
+                                            <div className='text-white'>
+                                                Trạng thái
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                    <p className='flex mt-1'> 
+                                        
+                                        IMASIS MIND ĐÃ KẾT NỐI 
+                                    </p>
+                                     
+                                </div> 
+                            </div>
+                        ) : (
+                            <div className='flex m-5 '>
+                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-rose-500 opacity-75'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div>  
+                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
+                                <div 
+                                        className=''
+                                        onClick={OpenSheet}
+                                    >      
+                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
+                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                                            </div>  
+                                            <div className='text-white'>
+                                                Rỗng
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <p className='flex mt-1'> 
+                                        
+                                        IMASIS MIND TỪ CHỐI KẾT NỐI
+                                    </p>
+                                     
+                                </div> 
+                            </div>
+                )}
+
+                
+            </div>
 
             {/* <BottomSheet /> */}
             <Sheet open={Open} onOpenChange={CloseSheet}>
