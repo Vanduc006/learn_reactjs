@@ -40,9 +40,13 @@ import {
 } from "@/components/ui/select"
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
-import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera } from 'lucide-react';
+import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, 
+    ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, ChevronsRight,
+    Camera, CameraOff
+ } from 'lucide-react';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
+import { motion } from "framer-motion";
 
 
 
@@ -190,11 +194,11 @@ const Mind = () => {
                                 {(() => {
                                     if (Development) {
                                         return (
-                                            <p>Turn Off Camera</p>
+                                            <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/>Turn Off Camera</p>
                                         );
                                     } else {
                                         return (
-                                            <p>Turn On Camera</p>
+                                            <p className='flex items-center'><Camera className='h-4 w-4 mr-2'/> Turn On Camera</p>
                                         );
                                     }
                                 })()}
@@ -305,7 +309,15 @@ const Mind = () => {
             {/* <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
             </div> */}
+            <motion.div
+                className="flex ml-5 text-black items-center text-lg font-medium"
+                initial={{ x: 0 }}
+                animate={{ x: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+            >
+                Drag to see <ChevronsRight />
 
+            </motion.div>
             <Carousel
             opts={{
                 align: "start",
@@ -359,8 +371,8 @@ const Mind = () => {
                                     //     alt="Example"
                                     // />
                                     <video
-                                        className="rounded-[12px] h-[70vh] w-[90%] max-w-[600px] object-cover"
-                                        src="/public/7639979-hd_1080_1920_30fps.mp4"
+                                        className="rounded-[12px] h-[58vh] w-[90%] max-w-[600px] object-cover"
+                                        src="https://res.cloudinary.com/dkgluft3l/video/upload/v1739529576/7639979-hd_1080_1920_30fps_pzrbh0.mp4"
                                         autoPlay
                                         loop
                                         muted
@@ -433,13 +445,13 @@ const Mind = () => {
                         
                     </CarouselItem>
                     <CarouselItem>
-                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[70vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
 
                             <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                     <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
                                 </div> 
-                                <div id='user-media' className='grid grid-cols-2 gap-2'>
+                                <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
                                     {[
                                         "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
                                         "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
@@ -467,7 +479,7 @@ const Mind = () => {
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                     <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
                                 </div> 
-                                <div id='user-media' className='grid grid-cols-2 gap-2'>
+                                <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
                                     {[
                                         "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
                                         "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
@@ -478,6 +490,18 @@ const Mind = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
+                                <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
+                                    <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
+                                </div>    
+                                <p>AI, or Artificial Intelligence, doesn’t work in a single, unified way.  Instead, it encompasses a broad range of techniques and approaches, all aiming to create systems that can perform tasks that typically require human intelligence.  Here’s a breakdown of some core concepts:</p>
+                                <p><strong>1. Data is King:</strong>  At the heart of most AI systems lies vast amounts of data.  This data is used to train the AI, allowing it to learn patterns, relationships, and insights.  The more relevant data, the better the AI’s performance.</p>
+                                <p><strong>2. Algorithms are the Tools:</strong>  Algorithms are sets of rules and instructions that tell the AI how to process and learn from the data. Different types of AI use different algorithms:</p>
+                                <div className='flex mt-5'>
+                                    <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                </div>
+                            </div>
                             
 
                         </div>
@@ -486,7 +510,7 @@ const Mind = () => {
 
                 </CarouselContent>
             </Carousel>
-            <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black'>
+            <div className='flex overflow-x-auto whitespace-nowrap space-x-4 m-5  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black rounded-xl'>
                 <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
                     <Mic className='h-4 w-4 mr-2'/> Conservation
                 </div>
