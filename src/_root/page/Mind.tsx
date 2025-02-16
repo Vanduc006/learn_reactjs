@@ -86,8 +86,8 @@ const Mind = () => {
       setPhotos((prevPhotos) => [imageSrc, ...prevPhotos].slice(0, 4));
     };
 
-    // // set show user drag to see content
-    // const [hidden, setHidden] = useState(false);
+    // set show user drag to see content
+    const [hidden, setHidden] = useState(false);
     
     const toogleDevelopment = () => {
         if (Development) {
@@ -260,6 +260,21 @@ const Mind = () => {
                 </motion.div>
 
             </SignedOut> 
+            <SignedIn>
+            <div>
+                {!hidden && (
+                    <motion.div
+                    className="flex ml-5 text-black items-center text-lg font-medium mt-2 opacity-50 cursor-pointer"
+                    initial={{ x: 0 }}
+                    animate={{ x: [0, 8, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                    onClick={() => setHidden(true)}
+                    >
+                    Trượt để xem  <ChevronsRight /> <p className='ml-1 bg-slate-500 rounded-xl pl-1 pr-1'>click để ẩn ?</p>
+                    </motion.div>
+                )}
+                </div>
+            </SignedIn>
 
             
             <Carousel
@@ -513,7 +528,14 @@ const Mind = () => {
                             <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-green-500 opacity-75 mr-2'>
                                 <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
                             </div> 
-                            IMASIS MIND ĐÃ SẴN SÀNG
+                            
+                            {hasCamera === null ? (
+                                <p></p>
+                                ) : hasCamera ? (
+                                    <div>IMASIS MIND ĐÃ SẴN SÀNG</div>
+                                ) : (
+                                    <div>IMASIS MIND VẪN TỪ CHỐI KẾT NỐI</div>
+                            )}
                         </div> 
                     </SignedIn> 
                     </p>
@@ -524,8 +546,9 @@ const Mind = () => {
 
             {/* Nếu chưa đăng nhập, mở dialog login */}
             <SignedOut>
+                
                 <Dialog open={openClerk} onOpenChange={setOpenClerk} >
-                    <DialogContent className="bg-slate-500 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
+                    <DialogContent className="block sm:hidden bg-slate-500 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
                     
                     <DialogHeader>
                         <DialogTitle className="text-center">Đăng nhập để vào Mind</DialogTitle>
@@ -533,7 +556,7 @@ const Mind = () => {
                     {/* Căn giữa form Clerk */}
                     <div className="w-full flex justify-center">
                         <div className="scale-90 mx-auto">
-                        <SignIn afterSignInUrl="/mind" />
+                            <SignIn afterSignInUrl="/mind" redirectUrl="/mind" />
                         </div>
                     </div>
                     </DialogContent>
