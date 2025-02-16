@@ -14,30 +14,31 @@ import Webcam from "react-webcam";
 //     DropdownMenuSeparator,
 //     DropdownMenuTrigger,
 // } from "@/components/ui/dropdown-menu"
-import {
-    Sheet,
-    SheetContent,
-    // SheetDescription,
-    // SheetHeader,
-    SheetTitle,
-    // SheetTrigger,
-  } from "@/components/ui/sheet"
+// import {
+//     Sheet,
+//     SheetContent,
+//     // SheetDescription,
+//     // SheetHeader,
+//     SheetTitle,
+//     // SheetTrigger,
+//   } from "@/components/ui/sheet"
 import {
     Dialog,
     DialogClose,
     DialogContent,
     // DialogDescription,
-    // DialogHeader,
+    DialogHeader,
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-import {
-    Select1,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
+
+// import {
+//     Select1,
+//     SelectContent,
+//     SelectItem,
+//     SelectTrigger,
+//     SelectValue,
+// } from "@/components/ui/select"
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
 import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, 
@@ -47,6 +48,9 @@ import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot,
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { motion } from "framer-motion";
+import { SignedIn, SignedOut, SignIn, 
+    // SignOutButton, 
+    UserButton, useUser} from "@clerk/clerk-react";
 
 
 
@@ -68,23 +72,23 @@ const list_languages_sp = [
 
 
 const Mind = () => {
-    // const [photo, setPhoto] = useState(null);
+
     const [photos, setPhotos] = useState<string[]>([]);
-    const [Open, setOpen] = useState<boolean>(false);
-    // const [Usercam, setUsercam] = useState<boolean>(false);
-    // const [Environmentcam, setEnvironment] = useState<boolean>(false);
+    // const [Open, setOpen] = useState<boolean>(false);
+
     const [modeCam, setModeCam] = useState<'user' | 'environment'>('user');
     const [mirroredCam, setMirroredCam] = useState(true);
     const [Development, setDevelopment] = useState(false);
-
     const webcamRef:any = useRef(null);
     const capturePhoto = () => {
       const imageSrc = webcamRef.current.getScreenshot();
       console.log(JSON.stringify(imageSrc))
       setPhotos((prevPhotos) => [imageSrc, ...prevPhotos].slice(0, 4));
     };
-    // set show user drag to see content
-    const [hidden, setHidden] = useState(false);
+
+    // // set show user drag to see content
+    // const [hidden, setHidden] = useState(false);
+    
     const toogleDevelopment = () => {
         if (Development) {
             setDevelopment(false)
@@ -102,15 +106,16 @@ const Mind = () => {
         setMirroredCam(false); // No mirroring for the environment (rear) camera
     }
     };
-    const OpenSheet = () => {
-        setOpen(true)
-    }
-    const CloseSheet = () => {
-        setOpen(false)
-    }
+    // const OpenSheet = () => {
+    //     setOpen(true)
+    // }
+    // const CloseSheet = () => {
+    //     setOpen(false)
+    // }
     const videoConstraints = {
         facingMode: modeCam,
     };
+
 
     const speakText = (text:string) => {
         const speech = new SpeechSynthesisUtterance(text);
@@ -136,25 +141,17 @@ const Mind = () => {
         checkCamera();
     }, []);
 
-    // const [Api, setApi] = useState<any>()
-    // const [Current, setCurrent] = useState(0)
-    // const scrollPrev = React.useCallback(() => {
-    //     Api?.scrollPrev()
-    // }, [Api])
-    // const scrollNext = React.useCallback(() => {
-    //     Api?.scrollNext()
-    // }, [Api])
-
     const handleDragStart = (event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
         if (event.type === "touchstart") {
           document.body.style.overflow = "hidden"
         }
     }
-    
     const handleDragEnd = () => {
         document.body.style.overflow = ""
     }
 
+    const [openClerk, setOpenClerk] = useState(true);
+    const { user } = useUser(); // Lấy thông tin user trước khi dùng
     
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
@@ -164,6 +161,7 @@ const Mind = () => {
         </div>
 
         <div className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-slate-300 text-white block sm:hidden'>
+
 
             <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white mt-5'>
                 <div className='flex justify-content-center items-center rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
@@ -216,7 +214,22 @@ const Mind = () => {
                 </div>
                 
             </div>
-
+            
+            {/* <div style={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
+            <h1>📌 Streaming HTML with AI-Like Typing Effect</h1>
+            <div
+                onClick={() => setStartStreaming(true)}
+                style={{
+                    padding: "10px 15px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                    marginBottom: "10px",
+                }}
+            >
+                📝 Start Streaming
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: displayedContent.join("") }} />
+        </div> */}
             <div className='flex overflow-x-auto whitespace-nowrap space-x-2 ml-5 mr-5 mt-2  max-w-lg scrollbar-hide md:scrollbar-default overflow-hidden text-black rounded-xl'>
                 <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
                     <Mic className='h-4 w-4 mr-2'/> Giao Tiếp
@@ -234,19 +247,21 @@ const Mind = () => {
             {/* <div className='m-5 p-2 rounded-xl drop-shadow-xl bg-[#4871f7]' onClick={OpenSheet}>
                 <p className='text-center'>Show me the magic</p>
             </div> */}
-            <div>
-      {!hidden && (
-        <motion.div
-          className="flex ml-5 text-black items-center text-lg font-medium mt-2 opacity-50 cursor-pointer"
-          initial={{ x: 0 }}
-          animate={{ x: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
-          onClick={() => setHidden(true)}
-        >
-          Trượt để xem  <ChevronsRight /> <p className='ml-1 bg-slate-500 rounded-xl pl-1 pr-1'>click để ẩn ?</p>
-        </motion.div>
-      )}
-    </div>
+            <SignedOut>
+
+                <motion.div
+                className="flex ml-5 text-black items-center text-lg font-medium mt-2 opacity-50 cursor-pointer"
+                initial={{ x: 0 }}
+                animate={{ x: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                // onClick={() => setHidden(true)}
+                >
+                Trượt để xem  <ChevronsRight />
+                </motion.div>
+
+            </SignedOut> 
+
+            
             <Carousel
             opts={{
                 align: "start",
@@ -379,7 +394,12 @@ const Mind = () => {
 
                             <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                    <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
+                                    
+                                    <SignedOut>Khách vãng lai</SignedOut>    
+                                    <SignedIn>
+                                        
+                                        <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
+                                    </SignedIn>
                                 </div> 
                                 <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
                                     {[
@@ -407,7 +427,12 @@ const Mind = () => {
 
                             <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
                                 <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                    <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
+                                    
+                                    <SignedOut>Khách vãng lai</SignedOut>    
+                                    <SignedIn>
+                                        
+                                        <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
+                                    </SignedIn>
                                 </div> 
                                 <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
                                     {[
@@ -440,71 +465,87 @@ const Mind = () => {
 
                 </CarouselContent>
             </Carousel>
-            <div className="">
-                {hasCamera === null ? (
-                    <p></p>
-                        ) : hasCamera ? (
-                            <div className='flex m-5 '>
-                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-slate-200 opacity-75'>
-                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
-                                </div>  
-                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
-                                    <div 
-                                        className=''
-                                        onClick={OpenSheet}
-                                    >      
-                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
-                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                                            </div>  
-                                            <div className='text-white'>
-                                                Trạng thái
-                                            </div>
+            <div className='flex m-5 '>
+
+                <div className='flex flex-col justify-center text-black overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
+                <div 
+                        className=''
+                        
+                    >      
+                        <div className='flex rounded-xl bg-[#4871f7] p-2 items-center'>
+                            {/* <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                            </div>   */}
+                            <div className='text-white'>
+                                <div onClick={() => setOpenClerk(true)} className='cursor-pointer'>
+                                    <SignedOut>Click để đăng nhập</SignedOut> 
+                                    
+                                </div>
+                                    
+                                <SignedIn>
+
+                                
+                                    <div className='flex items-center'>
+                                        <div className='rounded-md'>
+                                            <UserButton /> 
                                         </div>
-
-                                    </div>
-                                    <p className='flex mt-1'> 
                                         
-                                        IMASIS MIND ĐÃ KẾT NỐI 
-                                    </p>
-                                     
-                                </div> 
-                            </div>
-                        ) : (
-                            <div className='flex m-5 '>
-                                <div className='flex items-center justify-center flex-shrink-0 w-16 h-16 text-black rounded-full overflow-hidden bg-rose-500 opacity-75'>
-                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
-                                </div>  
-                                <div className='flex flex-col justify-center text-black ml-2 overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
-                                <div 
-                                        className=''
-                                        onClick={OpenSheet}
-                                    >      
-                                        <div className='flex rounded-xl bg-[#4871f7] p-1 items-center '>
-                                            <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                                            </div>  
-                                            <div className='text-white'>
-                                                Rỗng
-                                            </div>
-                                        </div>
-
+                                        <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p>
                                     </div>
-                                    <p className='flex mt-1'> 
-                                        
-                                        IMASIS MIND TỪ CHỐI KẾT NỐI
-                                    </p>
-                                     
-                                </div> 
+                                
+                                </SignedIn>
                             </div>
-                )}
+                        </div>
 
-                
-            </div>
+                    </div>
+                    <p className='mt-1 '> 
+                    <SignedOut>
+                        <div className='flex items-center'>
+                            <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-rose-500 opacity-75 mr-2'>
+                                <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                            </div> 
+                            
+                            IMASIS MIND TỪ CHỐI KẾT NỐI
+                        </div> 
+                    </SignedOut>    
+                    <SignedIn>
+                        <div className='flex items-center'>
+                            <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-green-500 opacity-75 mr-2'>
+                                <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                            </div> 
+                            IMASIS MIND ĐÃ SẴN SÀNG
+                        </div> 
+                    </SignedIn> 
+                    </p>
+                    
+                        
+                </div> 
+            </div>  
+
+            {/* Nếu chưa đăng nhập, mở dialog login */}
+            <SignedOut>
+                <Dialog open={openClerk} onOpenChange={setOpenClerk} >
+                    <DialogContent className="bg-slate-500 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
+                    
+                    <DialogHeader>
+                        <DialogTitle className="text-center">Đăng nhập để vào Mind</DialogTitle>
+                    </DialogHeader>
+                    {/* Căn giữa form Clerk */}
+                    <div className="w-full flex justify-center">
+                        <div className="scale-90 mx-auto">
+                        <SignIn afterSignInUrl="/mind" />
+                        </div>
+                    </div>
+                    </DialogContent>
+                </Dialog>
+            </SignedOut>
+
+            {/* Nếu đã đăng nhập, hiển thị nội dung */}
+
 
             {/* <BottomSheet /> */}
-            <Sheet open={Open} onOpenChange={CloseSheet}>
-                {/* <SheetTrigger>Open</SheetTrigger> */}
+            {/* <Sheet open={Open} onOpenChange={CloseSheet}>
+
                 <SheetContent side={'bottom'} className="h-[95%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
                     <SheetTitle className='font-bold text-lg mb-1'>IMASIS MIND : POWERFUL FOR LIFE</SheetTitle>
                     
@@ -513,10 +554,9 @@ const Mind = () => {
                             <SelectValue placeholder="Translator"/>
                         </SelectTrigger>
                         <SelectContent className='text-white items-center justify-content-center bg-[#5A8DF7]'>
-                            {/* <SelectItem value="conservation">Conservation</SelectItem> */}
+
                             <SelectItem value="translator">Translator</SelectItem>
-                            {/* <SelectItem value="object">Object</SelectItem> */}
-                            {/* <SelectItem value="talkback">Talkback</SelectItem> */}
+
                         </SelectContent>
                     </Select1>
                     <div className=' h-[88%] mt-5 rounded-xl overflow-y-auto'>
@@ -547,7 +587,7 @@ const Mind = () => {
 
                     </div>
                 </SheetContent>
-            </Sheet>
+            </Sheet> */}
             {/* <div className='m-5 bg-[#4871f7]'>
                 USER section
             </div> */}
