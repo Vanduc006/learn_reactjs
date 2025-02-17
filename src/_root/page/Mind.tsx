@@ -49,6 +49,7 @@ import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import { motion } from "framer-motion";
 import { SignedIn, SignedOut, SignIn, 
+    SignUp, 
     // SignOutButton, 
     UserButton, useUser} from "@clerk/clerk-react";
 
@@ -152,6 +153,14 @@ const Mind = () => {
 
     const [openClerk, setOpenClerk] = useState(true);
     const { user } = useUser(); // Lấy thông tin user trước khi dùng
+    const [isSignUp, setIsSignUp] = useState(false);
+    const appearance = {
+        elements: {
+          footerActionLink: "hidden", // Hides the link (Sign In / Sign Up)
+          footerActionText: "hidden", // Hides the text (e.g., "Already have an account?")
+        },
+      };
+      
     
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
@@ -514,31 +523,32 @@ const Mind = () => {
 
                     </div>
                     <p className='mt-1 '> 
-                    <SignedOut>
-                        <div className='flex items-center'>
-                            <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-rose-500 opacity-75 mr-2'>
-                                <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                        <SignedOut>
+                            <div className='flex items-center'>
+                                <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-rose-500 opacity-75 mr-2'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div> 
+                                
+                                IMASIS MIND TỪ CHỐI KẾT NỐI
                             </div> 
-                            
-                            IMASIS MIND TỪ CHỐI KẾT NỐI
-                        </div> 
-                    </SignedOut>    
-                    <SignedIn>
-                        <div className='flex items-center'>
-                            <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-green-500 opacity-75 mr-2'>
-                                <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                        </SignedOut>    
+                        <SignedIn>
+                            <div className='flex items-center'>
+                                <div className='flex items-center justify-center w-8 h-8 rounded-md overflow-hidden bg-green-500 opacity-75 mr-2'>
+                                    <iframe src="https://lottie.host/embed/a7cc0414-abdf-4a65-b5ca-41e2d6671e18/vshdKBlMbj.lottie" className='w-[100%] h-[100%]'></iframe>
+                                </div> 
+                                
+                                {hasCamera === null ? (
+                                    <p></p>
+                                    ) : hasCamera ? (
+                                        <div>IMASIS MIND ĐÃ SẴN SÀNG</div>
+                                    ) : (
+                                        <div>IMASIS MIND VẪN TỪ CHỐI KẾT NỐI</div>
+                                )}
                             </div> 
-                            
-                            {hasCamera === null ? (
-                                <p></p>
-                                ) : hasCamera ? (
-                                    <div>IMASIS MIND ĐÃ SẴN SÀNG</div>
-                                ) : (
-                                    <div>IMASIS MIND VẪN TỪ CHỐI KẾT NỐI</div>
-                            )}
-                        </div> 
-                    </SignedIn> 
+                        </SignedIn> 
                     </p>
+
                     
                         
                 </div> 
@@ -546,22 +556,39 @@ const Mind = () => {
 
             {/* Nếu chưa đăng nhập, mở dialog login */}
             <SignedOut>
-                
-                <Dialog open={openClerk} onOpenChange={setOpenClerk} >
-                    <DialogContent className="block sm:hidden bg-slate-500 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
-                    
-                    <DialogHeader>
-                        <DialogTitle className="text-center">Đăng nhập để vào Mind</DialogTitle>
-                    </DialogHeader>
-                    {/* Căn giữa form Clerk */}
-                    <div className="w-full flex justify-center">
-                        <div className="scale-90 mx-auto">
-                            <SignIn afterSignInUrl="/mind" redirectUrl="/mind" />
-                        </div>
-                    </div>
-                    </DialogContent>
-                </Dialog>
-            </SignedOut>
+      <Dialog open={openClerk} onOpenChange={setOpenClerk}>
+        <DialogContent className="block sm:hidden bg-slate-500 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
+          
+          <DialogHeader>
+            <DialogTitle className="text-center">
+              {isSignUp ? "Đăng ký tài khoản" : "Đăng nhập để tiếp tục"}
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="w-full flex justify-center">
+            <div className="scale-90 mx-auto">
+              {isSignUp ? (
+                <SignUp afterSignUpUrl="/mind" redirectUrl="/mind" appearance={appearance} />
+              ) : (
+                <SignIn afterSignInUrl="/mind" redirectUrl="/mind" appearance={appearance} />
+              )}
+            </div>
+          </div>
+
+          {/* Custom Toggle Button */}
+          <p className="mt-4 text-sm text-white">
+            {isSignUp ? "Đã có tài khoản?" : "Chưa có tài khoản?"}
+            <button 
+              className="text-blue-300 ml-2 underline"
+              onClick={() => setIsSignUp(!isSignUp)}
+            >
+              {isSignUp ? "Đăng nhập" : "Đăng ký"}
+            </button>
+          </p>
+
+        </DialogContent>
+      </Dialog>
+    </SignedOut>
 
             {/* Nếu đã đăng nhập, hiển thị nội dung */}
 
