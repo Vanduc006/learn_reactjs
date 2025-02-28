@@ -11,7 +11,7 @@ import PhatNguoi from './_root/page/PhatNguoi'
 import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
 import Mind from './_root/page/Mind'
 import NotFound from './_root/page/NotFound'
-
+// import PhotoBooth from './_root/page/PhotoBooth'
 
 const App = () => {
 
@@ -38,6 +38,8 @@ const App = () => {
       <Route path="/mind" element={<Mind/>}> </Route>
       <Route path="/" element={<Mind/>}> </Route>
       <Route path="*" element={<NotFound/>} ></Route>
+      {/* <Route path="/booth" element={<PhotoBooth/>} ></Route> */}
+      
 
 
     </Routes>
