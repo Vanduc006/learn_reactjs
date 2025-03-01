@@ -1,0 +1,9 @@
+{
+    "name": "IMASIS MIND",
+    "short_name": "IMASIS MIND",
+    "description": "IMASIS MIND là một camera app tích hợp LLM, AI Agent và hàng tá công nghệ mới nhất rất hứa hẹn sẽ giúp ích cho cuộc sống của bạn, truy cập ngay!",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#cbd5e1"
+}
+  

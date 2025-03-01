@@ -32,6 +32,7 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 
+  
 // import {
 //     Select1,
 //     SelectContent,
@@ -552,6 +553,12 @@ const Mind = () => {
                             </div>
                             
                         ))} */}
+                        <SignedOut>
+                            <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
+                        </SignedOut>
+                        <SignedIn>
+                            <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
+                        </SignedIn>
                         {chatSession.map((chat, index) => {
                             // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
                             const photos = chat.photos_prompt_url
@@ -570,7 +577,7 @@ const Mind = () => {
                                         </div> 
                                         
                                         {photos.length > 0 && (
-                                            <div id="user-media" className="grid grid-cols-2 gap-2 mt-3">
+                                            <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
                                                 {photos.map((src:string, imgIndex:any) => (
                                                     <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
                                                 ))}
