@@ -55,6 +55,8 @@ import { SignedIn, SignedOut, SignIn,
     // SignOutButton, 
     UserButton, useUser} from "@clerk/clerk-react";
 import parse from 'html-react-parser';
+import BeatLoader from "react-spinners/BeatLoader";
+
 // import Markdown from 'react-markdown'
 //services
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
@@ -168,26 +170,121 @@ const Mind = () => {
       };
 
     const [chatSession, setChatSession] = useState<any[]>([]);
+    const [loadingChat,setLoadingChat] = useState(false)
+    const [moreChat,setMoreChat] = useState(true)
+    const lastChatRef = useRef(null)
+    const [lastCreatedAt, setLastCreatedAt] = useState(null);
+    // const containerRef = useRef(null);
+    // const [visibleChat, setVisibleChat] = useState(false);
+
+    async function CallTranslatorList(clerkUserId : string,cursor = null) {
+        TranslatorList(clerkUserId,cursor).then((data) => {
+
+            // if (!moreChat || loadingChat) {
+            //     console.log("morechat false , loading false")
+            //     return
+            // }
+            // console.log(data)
+            setLoadingChat(true)
+            if (data.length < 10 ) {
+                console.log("data.length < 20")
+                setMoreChat(false)
+            }
+            if (data.length > 0) {
+                console.log("data.length > 0")
+                setChatSession((prev) => [...prev, ...data]); 
+                setLastCreatedAt(data[data.length - 1].created_at);
+                // console.log(chatSession)
+            }
+            // if (data.length === 0) {
+            //     console.log('Chat history not exists')
+            // }
+            // setChatSession(data)
+            setLoadingChat(false)
+        })
+    }
+
+    // useEffect(() => {
+    //     console.log('query')
+    //     if(user) {
+    //         const clerkUserId = user?.id
+    //         console.log(clerkUserId)
+    //         setChatSession([])
+    //         // console.log(chatSession)
+    //         setMoreChat(true)
+    //         CallTranslatorList(clerkUserId)
+    //         // iduser(clerkid)
+
+    //     }
+    //     else {
+    //         console.log('User not exists')
+    //     }
+    //     // console.log(chatSession)
+    //     // TranslatorList(us)
+    // },[user])
+
+    const observerOptions = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0
+    };
+
     useEffect(() => {
-        console.log('query')
-        if(user) {
+        const observer = new IntersectionObserver((entries) => {
+            const [entry] =  entries;
+            setLoadingChat(entry.isIntersecting)
+        },observerOptions)
+
+        if (lastChatRef.current) {
+            observer.observe(lastChatRef.current)
+            // console.log(loadingChat)
+        } 
+        if (loadingChat && user ) {
             const clerkUserId = user?.id
-            console.log(clerkUserId)
-            // iduser(clerkid)
-            TranslatorList(clerkUserId).then((data) => {
-                // console.log(data)
-                if (data.length === 0) {
-                    console.log('Chat history not exists')
-                }
-                setChatSession(data)
-            })
+            if (!moreChat) {
+                console.log("No more chat")
+                return
+            }
+            else {
+                CallTranslatorList(clerkUserId,lastCreatedAt)
+            }
+            
+            // console.log(clerkUserId)
+            console.log(loadingChat)
         }
-        else {
-            console.log('User not exists')
+        return () => {
+            // if (lastChatRef.current) {
+            //     observer.unobserve(lastChatRef.current)
+            // }
         }
-        // console.log(chatSession)
-        // TranslatorList(us)
-    },[user])
+    },[observerOptions,loadingChat,user]);
+    // test observe
+
+    
+    // useEffect(() => {
+    //     const observer = new IntersectionObserver((entries) => {
+    //         const [entry] = entries;
+    //         setVisibleChat(entry.isIntersecting);
+    //     }, observerOptions);
+    
+    //     if (containerRef.current) {
+    //         observer.observe(containerRef.current);
+    //     }
+    
+    //     return () => {
+    //         if (containerRef.current) {
+    //             observer.unobserve(containerRef.current);
+    //         }
+    //     };
+    // }, [observerOptions]);
+
+    // useEffect(() => {
+    //     if (loadingChat && user) {
+    //         console.log('view')
+    //     }
+    // },[loadingChat,user])
+
+
 
     // useEffect(() => {
     // Test().then((test) => {
@@ -510,132 +607,72 @@ const Mind = () => {
                         
                     </CarouselItem>
                     <CarouselItem>
+
                         <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                        {/* {chatSession.map((chat, index) => (
-                            <div key={index}>
-                                <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
-                                    <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                         
-                                        <SignedIn>
-                                            
-                                            <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
-                                        </SignedIn>
-                                    </div> 
-                                    <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
-                                        {[
-                                            "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                            "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                            "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                            "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg"
-                                        ].map((src, index) => (
-                                            <img key={index} className='w-[100px] h-[100px] rounded-lg object-cover' src={src} alt='' />
-                                        ))}
-                                    </div>
-                                </div>
-                                <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                    <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                        <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                    </div>    
-                                    
-                                    {parse(chat.api_respone_content)}
-                                    
-                                    <div className='flex mt-5'>
-                                        <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
-                                    </div>
-                                </div> 
-                                                                    {photos.length > 0 && (
-                                        <div id="user-media" className="grid grid-cols-2 gap-2 mt-3">
-                                            {photos.map((src:string, imgIndex:any) => (
-                                                <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
-                                            ))}
-                                        </div>
-                                    )}
-                            </div>
-                            
-                        ))} */}
-                        <SignedOut>
-                            <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
-                        </SignedOut>
-                        <SignedIn>
-                            <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
-                        </SignedIn>
-                        {chatSession.map((chat, index) => {
-                            // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
-                            const photos = chat.photos_prompt_url
-                                ? chat.photos_prompt_url.replace(/{|}/g, "").split(",")
-                                : [];
 
-                            return (
-                                <div key={index}>
-                                    <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
-                                        <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                            
-                                            <SignedIn>
+                            <SignedOut>
+                                <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
+                            </SignedOut>
+
+                            <div className=''>
+                            {chatSession.map((chat, index) => {
+                                // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
+                                // console.log(chat.id)
+                                const photos = chat.photos_prompt_url
+                                    ? chat.photos_prompt_url.replace(/{|}/g, "").split(",")
+                                    : [];
+
+                                return (
+                                    <div key={index}>
+                                        <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
+                                            <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                                 
-                                                <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
-                                            </SignedIn>
-                                        </div> 
-                                        
-                                        {photos.length > 0 && (
-                                            <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
-                                                {photos.map((src:string, imgIndex:any) => (
-                                                    <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
-                                                ))}
-                                            </div>
-                                        )}
-                                        
-                                    </div>
-                                    <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                        <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                            <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                        </div>    
-                                        
-                                        {parse(chat.api_respone_content)}
-                                        
-                                        <div className='flex mt-5'>
-                                            <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                                <SignedIn>
+                                                    
+                                                    <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
+                                                </SignedIn>
+                                            </div> 
+                                            
+                                            {photos.length > 0 && (
+                                                <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
+                                                    {photos.map((src:string, imgIndex:any) => (
+                                                        <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
+                                                    ))}
+                                                </div>
+                                            )}
+                                            
                                         </div>
-                                    </div> 
-                                </div>
-                            );
-                        })}
+                                        <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
+                                            <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
+                                                chat id {chat.id} <br />
+                                                {/* creat at {chat.created_at} */}
+                                                <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
+                                            </div>    
 
-
-                            {/* <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
-                                <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                    
-                                    <SignedOut>Khách vãng lai</SignedOut>    
-                                    <SignedIn>
-                                        
-                                        <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
-                                    </SignedIn>
-                                </div> 
-                                <div id='user-media' className='grid grid-cols-2 gap-2 mt-3'>
-                                    {[
-                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg",
-                                        "https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg"
-                                    ].map((src, index) => (
-                                        <img key={index} className='w-[100px] h-[100px] rounded-lg object-cover' src={src} alt='' />
-                                    ))}
-                                </div>
+                                            
+                                            {parse(chat.api_respone_content)}
+                                            
+                                            <div className='flex mt-5'>
+                                                <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                            </div>
+                                        </div> 
+                                    </div>
+                                );
+                            })}
+                            </div>
+                            <div ref={lastChatRef}>
+                                {moreChat && 
+                                    <p className='flex items-center '>      
+                                        <BeatLoader
+                                            color='#4871f7'
+                                            className=''
+                                            loading={true}
+                                            size={10}
+                                        />
+                                    </p>
+                                }
                             </div>
 
-                            <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                    <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                </div>    
-                                <p>AI, or Artificial Intelligence, doesn’t work in a single, unified way.  Instead, it encompasses a broad range of techniques and approaches, all aiming to create systems that can perform tasks that typically require human intelligence.  Here’s a breakdown of some core concepts:</p>
-                                <p><strong>1. Data is King:</strong>  At the heart of most AI systems lies vast amounts of data.  This data is used to train the AI, allowing it to learn patterns, relationships, and insights.  The more relevant data, the better the AI’s performance.</p>
-                                <p><strong>2. Algorithms are the Tools:</strong>  Algorithms are sets of rules and instructions that tell the AI how to process and learn from the data. Different types of AI use different algorithms:</p>
-                                <div className='flex mt-5'>
-                                    <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
-                                </div>
-                            </div> */}
-
-
-                            
 
                         </div>
                     </CarouselItem> 
@@ -648,28 +685,26 @@ const Mind = () => {
                 { photos.length < 0 ? (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
                     onClick={() => {
+                        
                         UploadImages(photos).then((result) => {
                             console.log(result)
                         })
 
-                    }}
+                    }}                    
                     > 
-
-                        <p className='text-center'>Dịch giúp  tôi</p>
-                        
+                        <p className='text-center'>Dịch giúp  tôi</p>                       
                     </div>
                 ) : (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
                     onClick={() => {
-                        UploadImages(photos).then((result) => {
-                            console.log(result)
-                        })
+                        console.log('photos.length < 0')
+                        // UploadImages(photos).then((result) => {
+                        //     console.log(result)
+                        // })
 
-                    }}
-                    
+                    }}                    
                     > 
-                        <p className='text-center'>Dịch giúp  tôi</p>
-                        
+                        <p className='text-center'>Dịch giúp  tôi</p>                     
                     </div>
                 )}
             </div>
@@ -742,39 +777,39 @@ const Mind = () => {
             
             {/* Nếu chưa đăng nhập, mở dialog login */}
             <SignedOut>
-      <Dialog open={openClerk} onOpenChange={setOpenClerk}>
-        <DialogContent className="block sm:hidden bg-slate-300 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
-          
-          <DialogHeader>
-            <DialogTitle className="text-center">
-              {isSignUp ? "Đăng ký tài khoản" : "Chào mừng bạn quay trở lại"}
-            </DialogTitle>
-          </DialogHeader>
+                <Dialog open={openClerk} onOpenChange={setOpenClerk}>
+                    <DialogContent className="block sm:hidden bg-slate-300 text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl flex flex-col items-center">
+                    
+                    <DialogHeader>
+                        <DialogTitle className="text-center">
+                        {isSignUp ? "Đăng ký tài khoản" : "Chào mừng bạn quay trở lại"}
+                        </DialogTitle>
+                    </DialogHeader>
 
-          <div className="w-full flex justify-center">
-            <div className="scale-90 mx-auto">
-              {isSignUp ? (
-                <SignUp afterSignUpUrl="/mind" redirectUrl="/mind" appearance={appearance} />
-              ) : (
-                <SignIn afterSignInUrl="/mind" redirectUrl="/mind" appearance={appearance} />
-              )}
-            </div>
-          </div>
+                    <div className="w-full flex justify-center">
+                        <div className="scale-90 mx-auto">
+                        {isSignUp ? (
+                            <SignUp afterSignUpUrl="/mind" redirectUrl="/mind" appearance={appearance} />
+                        ) : (
+                            <SignIn afterSignInUrl="/mind" redirectUrl="/mind" appearance={appearance} />
+                        )}
+                        </div>
+                    </div>
 
-          {/* Custom Toggle Button */}
-          <p className="mt-4 text-sm text-black">
-            {isSignUp ? "Đã có tài khoản?" : "Chưa có tài khoản?"}
-            <button 
-              className="text-blue-500 ml-2 underline"
-              onClick={() => setIsSignUp(!isSignUp)}
-            >
-              {isSignUp ? "Đăng nhập" : "Đăng ký"}
-            </button>
-          </p>
+                    {/* Custom Toggle Button */}
+                    <p className="mt-4 text-sm text-black">
+                        {isSignUp ? "Đã có tài khoản?" : "Chưa có tài khoản?"}
+                        <button 
+                        className="text-blue-500 ml-2 underline"
+                        onClick={() => setIsSignUp(!isSignUp)}
+                        >
+                        {isSignUp ? "Đăng nhập" : "Đăng ký"}
+                        </button>
+                    </p>
 
-        </DialogContent>
-      </Dialog>
-    </SignedOut>
+                    </DialogContent>
+                </Dialog>
+            </SignedOut>
 
             {/* Nếu đã đăng nhập, hiển thị nội dung */}
 
