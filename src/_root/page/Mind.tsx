@@ -14,14 +14,14 @@ import Webcam from "react-webcam";
 //     DropdownMenuSeparator,
 //     DropdownMenuTrigger,
 // } from "@/components/ui/dropdown-menu"
-// import {
-//     Sheet,
-//     SheetContent,
-//     // SheetDescription,
-//     // SheetHeader,
-//     SheetTitle,
-//     // SheetTrigger,
-//   } from "@/components/ui/sheet"
+import {
+    Sheet,
+    SheetContent,
+    // SheetDescription,
+    // SheetHeader,
+    SheetTitle,
+    // SheetTrigger,
+  } from "@/components/ui/sheet"
 import {
     Dialog,
     DialogClose,
@@ -44,7 +44,7 @@ import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel
 // import { Card, CardContent } from "@/components/ui/card"
 import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, 
     ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, ChevronsRight,
-    Camera, CameraOff,
+    Camera, CameraOff,CircleDashed
     // Send,
  } from 'lucide-react';
 import Select from 'react-select'
@@ -56,11 +56,19 @@ import { SignedIn, SignedOut, SignIn,
     UserButton, useUser} from "@clerk/clerk-react";
 import parse from 'html-react-parser';
 import BeatLoader from "react-spinners/BeatLoader";
-
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import { EffectCards } from 'swiper/modules';
 // import Markdown from 'react-markdown'
+// import ReactFlipCard from 'reactjs-flip-card'
+import Marquee from 'react-fast-marquee';
+
 //services
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
 import TranslatorList from '@/services/Supabase/TranslatorList';
+import { TranslatorNew } from '@/services/Supabase/TranslatorList';
 
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -83,11 +91,11 @@ const list_languages_sp = [
 const Mind = () => {
 
     const [photos, setPhotos] = useState<string[]>([]);
-    // const [Open, setOpen] = useState<boolean>(false);
-
+    const [Open, setOpen] = useState<boolean>(false);
     const [modeCam, setModeCam] = useState<'user' | 'environment'>('user');
     const [mirroredCam, setMirroredCam] = useState(true);
     const [Development, setDevelopment] = useState(false);
+
     const webcamRef:any = useRef(null);
     const capturePhoto = () => {
       const imageSrc = webcamRef.current.getScreenshot();
@@ -115,12 +123,12 @@ const Mind = () => {
         setMirroredCam(false); // No mirroring for the environment (rear) camera
     }
     };
-    // const OpenSheet = () => {
-    //     setOpen(true)
-    // }
-    // const CloseSheet = () => {
-    //     setOpen(false)
-    // }
+    const OpenSheet = () => {
+        setOpen(true)
+    }
+    const CloseSheet = () => {
+        setOpen(false)
+    }
     const videoConstraints = {
         facingMode: modeCam,
     };
@@ -338,6 +346,15 @@ const Mind = () => {
     // const [photosPromptUrls, setPhotosPromptUrls] = useState<string[] | null>(null);
 
 
+    //flashcard
+    const [isReveal,setIsReveal] = useState(false)
+    // const swiperRef = useRef(null);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const flashcards = [
+        { question: "How to start a project?", answer: "Start with a plan." },
+        { question: "What is React?", answer: "A JavaScript library for UI." },
+        { question: "What is Tailwind?", answer: "A utility-first CSS framework." }
+    ];
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -410,7 +427,7 @@ const Mind = () => {
                     cursor: "pointer",
                     marginBottom: "10px",
                 }}
-            >
+            >const swiperRef = useRef(null);
                 📝 Start Streaming
             </div>
             <div dangerouslySetInnerHTML={{ __html: displayedContent.join("") }} />
@@ -433,8 +450,8 @@ const Mind = () => {
                 <p className='text-center'>Show me the magic</p>
             </div> */}
             <SignedOut>
-
-                <motion.div
+                <Marquee className='ml-5 mr-5 p-2'> IMASIS MIND đang có chương trình giảm giá hấp dẫn! Đừng bỏ lỡ cơ hội nhận ưu đãi ngay hôm nay! 🎉 </Marquee>
+                {/* <motion.div
                 className="flex ml-5 text-black items-center text-lg font-medium mt-2 opacity-50 cursor-pointer"
                 initial={{ x: 0 }}
                 animate={{ x: [0, 8, 0] }}
@@ -442,7 +459,7 @@ const Mind = () => {
                 // onClick={() => setHidden(true)}
                 >
                 Trượt để xem  <ChevronsRight />
-                </motion.div>
+                </motion.div> */}
 
             </SignedOut> 
             <SignedIn>
@@ -463,9 +480,14 @@ const Mind = () => {
 
             
             <Carousel
+            // draggable={false}
+            // data-disable-drag="false"
+            
             opts={{
                 align: "start",
                 loop: true,
+                dragFree: false,
+
             }}
               
               className="w-full max-w-sm mx-auto"
@@ -473,8 +495,11 @@ const Mind = () => {
               onTouchStart={handleDragStart}
               onMouseUp={handleDragEnd}
               onTouchEnd={handleDragEnd}  
+
             >
-                <CarouselContent>
+                
+                <CarouselContent 
+                >
                 {/* {cards.map((card, index) => (
                     <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3 pl-4 bg-slate-200">
                         <Card className="cursor-grab active:cursor-grabbing">
@@ -614,69 +639,161 @@ const Mind = () => {
                                 <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
                             </SignedOut>
 
-                            <div className=''>
-                            {chatSession.map((chat, index) => {
-                                // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
-                                // console.log(chat.id)
-                                const photos = chat.photos_prompt_url
-                                    ? chat.photos_prompt_url.replace(/{|}/g, "").split(",")
-                                    : [];
+                            <SignedIn>
+                                <div className=''>
+                                {chatSession.map((chat, index) => {
+                                    // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
+                                    // console.log(chat.id)
+                                    const photos = chat.photos_prompt_url
+                                        ? chat.photos_prompt_url.replace(/{|}/g, "").split(",")
+                                        : [];
 
-                                return (
-                                    <div key={index}>
-                                        <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
-                                            <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                                
-                                                <SignedIn>
+                                    return (
+                                        <div key={index}>
+                                            <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
+                                                <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                                     
-                                                    <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
-                                                </SignedIn>
-                                            </div> 
-                                            
-                                            {photos.length > 0 && (
-                                                <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
-                                                    {photos.map((src:string, imgIndex:any) => (
-                                                        <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
-                                                    ))}
-                                                </div>
-                                            )}
-                                            
-                                        </div>
-                                        <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                            <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                                chat id {chat.id} <br />
-                                                {/* creat at {chat.created_at} */}
-                                                <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                            </div>    
-
-                                            
-                                            {parse(chat.api_respone_content)}
-                                            
-                                            <div className='flex mt-5'>
-                                                <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                                    <SignedIn>
+                                                        
+                                                        <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
+                                                    </SignedIn>
+                                                </div> 
+                                                
+                                                {photos.length > 0 && (
+                                                    <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
+                                                        {photos.map((src:string, imgIndex:any) => (
+                                                            <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
+                                                        ))}
+                                                    </div>
+                                                )}
+                                                
                                             </div>
-                                        </div> 
-                                    </div>
-                                );
-                            })}
-                            </div>
-                            <div ref={lastChatRef}>
-                                {moreChat && 
-                                    <p className='flex items-center '>      
-                                        <BeatLoader
-                                            color='#4871f7'
-                                            className=''
-                                            loading={true}
-                                            size={10}
-                                        />
-                                    </p>
-                                }
-                            </div>
+                                            <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
+                                                <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
+                                                    chat id {chat.id} <br />
+                                                    {/* creat at {chat.created_at} */}
+                                                    <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
+                                                </div>    
+
+                                                
+                                                {parse(chat.api_respone_content)}
+                                                
+                                                <div className='flex mt-5'>
+                                                    <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    );
+                                })}
+                                </div>
+                                <div ref={lastChatRef}>
+                                    {moreChat && 
+                                        <p className='flex items-center '>      
+                                            <BeatLoader
+                                                color='#4871f7'
+                                                className=''
+                                                loading={true}
+                                                size={10}
+                                            />
+                                        </p>
+                                    }
+                                </div>
+                            </SignedIn>
 
 
                         </div>
                     </CarouselItem> 
+                    <CarouselItem draggable={false}>
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
+                                    <div className='text-white flex  items-center justify-content-center'
 
+                                    
+                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
+                                    <div  className='flex '>
+                                        <div className='text-white'>07 Mar  03:13:41</div>
+                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
+                                            onClick={() => {
+                                                console.log('open')
+                                                OpenSheet()
+                                            }}
+                                        >View</div>
+                                    </div>
+
+                            </div>
+                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
+                                    <div className='text-white flex  items-center justify-content-center'
+
+                                    
+                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
+                                    <div  className='flex '>
+                                        <div className='text-white'>07 Mar  03:13:41</div>
+                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
+                                            onClick={() => {
+                                                console.log('open')
+                                                OpenSheet()
+                                            }}
+                                        >View</div>
+                                    </div>
+
+                            </div>
+                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
+                                    <div className='text-white flex  items-center justify-content-center'
+
+                                    
+                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
+                                    <div  className='flex '>
+                                        <div className='text-white'>07 Mar  03:13:41</div>
+                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
+                                            onClick={() => {
+                                                console.log('open')
+                                                OpenSheet()
+                                            }}
+                                        >View</div>
+                                    </div>
+
+                            </div>
+                        </div>
+                        {/* <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                                <div
+                                onClick={() => {
+                                    console.log(isAbleDragg)
+                                    if (isAbleDragg) {
+                                        setIsAbleDragg(false)
+                                    }
+                                    else {
+                                        setIsAbleDragg(true)
+                                    }
+                                }}>
+                                    {isAbleDragg ? 
+                                        <div className='bg-green-500 w-fit p-1 rounded-xl'>Lock container</div> 
+                                    : 
+                                        <div className='bg-green-500 w-fit p-1 rounded-xl'>Unlock container</div>
+                                    }
+                                    
+                                    
+                                </div>
+                                <Swiper
+                                    effect={'cards'}
+                                    grabCursor={true}
+                                    modules={[EffectCards]}
+                                    className='w-[240px] h-[320px] mt-2 rounded-xl'
+                                >
+                                    <SwiperSlide className='bg-slate-300 rounded-xl'>
+                                        <ReactFlipCard
+                                            // frontStyle={styles.card}
+                                            // backStyle={styles.card}
+                                            frontComponent={<div>Hover me!</div>}
+                                            backComponent={<div>Back!</div>}
+                                        />
+                                    </SwiperSlide>
+                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 2</SwiperSlide>
+                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 3</SwiperSlide>
+                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 4</SwiperSlide>
+                                </Swiper>
+                            </div> */}
+                            
+                    </CarouselItem>
 
                 </CarouselContent>
             </Carousel>
@@ -697,7 +814,11 @@ const Mind = () => {
                 ) : (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
                     onClick={() => {
+                        const lisst = '{https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg,https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg}'
                         console.log('photos.length < 0')
+                        TranslatorNew(user?.id,lisst,'<p>Test insert row supabase</p>').then((data) => {
+                            console.log(data)
+                        })
                         // UploadImages(photos).then((result) => {
                         //     console.log(result)
                         // })
@@ -815,50 +936,50 @@ const Mind = () => {
 
 
             {/* <BottomSheet /> */}
-            {/* <Sheet open={Open} onOpenChange={CloseSheet}>
+            <Sheet open={Open} onOpenChange={CloseSheet}>
 
-                <SheetContent side={'bottom'} className="h-[95%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
-                    <SheetTitle className='font-bold text-lg mb-1'>IMASIS MIND : POWERFUL FOR LIFE</SheetTitle>
-                    
-                    <Select1>
-                        <SelectTrigger className="bg-[#4871f7] text-white drop-shadow-xl">
-                            <SelectValue placeholder="Translator"/>
-                        </SelectTrigger>
-                        <SelectContent className='text-white items-center justify-content-center bg-[#5A8DF7]'>
+                <SheetContent side={'bottom'} className="h-[60%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
+                    <SheetTitle className='font-bold text-lg mb-1'>Flashcard Mode</SheetTitle>
+                    <p className='pl-2 pr-2 bg-[#4871f7] text-white w-fit rounded-xl'>Click to reveal answer</p>
 
-                            <SelectItem value="translator">Translator</SelectItem>
-
-                        </SelectContent>
-                    </Select1>
                     <div className=' h-[88%] mt-5 rounded-xl overflow-y-auto'>
+                        
 
-                        <div id='user' className='w-[90%] ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl'>
-                            <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                <User className='h-4 w-4 mr-1 ml-1'/> NguyenVanDuc
-                            </div> 
-                            <div id='user-media' className='flex gap-2 overflow-x-auto whitespace-nowrap mt-2'>
-                                <img className='max-w-xs max-h-40 rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                <img className='max-w-xs max-h-40 rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                <img className='max-w-xs max-h-40 rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                                <img className='max-w-xs max-h-40 rounded-lg' src="https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg" alt="" />
-                            </div>
+                                <Swiper
+                                    onSlideChange={(swiper) => {
+                                        setIsReveal(false)
+                                        setActiveIndex(swiper.activeIndex)
+                                        // con
+                                    }}
+                                    effect={'cards'}
+                                    grabCursor={true}
+                                    modules={[EffectCards]}
+                                    className='w-[80%] h-[300px] mt-2 rounded-xl items-center justify-content-center'
+                                >
+                                    {flashcards.map((card, index) => (
+                                        <SwiperSlide key={index} className="bg-slate-300 rounded-xl" onClick={() => index === activeIndex && setIsReveal(true)}>
+                                        <div className="p-2 mt-[40%]" >
+                                            <p className="text-center font-bold text-xl">{card.question}</p>
 
-                        </div>
-                        <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                            <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                            </div>    
-                            <p>AI, or Artificial Intelligence, doesn’t work in a single, unified way.  Instead, it encompasses a broad range of techniques and approaches, all aiming to create systems that can perform tasks that typically require human intelligence.  Here’s a breakdown of some core concepts:</p>
-                            <p><strong>1. Data is King:</strong>  At the heart of most AI systems lies vast amounts of data.  This data is used to train the AI, allowing it to learn patterns, relationships, and insights.  The more relevant data, the better the AI’s performance.</p>
-                            <p><strong>2. Algorithms are the Tools:</strong>  Algorithms are sets of rules and instructions that tell the AI how to process and learn from the data. Different types of AI use different algorithms:</p>
-                            <div className='flex mt-5'>
-                                <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
-                            </div>
-                        </div>
+                                            {/* Đáp án chỉ hiển thị nếu là slide active */}
+                                            <motion.div
+                                            initial={{ opacity: 0, y: -10 }}
+                                            animate={{ opacity: isReveal && index === activeIndex ? 1 : 0, y: isReveal && index === activeIndex ? 0 : -10 }}
+                                            transition={{ duration: 0.1, ease: "easeInOut" }}
+                                            className="absolute bottom-0 transform w-11/12 max-w-md p-4 bg-gray-100 rounded-md shadow-lg text-center mb-2"
+                                            >
+                                            {isReveal && index === activeIndex && <div>{card.answer}</div>}
+                                            </motion.div>
+                                        </div>
+                                        </SwiperSlide>
+                                    ))}
+                                </Swiper>
+                            
+
 
                     </div>
                 </SheetContent>
-            </Sheet> */}
+            </Sheet>
             {/* <div className='m-5 bg-[#4871f7]'>
                 USER section
             </div> */}
@@ -868,26 +989,6 @@ const Mind = () => {
                 
 
             </div>
-            {/* <div className='flex bg-black m-3 mt-3 p-2 rounded-[10px]'>
-                <div>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger>Choose mode</DropdownMenuTrigger>
-                        <DropdownMenuContent className='mt-2 bg-black ml-1'>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem >Translator</DropdownMenuItem>
-                            <DropdownMenuItem >Finding Object</DropdownMenuItem>
-                            <DropdownMenuItem >Graph the world</DropdownMenuItem>
-
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
-
-            </div>
-            <div className='text-center m-2 rounded-['>
-                <p className='bg-black'>
-                    Capture
-                </p>
-            </div> */}
         </div>
     </main>
     

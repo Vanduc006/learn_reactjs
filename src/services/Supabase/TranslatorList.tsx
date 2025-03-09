@@ -23,6 +23,19 @@ const TranslatorList = async (clerkUserId: string,cursor = null): Promise<any[]>
 
 export default TranslatorList;
 
+export const TranslatorNew = async (clerkId: any,listImages: any,GeminiRespone: any):Promise<any[]> => {
+
+    let query = supabase
+        .from('translator')
+        .insert({userid : clerkId,photos_prompt_url :listImages,api_respone_content :GeminiRespone})
+    const { data,error } =  await query
+    if (error) {
+        console.log("new translator error",error)
+    }
+    return data || [];
+  
+}
+
 // import { useEffect, useState, useRef } from "react";
 // import supabase from "./ConnectSupabase";
 
