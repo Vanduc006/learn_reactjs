@@ -31,8 +31,6 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-
-  
 // import {
 //     Select1,
 //     SelectContent,
@@ -42,6 +40,7 @@ import {
 // } from "@/components/ui/select"
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
+
 import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, 
     ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, ChevronsRight,
     Camera, CameraOff,CircleDashed
@@ -69,6 +68,7 @@ import Marquee from 'react-fast-marquee';
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
 import TranslatorList from '@/services/Supabase/TranslatorList';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
+import QuizComponent from '@/services/Supabase/Quiz';
 
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -355,6 +355,9 @@ const Mind = () => {
         { question: "What is React?", answer: "A JavaScript library for UI." },
         { question: "What is Tailwind?", answer: "A utility-first CSS framework." }
     ];
+
+    //quiz
+    const [selectedQuiz,setSelectedQuiz] = useState(true)
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -753,48 +756,65 @@ const Mind = () => {
                                     </div>
 
                             </div>
-                        </div>
-                        {/* <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                                <div
-                                onClick={() => {
-                                    console.log(isAbleDragg)
-                                    if (isAbleDragg) {
-                                        setIsAbleDragg(false)
-                                    }
-                                    else {
-                                        setIsAbleDragg(true)
-                                    }
-                                }}>
-                                    {isAbleDragg ? 
-                                        <div className='bg-green-500 w-fit p-1 rounded-xl'>Lock container</div> 
-                                    : 
-                                        <div className='bg-green-500 w-fit p-1 rounded-xl'>Unlock container</div>
-                                    }
-                                    
-                                    
-                                </div>
-                                <Swiper
-                                    effect={'cards'}
-                                    grabCursor={true}
-                                    modules={[EffectCards]}
-                                    className='w-[240px] h-[320px] mt-2 rounded-xl'
-                                >
-                                    <SwiperSlide className='bg-slate-300 rounded-xl'>
-                                        <ReactFlipCard
-                                            // frontStyle={styles.card}
-                                            // backStyle={styles.card}
-                                            frontComponent={<div>Hover me!</div>}
-                                            backComponent={<div>Back!</div>}
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 2</SwiperSlide>
-                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 3</SwiperSlide>
-                                    <SwiperSlide className='bg-slate-300 rounded-xl'>Slide 4</SwiperSlide>
-                                </Swiper>
-                            </div> */}
-                            
+                        </div>   
                     </CarouselItem>
 
+                    <CarouselItem>
+                        {selectedQuiz ? 
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                            {/* <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
+                                    <div className='text-white flex  items-center justify-content-center'
+
+                                    
+                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
+                                    <div  className='flex '>
+                                        <div className='text-white'>07 Mar  03:13:41</div>
+                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
+                                            onClick={() => {
+                                                console.log('open')
+                                                OpenSheet()
+                                            }}
+                                        >View</div>
+                                    </div>
+
+                            </div> */}
+                            <div className='mb-2 rounded-xl p-2 cursor-pointer drop-shadow-xl bg-[#4871f7]'> 
+
+                                <div className='flex'>
+                                    <p className='bg-slate-300 pl-3 pr-3 p-1 rounded-xl mr-2'>Tech</p>
+                                </div>
+                                {/* <div className="w-full">
+                                    <img src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg" 
+                                    className="w-full h-[130px] object-cover rounded-lg" alt="Quiz" />
+                                </div> */}
+                                <div className='mt-2 text-white flex items-center justify-content-center'>
+                                    <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>
+                                    New games from Bytedance
+                                </div>
+                                <div className='mt-2 text-white flex items-center justify-content-center'>
+                                    <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>
+                                    07 Mar  03:13:41
+                                </div>
+                                <div className='mt-5 text-center bg-slate-300 rounded-xl p-2'
+                                onClick={() => {
+                                    setSelectedQuiz(false)    
+                                }}
+                                >Let's do</div>
+                            </div>
+                            
+                        </div>
+                        :
+                        <div className='bg-slate-200 ml-5 p-2 mr-5 rounded-xl overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                            <div
+                            onClick={() => {
+                                setSelectedQuiz(true)
+                            }}
+                            className='bg-white w-fit p-2 rounded-xl mb-2'
+                            >Back to quiz list</div>
+                            <QuizComponent/>
+                        </div>
+                        }
+                    </CarouselItem>                            
                 </CarouselContent>
             </Carousel>
             

@@ -14,3 +14,4 @@ const FlashcardList = async(clerkId: string):Promise<string[]> => {
     // return new Promise<any>((resolve, reject) => {        
     // })
 }
+export default FlashcardList
