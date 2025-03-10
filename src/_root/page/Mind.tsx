@@ -41,7 +41,7 @@ import {
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
 
-import { Aperture, Mic, Languages, ScanSearch, Podcast, Settings, Bot, 
+import { Aperture, Mic, Languages, BookText, Podcast, Settings, Bot, 
     ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, ChevronsRight,
     Camera, CameraOff,CircleDashed
     // Send,
@@ -69,6 +69,7 @@ import { UploadImages } from '@/services/Cloudinary/UploadImages';
 import TranslatorList from '@/services/Supabase/TranslatorList';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
 import QuizComponent from '@/services/Supabase/Quiz';
+import VideoPlayer from '@/services/Supabase/VideoRender';
 
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -443,7 +444,7 @@ const Mind = () => {
                     <Languages className='h-4 w-4 mr-2'/> Dịch thuật
                 </div>
                 <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
-                    <ScanSearch className='h-4 w-4 mr-2'/> Tìm kiếm nâng cao
+                    <BookText className='h-4 w-4 mr-2'/> Học tập
                 </div>
                 <div className='flex items-center bg-white p-2 rounded-xl opacity-75 cursor-not-allowed'>
                     <Podcast className='h-4 w-4 mr-2'/> Trợ năng
@@ -814,7 +815,29 @@ const Mind = () => {
                             <QuizComponent/>
                         </div>
                         }
-                    </CarouselItem>                            
+                    </CarouselItem>   
+                    <CarouselItem>
+
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                        {/* <div>
+                            <h2 className="text-xl font-semibold mb-4">Direct Video Source</h2>
+                            <VideoPlayer
+                                videoSrc="https://res.cloudinary.com/dkgluft3l/video/upload/v1741572466/13182344_3840_2160_25fps_jipxnn.mp4"
+                                videoTitle="Cinematic Nature Footage"
+                                videoDescription="This breathtaking 4K footage captures the serene beauty of nature in stunning detail. The video showcases lush landscapes, flowing water, and vibrant colors that highlight the natural world's magnificence."
+                            />
+                        </div> */}
+
+                        <div>
+                            <h2 className="text-xl font-semibold mb-4">YouTube Video Source</h2>
+                            <VideoPlayer
+                                videoSrc="https://www.youtube.com/watch?v=Y1QXFXGfrTI"
+                                // videoTitle="Rick Astley - Never Gonna Give You Up"
+                                // videoDescription="The official music video for Rick Astley's iconic 1987 hit single 'Never Gonna Give You Up'. The song became a worldwide number-one hit, initially in the UK where it spent five weeks at the top of the charts."
+                            />
+                        </div>
+                        </div>    
+                    </CarouselItem>                         
                 </CarouselContent>
             </Carousel>
             
