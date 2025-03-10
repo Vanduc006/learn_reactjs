@@ -70,7 +70,7 @@ import TranslatorList from '@/services/Supabase/TranslatorList';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
 import QuizComponent from '@/services/Supabase/Quiz';
 import VideoPlayer from '@/services/Supabase/VideoRender';
-
+// import InstallPrompt from '@/components/all/InstallSafari';
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
 
@@ -367,7 +367,7 @@ const Mind = () => {
         </div>
 
         <div className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto bg-slate-300 text-white block sm:hidden'>
-
+        {/* <InstallPrompt /> */}
 
             <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white mt-5'>
                 <div className='flex justify-content-center items-center rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
