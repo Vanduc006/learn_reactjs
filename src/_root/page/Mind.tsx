@@ -14,14 +14,14 @@ import Webcam from "react-webcam";
 //     DropdownMenuSeparator,
 //     DropdownMenuTrigger,
 // } from "@/components/ui/dropdown-menu"
-import {
-    Sheet,
-    SheetContent,
-    // SheetDescription,
-    // SheetHeader,
-    SheetTitle,
-    // SheetTrigger,
-  } from "@/components/ui/sheet"
+// import {
+//     Sheet,
+//     SheetContent,
+//     // SheetDescription,
+//     // SheetHeader,
+//     SheetTitle,
+//     // SheetTrigger,
+//   } from "@/components/ui/sheet"
 import {
     Dialog,
     DialogClose,
@@ -41,8 +41,7 @@ import {
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
 
-import { Aperture, Mic, Languages, BookText, Podcast, Settings, Bot, 
-    ThumbsUp, ThumbsDown, ScanText, User, SwitchCamera, ChevronsRight,
+import { Aperture, Mic, Languages, BookText, Podcast, Settings, SwitchCamera, ChevronsRight,
     Camera, CameraOff,CircleDashed
     // Send,
  } from 'lucide-react';
@@ -53,23 +52,23 @@ import { SignedIn, SignedOut, SignIn,
     SignUp, 
     // SignOutButton, 
     UserButton, useUser} from "@clerk/clerk-react";
-import parse from 'html-react-parser';
-import BeatLoader from "react-spinners/BeatLoader";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
-import { EffectCards } from 'swiper/modules';
+// import { EffectCards } from 'swiper/modules';
 // import Markdown from 'react-markdown'
 // import ReactFlipCard from 'reactjs-flip-card'
 import Marquee from 'react-fast-marquee';
 
 //services
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
-import TranslatorList from '@/services/Supabase/TranslatorList';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
 import QuizComponent from '@/services/Supabase/Quiz';
 import VideoPlayer from '@/services/Supabase/VideoRender';
+import Chat from '@/components/mind/Chat';
+import PreviewVoice from '@/components/mind/PreviewVoice';
+import FLashCard from '@/components/mind/FLashCard';
 // import InstallPrompt from '@/components/all/InstallSafari';
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -92,7 +91,7 @@ const list_languages_sp = [
 const Mind = () => {
 
     const [photos, setPhotos] = useState<string[]>([]);
-    const [Open, setOpen] = useState<boolean>(false);
+    // const [Open, setOpen] = useState<boolean>(false);
     const [modeCam, setModeCam] = useState<'user' | 'environment'>('user');
     const [mirroredCam, setMirroredCam] = useState(true);
     const [Development, setDevelopment] = useState(false);
@@ -124,12 +123,12 @@ const Mind = () => {
         setMirroredCam(false); // No mirroring for the environment (rear) camera
     }
     };
-    const OpenSheet = () => {
-        setOpen(true)
-    }
-    const CloseSheet = () => {
-        setOpen(false)
-    }
+    // const OpenSheet = () => {
+    //     setOpen(true)
+    // }
+    // const CloseSheet = () => {
+    //     setOpen(false)
+    // }
     const videoConstraints = {
         facingMode: modeCam,
     };
@@ -178,40 +177,7 @@ const Mind = () => {
         },
       };
 
-    const [chatSession, setChatSession] = useState<any[]>([]);
-    const [loadingChat,setLoadingChat] = useState(false)
-    const [moreChat,setMoreChat] = useState(true)
-    const lastChatRef = useRef(null)
-    const [lastCreatedAt, setLastCreatedAt] = useState(null);
-    // const containerRef = useRef(null);
-    // const [visibleChat, setVisibleChat] = useState(false);
 
-    async function CallTranslatorList(clerkUserId : string,cursor = null) {
-        TranslatorList(clerkUserId,cursor).then((data) => {
-
-            // if (!moreChat || loadingChat) {
-            //     console.log("morechat false , loading false")
-            //     return
-            // }
-            // console.log(data)
-            setLoadingChat(true)
-            if (data.length < 10 ) {
-                console.log("data.length < 20")
-                setMoreChat(false)
-            }
-            if (data.length > 0) {
-                console.log("data.length > 0")
-                setChatSession((prev) => [...prev, ...data]); 
-                setLastCreatedAt(data[data.length - 1].created_at);
-                // console.log(chatSession)
-            }
-            // if (data.length === 0) {
-            //     console.log('Chat history not exists')
-            // }
-            // setChatSession(data)
-            setLoadingChat(false)
-        })
-    }
 
     // useEffect(() => {
     //     console.log('query')
@@ -232,42 +198,7 @@ const Mind = () => {
     //     // TranslatorList(us)
     // },[user])
 
-    const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0
-    };
 
-    useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            const [entry] =  entries;
-            setLoadingChat(entry.isIntersecting)
-        },observerOptions)
-
-        if (lastChatRef.current) {
-            observer.observe(lastChatRef.current)
-            // console.log(loadingChat)
-        } 
-        if (loadingChat && user ) {
-            const clerkUserId = user?.id
-            if (!moreChat) {
-                console.log("No more chat")
-                return
-            }
-            else {
-                CallTranslatorList(clerkUserId,lastCreatedAt)
-            }
-            
-            // console.log(clerkUserId)
-            console.log(loadingChat)
-        }
-        return () => {
-            // if (lastChatRef.current) {
-            //     observer.unobserve(lastChatRef.current)
-            // }
-        }
-    },[observerOptions,loadingChat,user]);
-    // test observe
 
     
     // useEffect(() => {
@@ -348,14 +279,14 @@ const Mind = () => {
 
 
     //flashcard
-    const [isReveal,setIsReveal] = useState(false)
-    // const swiperRef = useRef(null);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const flashcards = [
-        { question: "How to start a project?", answer: "Start with a plan." },
-        { question: "What is React?", answer: "A JavaScript library for UI." },
-        { question: "What is Tailwind?", answer: "A utility-first CSS framework." }
-    ];
+    // const [isReveal,setIsReveal] = useState(false)
+    // // const swiperRef = useRef(null);
+    // const [activeIndex, setActiveIndex] = useState(0);
+    // const flashcards = [
+    //     { question: "How to start a project?", answer: "Start with a plan." },
+    //     { question: "What is React?", answer: "A JavaScript library for UI." },
+    //     { question: "What is Tailwind?", answer: "A utility-first CSS framework." }
+    // ];
 
     //quiz
     const [selectedQuiz,setSelectedQuiz] = useState(true)
@@ -374,7 +305,7 @@ const Mind = () => {
                     
                     <Dialog>    
                             <DialogTrigger><Settings className='flex '/></DialogTrigger>
-                            <DialogContent className='bg-white text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl absolute top-0 mt-[50%]'>
+                            <DialogContent className='bg-white text-black max-w-full md:w-[500px] w-[90%] h-auto rounded-xl absolute top-0 mt-[90%]'>
                                 
                                 <DialogTitle className='mt-5'>Chọn những ngôn ngữ phù hợp với ngữ cảnh của bạn</DialogTitle>
                                 <Select
@@ -386,7 +317,8 @@ const Mind = () => {
                                     options={list_languages_sp}
                                 />
                                 <DialogTitle className='mb-5 mt-5'>Gói đăng kí của bạn</DialogTitle>
-                                
+                                <DialogTitle className='mb-2'>Giọng đọc</DialogTitle>
+                                <PreviewVoice/>
                                 <DialogClose asChild>
                                     <Button type="button" className='bg-[#4871f7] drop-shadow-xl text-white'>
                                         Lưu hoặc Đóng
@@ -635,81 +567,24 @@ const Mind = () => {
                         </div>
                         
                     </CarouselItem>
-                    <CarouselItem>
-
+                    {/* chat tab */}
+                    <CarouselItem> 
                         <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-
                             <SignedOut>
                                 <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
                             </SignedOut>
 
                             <SignedIn>
                                 <div className=''>
-                                {chatSession.map((chat, index) => {
-                                    // Chuyển `{url1,url2,url3}` thành mảng hợp lệ
-                                    // console.log(chat.id)
-                                    const photos = chat.photos_prompt_url
-                                        ? chat.photos_prompt_url.replace(/{|}/g, "").split(",")
-                                        : [];
-
-                                    return (
-                                        <div key={index}>
-                                            <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
-                                                <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
-                                                    
-                                                    <SignedIn>
-                                                        
-                                                        <User className='h-4 w-4 mr-1 ml-1'/>{user?.firstName} {user?.lastName}
-                                                    </SignedIn>
-                                                </div> 
-                                                
-                                                {photos.length > 0 && (
-                                                    <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
-                                                        {photos.map((src:string, imgIndex:any) => (
-                                                            <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
-                                                        ))}
-                                                    </div>
-                                                )}
-                                                
-                                            </div>
-                                            <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                                <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                                    chat id {chat.id} <br />
-                                                    {/* creat at {chat.created_at} */}
-                                                    <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                                </div>    
-
-                                                
-                                                {parse(chat.api_respone_content)}
-                                                
-                                                <div className='flex mt-5'>
-                                                    <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
-                                                </div>
-                                            </div> 
-                                        </div>
-                                    );
-                                })}
-                                </div>
-                                <div ref={lastChatRef}>
-                                    {moreChat && 
-                                        <p className='flex items-center '>      
-                                            <BeatLoader
-                                                color='#4871f7'
-                                                className=''
-                                                loading={true}
-                                                size={10}
-                                            />
-                                        </p>
-                                    }
+                                    < Chat />
                                 </div>
                             </SignedIn>
-
-
                         </div>
                     </CarouselItem> 
-                    <CarouselItem draggable={false}>
+                    <CarouselItem>
                         <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
+                            < FLashCard />
+                            {/* <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
                                     <div className='text-white flex  items-center justify-content-center'
 
                                     
@@ -724,39 +599,7 @@ const Mind = () => {
                                         >View</div>
                                     </div>
 
-                            </div>
-                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
-                                    <div className='text-white flex  items-center justify-content-center'
-
-                                    
-                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
-                                    <div  className='flex '>
-                                        <div className='text-white'>07 Mar  03:13:41</div>
-                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
-                                            onClick={() => {
-                                                console.log('open')
-                                                OpenSheet()
-                                            }}
-                                        >View</div>
-                                    </div>
-
-                            </div>
-                            <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
-                                    <div className='text-white flex  items-center justify-content-center'
-
-                                    
-                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
-                                    <div  className='flex '>
-                                        <div className='text-white'>07 Mar  03:13:41</div>
-                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
-                                            onClick={() => {
-                                                console.log('open')
-                                                OpenSheet()
-                                            }}
-                                        >View</div>
-                                    </div>
-
-                            </div>
+                            </div> */}
                         </div>   
                     </CarouselItem>
 
@@ -805,7 +648,7 @@ const Mind = () => {
                             
                         </div>
                         :
-                        <div className='bg-slate-200 ml-5 p-2 mr-5 rounded-xl overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                        <div className='cursor-pointer bg-slate-200 ml-5 p-2 mr-5 rounded-xl overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
                             <div
                             onClick={() => {
                                 setSelectedQuiz(true)
@@ -979,50 +822,7 @@ const Mind = () => {
 
 
             {/* <BottomSheet /> */}
-            <Sheet open={Open} onOpenChange={CloseSheet}>
-
-                <SheetContent side={'bottom'} className="h-[60%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
-                    <SheetTitle className='font-bold text-lg mb-1'>Flashcard Mode</SheetTitle>
-                    <p className='pl-2 pr-2 bg-[#4871f7] text-white w-fit rounded-xl'>Click to reveal answer</p>
-
-                    <div className=' h-[88%] mt-5 rounded-xl overflow-y-auto'>
-                        
-
-                                <Swiper
-                                    onSlideChange={(swiper) => {
-                                        setIsReveal(false)
-                                        setActiveIndex(swiper.activeIndex)
-                                        // con
-                                    }}
-                                    effect={'cards'}
-                                    grabCursor={true}
-                                    modules={[EffectCards]}
-                                    className='w-[80%] h-[300px] mt-2 rounded-xl items-center justify-content-center'
-                                >
-                                    {flashcards.map((card, index) => (
-                                        <SwiperSlide key={index} className="bg-slate-300 rounded-xl" onClick={() => index === activeIndex && setIsReveal(true)}>
-                                        <div className="p-2 mt-[40%]" >
-                                            <p className="text-center font-bold text-xl">{card.question}</p>
-
-                                            {/* Đáp án chỉ hiển thị nếu là slide active */}
-                                            <motion.div
-                                            initial={{ opacity: 0, y: -10 }}
-                                            animate={{ opacity: isReveal && index === activeIndex ? 1 : 0, y: isReveal && index === activeIndex ? 0 : -10 }}
-                                            transition={{ duration: 0.1, ease: "easeInOut" }}
-                                            className="absolute bottom-0 transform w-11/12 max-w-md p-4 bg-gray-100 rounded-md shadow-lg text-center mb-2"
-                                            >
-                                            {isReveal && index === activeIndex && <div>{card.answer}</div>}
-                                            </motion.div>
-                                        </div>
-                                        </SwiperSlide>
-                                    ))}
-                                </Swiper>
-                            
-
-
-                    </div>
-                </SheetContent>
-            </Sheet>
+            
             {/* <div className='m-5 bg-[#4871f7]'>
                 USER section
             </div> */}

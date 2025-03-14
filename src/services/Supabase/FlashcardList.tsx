@@ -1,17 +1,20 @@
 import supabase from "./ConnectSupabase";
 
-const FlashcardList = async(clerkId: string):Promise<string[]> => {
+const FlashcardList = async(clerkUserId: string, cursor = null):Promise<any[]> => {
     let query = supabase
         .from("flashcard")
         .select("*")
-        .eq("userid",clerkId)
-    const { data,error } = await query
-    if (error) {
-        console.log("can not query flashcard table")
-        return []
+        .eq("userid",clerkUserId)
+        .order("created_at", {ascending : false})
+        .limit(10)
+    if (cursor) {
+        query = query.lt("created_at", cursor);
+    }    
+    const { data, error } = await query
+    if ( error) {
+        console.log("query flashcard fail")
+        return [];
     }
-    return data || []
-    // return new Promise<any>((resolve, reject) => {        
-    // })
+    return data || [];
 }
 export default FlashcardList
