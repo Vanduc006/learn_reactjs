@@ -36,6 +36,18 @@ export const TranslatorNew = async (clerkId: any,listImages: any,GeminiRespone: 
   
 }
 
+export const isHaveTranslator = async(clerkUserId:string):Promise<boolean> => {
+    const { count, error } = await supabase
+        .from("translator")
+        .select("*", { count: "exact", head: true })
+        .eq("userid",clerkUserId)
+    if (error) {
+        console.error("Lỗi khi kiểm tra chat:", error);
+        return false;
+    }    
+    return (count ?? 0) > 0
+}
+
 // import { useEffect, useState, useRef } from "react";
 // import supabase from "./ConnectSupabase";
 

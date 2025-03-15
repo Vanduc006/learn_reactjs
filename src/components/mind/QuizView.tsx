@@ -263,31 +263,31 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { motion } from "framer-motion"
 
 // Sample quiz data - replace with your actual data
-const quizData = [
-  {
-    id: 1,
-    question: "What is the capital of France?",
-    options: ["London", "Berlin", "Paris", "Madrid"],
-    correctAnswer: "Paris",
-    hint: "This city is known as the 'City of Light'.",
-  },
-  {
-    id: 2,
-    question: "Which planet is known as the Red Planet?",
-    options: ["Venus", "Mars", "Jupiter", "Saturn"],
-    correctAnswer: "Mars",
-    hint: "It's named after the Roman god of war.",
-  },
-  {
-    id: 3,
-    question: "What is the largest mammal in the world?",
-    options: ["Elephant", "Blue Whale", "Giraffe", "Polar Bear"],
-    correctAnswer: "Blue Whale",
-    hint: "It's an aquatic mammal that can grow up to 100 feet long.",
-  },
-]
-
-export default function QuizComponent() {
+// const quizData = [
+//   {
+//     id: 1,
+//     question: "What is the capital of France?",
+//     options: ["London", "Berlin", "Paris", "Madrid"],
+//     correctAnswer: "Paris",
+//     hint: "This city is known as the 'City of Light'.",
+//   },
+//   {
+//     id: 2,
+//     question: "Which planet is known as the Red Planet?",
+//     options: ["Venus", "Mars", "Jupiter", "Saturn"],
+//     correctAnswer: "Mars",
+//     hint: "It's named after the Roman god of war.",
+//   },
+//   {
+//     id: 3,
+//     question: "What is the largest mammal in the world?",
+//     options: ["Elephant", "Blue Whale", "Giraffe", "Polar Bear"],
+//     correctAnswer: "Blue Whale",
+//     hint: "It's an aquatic mammal that can grow up to 100 feet long.",
+//   },
+// ]
+// { utcTime }: { utcTime: string }
+export default function QuizComponent({quizData} : {quizData : any}) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState("")
   const [showHint, setShowHint] = useState(false)
@@ -356,7 +356,7 @@ export default function QuizComponent() {
         </CardHeader>
         <CardContent>
           <RadioGroup value={selectedAnswer} onValueChange={handleAnswerSelect} className="space-y-3">
-            {currentQuestion.options.map((option) => (
+            {currentQuestion.options.map((option:any) => (
               <div
                 key={option}
                 className={`flex items-center space-x-2 rounded-md border p-3 ${

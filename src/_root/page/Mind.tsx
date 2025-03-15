@@ -42,7 +42,7 @@ import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel
 // import { Card, CardContent } from "@/components/ui/card"
 
 import { Aperture, Mic, Languages, BookText, Podcast, Settings, SwitchCamera, ChevronsRight,
-    Camera, CameraOff,CircleDashed
+    Camera, CameraOff
     // Send,
  } from 'lucide-react';
 import Select from 'react-select'
@@ -64,11 +64,13 @@ import Marquee from 'react-fast-marquee';
 //services
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
-import QuizComponent from '@/services/Supabase/Quiz';
-import VideoPlayer from '@/services/Supabase/VideoRender';
+import VideoPlayer from '@/components/mind/VideoRender';
 import Chat from '@/components/mind/Chat';
 import PreviewVoice from '@/components/mind/PreviewVoice';
-import FLashCard from '@/components/mind/FLashCard';
+import FLashCard from '@/components/mind/FlashCard';
+import Quizz from '../../components/mind/Quizz';
+import { isHaveFlashcard } from '@/services/Supabase/FlashcardList';
+import { isHaveQuizz } from '@/services/Supabase/QuizList';
 // import InstallPrompt from '@/components/all/InstallSafari';
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -85,8 +87,6 @@ const list_languages_sp = [
     { "value": "DE", "label": "🇩🇪 Đức" },
     { "value": "ES", "label": "🇪🇸 Tây Ban Nha" }
 ]
-
-
 
 const Mind = () => {
 
@@ -176,61 +176,6 @@ const Mind = () => {
           footerActionText: "hidden", // Hides the text (e.g., "Already have an account?")
         },
       };
-
-
-
-    // useEffect(() => {
-    //     console.log('query')
-    //     if(user) {
-    //         const clerkUserId = user?.id
-    //         console.log(clerkUserId)
-    //         setChatSession([])
-    //         // console.log(chatSession)
-    //         setMoreChat(true)
-    //         CallTranslatorList(clerkUserId)
-    //         // iduser(clerkid)
-
-    //     }
-    //     else {
-    //         console.log('User not exists')
-    //     }
-    //     // console.log(chatSession)
-    //     // TranslatorList(us)
-    // },[user])
-
-
-
-    
-    // useEffect(() => {
-    //     const observer = new IntersectionObserver((entries) => {
-    //         const [entry] = entries;
-    //         setVisibleChat(entry.isIntersecting);
-    //     }, observerOptions);
-    
-    //     if (containerRef.current) {
-    //         observer.observe(containerRef.current);
-    //     }
-    
-    //     return () => {
-    //         if (containerRef.current) {
-    //             observer.unobserve(containerRef.current);
-    //         }
-    //     };
-    // }, [observerOptions]);
-
-    // useEffect(() => {
-    //     if (loadingChat && user) {
-    //         console.log('view')
-    //     }
-    // },[loadingChat,user])
-
-
-
-    // useEffect(() => {
-    // Test().then((test) => {
-    //     console.log(test);
-    // });
-    // }, []);
       
     // upload
     // const [Havefile,isHavefile] = useState(false)
@@ -277,19 +222,20 @@ const Mind = () => {
     // ];
     // const [photosPromptUrls, setPhotosPromptUrls] = useState<string[] | null>(null);
 
-
-    //flashcard
-    // const [isReveal,setIsReveal] = useState(false)
-    // // const swiperRef = useRef(null);
-    // const [activeIndex, setActiveIndex] = useState(0);
-    // const flashcards = [
-    //     { question: "How to start a project?", answer: "Start with a plan." },
-    //     { question: "What is React?", answer: "A JavaScript library for UI." },
-    //     { question: "What is Tailwind?", answer: "A utility-first CSS framework." }
-    // ];
-
-    //quiz
-    const [selectedQuiz,setSelectedQuiz] = useState(true)
+    // check to show 
+    const [flashcard,setFlashcard] = useState(false)
+    const [quizz,setQuizz] = useState(false)
+    useEffect(() => {
+        if (user) {
+            isHaveFlashcard(user.id).then((data) => {
+                setFlashcard(data)
+            })
+            isHaveQuizz(user.id).then((data) => {
+                
+                setQuizz(data)
+            })
+        }
+    },[user])
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -581,84 +527,23 @@ const Mind = () => {
                             </SignedIn>
                         </div>
                     </CarouselItem> 
-                    <CarouselItem>
-                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                            < FLashCard />
-                            {/* <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
-                                    <div className='text-white flex  items-center justify-content-center'
 
-                                    
-                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
-                                    <div  className='flex '>
-                                        <div className='text-white'>07 Mar  03:13:41</div>
-                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
-                                            onClick={() => {
-                                                console.log('open')
-                                                OpenSheet()
-                                            }}
-                                        >View</div>
-                                    </div>
+                    {flashcard && 
+                        <CarouselItem>
+                            <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                                < FLashCard />
 
-                            </div> */}
-                        </div>   
-                    </CarouselItem>
+                            </div>   
+                        </CarouselItem>
+                    }
+                    
+                    {quizz &&
+                        <CarouselItem>
+                            < Quizz />                            
+                        </CarouselItem>  
+                    }
+ 
 
-                    <CarouselItem>
-                        {selectedQuiz ? 
-                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                            {/* <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
-                                    <div className='text-white flex  items-center justify-content-center'
-
-                                    
-                                    ><CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/> How to start with Nextjs</div> <br />
-                                    <div  className='flex '>
-                                        <div className='text-white'>07 Mar  03:13:41</div>
-                                        <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
-                                            onClick={() => {
-                                                console.log('open')
-                                                OpenSheet()
-                                            }}
-                                        >View</div>
-                                    </div>
-
-                            </div> */}
-                            <div className='mb-2 rounded-xl p-2 cursor-pointer drop-shadow-xl bg-[#4871f7]'> 
-
-                                <div className='flex'>
-                                    <p className='bg-slate-300 pl-3 pr-3 p-1 rounded-xl mr-2'>Tech</p>
-                                </div>
-                                {/* <div className="w-full">
-                                    <img src="https://images.pexels.com/photos/29947078/pexels-photo-29947078/free-photo-of-d-c-hoang-hon.jpeg" 
-                                    className="w-full h-[130px] object-cover rounded-lg" alt="Quiz" />
-                                </div> */}
-                                <div className='mt-2 text-white flex items-center justify-content-center'>
-                                    <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>
-                                    New games from Bytedance
-                                </div>
-                                <div className='mt-2 text-white flex items-center justify-content-center'>
-                                    <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>
-                                    07 Mar  03:13:41
-                                </div>
-                                <div className='mt-5 text-center bg-slate-300 rounded-xl p-2'
-                                onClick={() => {
-                                    setSelectedQuiz(false)    
-                                }}
-                                >Let's do</div>
-                            </div>
-                            
-                        </div>
-                        :
-                        <div className='cursor-pointer bg-slate-200 ml-5 p-2 mr-5 rounded-xl overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
-                            <div
-                            onClick={() => {
-                                setSelectedQuiz(true)
-                            }}
-                            className='bg-white w-fit p-2 rounded-xl mb-2'
-                            >Back to quiz list</div>
-                            <QuizComponent/>
-                        </div>
-                        }
-                    </CarouselItem>   
                     <CarouselItem>
 
                         <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
@@ -687,13 +572,13 @@ const Mind = () => {
             <div>
                 { photos.length < 0 ? (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
-                    onClick={() => {
+                    // onClick={() => {
                         
-                        UploadImages(photos).then((result) => {
-                            console.log(result)
-                        })
+                    //     UploadImages(photos).then((result) => {
+                    //         console.log(result)
+                    //     })
 
-                    }}                    
+                    // }}                    
                     > 
                         <p className='text-center'>Dịch giúp  tôi</p>                       
                     </div>
@@ -705,9 +590,9 @@ const Mind = () => {
                         TranslatorNew(user?.id,lisst,'<p>Test insert row supabase</p>').then((data) => {
                             console.log(data)
                         })
-                        // UploadImages(photos).then((result) => {
-                        //     console.log(result)
-                        // })
+                        UploadImages(photos).then((result) => {
+                            console.log(result)
+                        })
 
                     }}                    
                     > 

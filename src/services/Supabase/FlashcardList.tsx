@@ -18,3 +18,15 @@ const FlashcardList = async(clerkUserId: string, cursor = null):Promise<any[]> =
     return data || [];
 }
 export default FlashcardList
+
+export const isHaveFlashcard = async(clerkUserId:string):Promise<boolean> => {
+    const { count, error } = await supabase
+        .from("flashcard")
+        .select("*", { count: "exact", head: true })
+        .eq("userid",clerkUserId)
+    if (error) {
+        console.error("Lỗi khi kiểm tra flashcard:", error);
+        return false;
+    }    
+    return (count ?? 0) > 0
+}
