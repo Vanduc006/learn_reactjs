@@ -154,6 +154,8 @@ const Chat = () => {
                         </p>
                     }
                 </div>
+                {/* move chat ref to top */}
+
             </div>    
             : 
             <div className='bg-[#4871f7] text-white p-2 rounded-xl'>Chào mừng bạn đến với MIND</div>

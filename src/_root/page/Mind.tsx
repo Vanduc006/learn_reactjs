@@ -31,23 +31,24 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-// import {
-//     Select1,
-//     SelectContent,
-//     SelectItem,
-//     SelectTrigger,
-//     SelectValue,
-// } from "@/components/ui/select"
+import {
+    Select1,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 import { Carousel, CarouselContent, CarouselItem} from "@/components/ui/carousel"
 // import { Card, CardContent } from "@/components/ui/card"
 
-import { Aperture, Mic, Languages, BookText, Podcast, Settings, SwitchCamera, ChevronsRight,
-    Camera, CameraOff
+import { Aperture, Mic, Languages, BookText, Podcast, Settings, SwitchCamera,
+    Camera, CameraOff,
+    ArrowLeftRight
     // Send,
  } from 'lucide-react';
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
-import { motion } from "framer-motion";
+
 import { SignedIn, SignedOut, SignIn, 
     SignUp, 
     // SignOutButton, 
@@ -71,6 +72,8 @@ import FLashCard from '@/components/mind/FlashCard';
 import Quizz from '../../components/mind/Quizz';
 import { isHaveFlashcard } from '@/services/Supabase/FlashcardList';
 import { isHaveQuizz } from '@/services/Supabase/QuizList';
+import UserRecent from '@/components/mind/UserRecent';
+// import { Textarea } from '@/components/ui/textarea';
 // import InstallPrompt from '@/components/all/InstallSafari';
 // import BottomSheet from '@/components/all/BottomSheet';
 // import ChatInterface from '@/components/all/SampleChat';
@@ -104,7 +107,7 @@ const Mind = () => {
     };
 
     // set show user drag to see content
-    const [hidden, setHidden] = useState(false);
+    // const [hidden, setHidden] = useState(false);
     
     const toogleDevelopment = () => {
         if (Development) {
@@ -236,6 +239,8 @@ const Mind = () => {
             })
         }
     },[user])
+
+
   return (
     <main className='min-h-screen w-full  h-screen overflow-x-hidden overflow-y-auto'>
         <div className="bg-slate-300 text-black  hidden sm:block text-center p-5 justify-content-center items-center w-full h-screen">
@@ -247,7 +252,7 @@ const Mind = () => {
         {/* <InstallPrompt /> */}
 
             <div className='flex justify-content-center items-center text black ml-5 mr-5 mt-2 block  text-white mt-5'>
-                <div className='flex justify-content-center items-center rounded-xl p-1 bg-[#4871f7] drop-shadow-xl'>
+                <div className='flex justify-content-center items-center rounded-xl p-1 drop-shadow-xl bg-[#4871f7] '>
                     
                     <Dialog>    
                             <DialogTrigger><Settings className='flex '/></DialogTrigger>
@@ -264,7 +269,9 @@ const Mind = () => {
                                 />
                                 <DialogTitle className='mb-5 mt-5'>Gói đăng kí của bạn</DialogTitle>
                                 <DialogTitle className='mb-2'>Giọng đọc</DialogTitle>
+                                
                                 <PreviewVoice/>
+
                                 <DialogClose asChild>
                                     <Button type="button" className='bg-[#4871f7] drop-shadow-xl text-white'>
                                         Lưu hoặc Đóng
@@ -272,29 +279,56 @@ const Mind = () => {
                                 </DialogClose>
                             </DialogContent>
                     </Dialog>
-                    {hasCamera === null ? (
-                            <p></p>
-                        ) : hasCamera ? (
-                            <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-75' onClick={toogleDevelopment}>
-                                {(() => {
-                                    if (Development) {
-                                        return (
-                                            <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/> Tắt Camera</p>
-                                        );
-                                    } else {
-                                        return (
-                                            <p className='flex items-center'><Camera className='h-4 w-4 mr-2'/> Bật Camera</p>
-                                        );
-                                    }
-                                })()}
-                                
+
+                    <div className=''>
+                        {hasCamera === null ? (
+                                <p></p>
+                            ) : hasCamera ? (
+                                <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-75' onClick={toogleDevelopment}>
+                                    {(() => {
+                                        if (Development) {
+                                            return (
+                                                <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/> Tắt Camera</p>
+                                            );
+                                        } else {
+                                            return (
+                                                <p className='flex items-center'><Camera className='h-4 w-4 mr-2'/> Bật Camera</p>
+                                            );
+                                        }
+                                    })()}
+                                    
                                 </div>
-                        ) : (
-                            <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-50'>
-                                <p className=''>IMASIS không thấy camera trên thiết bị của bạn</p>
-                            </div>
-                    )}
+                            ) : (
+                                <div className='ml-5 bg-[#5A8DF7] rounded-xl p-1 opacity-50'>
+                                    <p className='flex items-center'><CameraOff className='h-4 w-4 mr-2'/>notfound</p>
+                                </div>
+                        )}
+                    </div>
                     
+                    
+                </div>
+                <div className='ml-auto'>
+                        <div className='flex rounded-xl items-center'>
+                            {/* <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
+                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
+                            </div>   */}
+                            <div className='text-white'>
+                                <SignedOut>
+                                    <div onClick={() => setOpenClerk(true)} className='cursor-pointer bg-[#4871f7] p-1'>
+                                        Đăng nhập
+                                    
+                                    </div>
+                                </SignedOut>       
+                                <SignedIn>                    
+                                    <div className='flex items-center p-1'>
+                                        <div className='rounded-md'>
+                                            <UserButton afterSignOutUrl="/mind" afterSwitchSessionUrl="/mind" afterMultiSessionSingleSignOutUrl='/mind' /> 
+                                        </div>                                        
+                                        {/* <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p> */}
+                                    </div>                               
+                                </SignedIn>
+                            </div>
+                        </div>
                 </div>
                 
             </div>
@@ -344,7 +378,7 @@ const Mind = () => {
                 </motion.div> */}
 
             </SignedOut> 
-            <SignedIn>
+            {/* <SignedIn>
             <div>
                 {!hidden && (
                     <motion.div
@@ -358,7 +392,7 @@ const Mind = () => {
                     </motion.div>
                 )}
                 </div>
-            </SignedIn>
+            </SignedIn> */}
 
             
             <Carousel
@@ -515,17 +549,68 @@ const Mind = () => {
                     </CarouselItem>
                     {/* chat tab */}
                     <CarouselItem> 
-                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+                        <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 text-black h-[58vh] mt-2 cursor-pointer'> 
+
+                            <div className="flex flex-col space-y-2 mb-2">
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <Select1>
+                                            <SelectTrigger className="bg-white text-black">
+                                                <SelectValue placeholder="🇻🇳 Vietnam" />
+                                            </SelectTrigger>
+                                            <SelectContent className='bg-white text-black'>
+                                                {list_languages_sp.map((item) => (
+                                                    <SelectItem key={item.value} value={item.value}>
+                                                        {item.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select1>
+                                    </div>
+                                    <div className='bg-white p-1 rounded-full'>
+                                        < ArrowLeftRight />
+                                    </div>
+                                    <div>
+                                        <Select1>
+                                            <SelectTrigger className="bg-white text-black">
+                                                <SelectValue placeholder="🇬🇧 English" />
+                                            </SelectTrigger>
+                                            <SelectContent className='bg-white text-black'>
+                                                {list_languages_sp.map((item) => (
+                                                    <SelectItem key={item.value} value={item.value}>
+                                                        {item.label}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select1>
+                                        
+                                    </div>
+                                </div>
+                                {/* <div className='flex'>
+                                    {Array(4).fill(null).map((_, index) => (
+                                        <img
+
+                                            key={index}
+                                            className="w-10 h-10 rounded-xl bg-slate-200"
+                                            src={photos[index] || "https://digitalreach.asia/wp-content/uploads/2021/11/placeholder-image-300x225.png"}
+                                            alt="Captured"
+                                        />
+                                    ))}
+                                </div> */}
+                                {/* <Textarea placeholder="Type your message here." className="max-h-[50px] text-base resize-none"/> */}
+                            </div>
+
                             <SignedOut>
                                 <p className='p-2 rounded-xl bg-[#4871f7] text-white mb-2'>Hãy đăng nhập, đăng kí để truy vấn lịch sử LLM, AI Agent bạn nhé</p>
                             </SignedOut>
 
                             <SignedIn>
-                                <div className=''>
+                                <div className='scrollbar-hide md:scrollbar-default overflow-y-auto h-[90%] rounded-xl'>
                                     < Chat />
                                 </div>
                             </SignedIn>
                         </div>
+                        
                     </CarouselItem> 
 
                     {flashcard && 
@@ -580,7 +665,7 @@ const Mind = () => {
 
                     // }}                    
                     > 
-                        <p className='text-center'>Dịch giúp  tôi</p>                       
+                        <p className='text-center'>Thực hiện</p>                       
                     </div>
                 ) : (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
@@ -593,46 +678,24 @@ const Mind = () => {
                         UploadImages(photos).then((result) => {
                             console.log(result)
                         })
+                        
 
                     }}                    
                     > 
-                        <p className='text-center'>Dịch giúp  tôi</p>                     
+                        <p className='text-center'>Thực hiện</p>                     
                     </div>
                 )}
             </div>
+            <div className='flex ml-5 mr-5 mt-2 bg-slate-200 text-black rounded-xl scrollbar-hide md:scrollbar-default h-[50%] overflow-y-auto'>
+                < UserRecent />
+            </div>
                                   
 
-            <div className='flex ml-5 mr-5 mt-2'>
+            {/* <div className='flex ml-5 mr-5 mt-2'>
 
                 <div className='flex flex-col justify-center text-black overflow-hidden bg-slate-200 scrollbar-hide md:scrollbar-default overflow-hidden overflow-x-auto p-2 rounded-xl w-full'>
-                <div 
-                        className=''
+                    <div className='' >      
                         
-                    >      
-                        <div className='flex rounded-xl bg-[#4871f7] p-2 items-center'>
-                            {/* <div className='flex w-5 h-5 text-black opacity-75 mr-2'>
-                                <iframe src="https://lottie.host/embed/af45882e-8502-4adb-9d6c-739d823b65db/O9CEimqPF0.lottie" className='w-[100%] h-[100%]'></iframe>
-                            </div>   */}
-                            <div className='text-white'>
-                                <div onClick={() => setOpenClerk(true)} className='cursor-pointer'>
-                                    <SignedOut>Click để đăng nhập</SignedOut> 
-                                    
-                                </div>
-                                    
-                                <SignedIn>
-
-                                
-                                    <div className='flex items-center'>
-                                        <div className='rounded-md'>
-                                            <UserButton afterSignOutUrl="/mind" afterSwitchSessionUrl="/mind" afterMultiSessionSingleSignOutUrl='/mind' /> 
-                                        </div>
-                                        
-                                        <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p>
-                                    </div>
-                                
-                                </SignedIn>
-                            </div>
-                        </div>
 
                     </div>
                     <p className='mt-1 '> 
@@ -665,7 +728,7 @@ const Mind = () => {
                     
                         
                 </div> 
-            </div>  
+            </div>   */}
             
             {/* Nếu chưa đăng nhập, mở dialog login */}
             <SignedOut>
