@@ -314,7 +314,7 @@ const Mind = () => {
                             </div>   */}
                             <div className='text-white'>
                                 <SignedOut>
-                                    <div onClick={() => setOpenClerk(true)} className='cursor-pointer bg-[#4871f7] p-1'>
+                                    <div onClick={() => setOpenClerk(true)} className='cursor-pointer bg-[#4871f7] p-2 rounded-xl'>
                                         Đăng nhập
                                     
                                     </div>

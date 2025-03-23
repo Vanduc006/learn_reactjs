@@ -123,7 +123,7 @@ const Chat = () => {
                                     )}
                                     
                                 </div>
-                                <div id='mode' className='w-[90%] mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
+                                <div id='mode' className='w-full mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
                                     <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
                                         
                                         {/* creat at {chat.created_at} */}
@@ -134,6 +134,9 @@ const Chat = () => {
                                     
                                     {parse(chat.api_respone_content)}
                                     
+                                    <div className='flex'>
+                                        <p></p>
+                                    </div>
                                     <div className='flex mt-5'>
                                         <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
                                     </div>
