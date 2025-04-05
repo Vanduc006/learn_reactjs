@@ -1,6 +1,6 @@
 import TranslatorList, { isHaveTranslator } from '@/services/Supabase/TranslatorList';
 import { SignedIn, useUser } from '@clerk/clerk-react';
-import { Bot, ScanText, ThumbsDown, ThumbsUp, User } from 'lucide-react';
+import { ScanText, ThumbsDown, ThumbsUp, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 import BeatLoader from 'react-spinners/BeatLoader';
 import parse from 'html-react-parser';
@@ -104,7 +104,7 @@ const Chat = () => {
 
                         return (
                             <div key={index}>
-                                <div id='user' className='ml-auto mb-5 bg-[#4871f7] p-2 rounded-xl drop-shadow-2xl max-w-[75%]'>
+                                <div id='user' className='ml-auto mb-5 bg-black p-2 rounded-xl drop-shadow-2xl w-fit'>
                                     
                                     <div className='flex items-center bg-white p-1 rounded-xl mb-1 overflow-hidden'>
                                         
@@ -115,7 +115,7 @@ const Chat = () => {
                                     </div> 
                                     
                                     {photos.length > 0 && (
-                                        <div id="user-media" className="grid grid-cols-3 gap-2 mt-3">
+                                        <div id="user-media" className="grid grid-cols-2 gap-2 mt-3 ">
                                             {photos.map((src:string, imgIndex:any) => (
                                                 <img key={imgIndex} className="w-[100px] h-[100px] rounded-lg object-cover" src={src.trim()} alt="User Upload" />
                                             ))}
@@ -123,15 +123,8 @@ const Chat = () => {
                                     )}
                                     
                                 </div>
-                                <div id='mode' className='w-full mb-5 bg-slate-300 p-2 rounded-xl drop-shadow-xl'>
-                                    <div className='flex items-center bg-white p-1 rounded-xl mb-1'>
-                                        
-                                        {/* creat at {chat.created_at} */}
-                                        <Bot className='h-4 w-4 mr-1 ml-1'/> Translator
-                                        <div className='ml-auto bg-slate-100 p-1 rounded-xl'><DateFormat utcTime={chat.created_at}/></div>
-                                    </div>    
-
-                                    
+                                <div id='mode' className='w-[80%] mb-1 bg-gray-200 p-2 rounded-xl drop-shadow-xl'>
+  
                                     {parse(chat.api_respone_content)}
                                     
                                     <div className='flex'>
@@ -140,7 +133,12 @@ const Chat = () => {
                                     <div className='flex mt-5'>
                                         <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> <ThumbsDown className='h-4 w-4 mr-1 ml-1'/> <ScanText className='h-4 w-4 mr-1 ml-1'/>
                                     </div>
+                                    
                                 </div> 
+                                <div className='text-sm mb-5'>
+                                    <DateFormat utcTime={chat.created_at}/>
+                                </div>
+                                
                             </div>
                         );
                     })}

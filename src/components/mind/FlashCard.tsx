@@ -114,17 +114,17 @@ const FLashCard = () => {
 
                 return (
                     <div key={index}>
-                        <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
-                            <div className='text-white flex  items-center justify-content-center'
+                        <div className='bg-gray-200 p-1 rounded-xl mb-2 cursor-pointer p-2'>
+                            <div className='text-black flex  items-center justify-content-center font-bold'
                             >
                                 <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>{flashcard.title_flashcard}
                                 {flashcard.ispin ? <PinOff className="w-4 h-4 ml-auto" /> : <Pin className="w-4 h-4 ml-auto" />}
                                 {/* <Pin className="w-4 h-4 ml-auto" /> */}
                             </div> 
                             <br />
-                            <div  className='flex '>
-                                <div className='text-white'><DateFormat utcTime={flashcard.created_at} /></div>
-                                <div className='ml-auto bg-slate-300 rounded-xl pl-2 pr-2'
+                            <div  className='flex'>
+                                <div className='text-black  pr-5 pt-2 pb-2'><DateFormat utcTime={flashcard.created_at} /></div>
+                                <div className='ml-auto bg-slate-300 rounded-xl pl-5 pr-5 pt-2 pb-2'
                                     onClick={() => {
                                         // console.log('open')
                                         setIsReveal(false)

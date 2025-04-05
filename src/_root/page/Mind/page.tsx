@@ -1,0 +1,389 @@
+"use client"
+
+import { useState } from "react"
+import {
+  ShowerHead,
+  Droplet,
+  SpaceIcon as Yoga,
+  Dumbbell,
+  Mail,
+  Smartphone,
+  Plus,
+  Menu,
+  Home,
+  User,
+  X,
+  Camera,
+  FolderOpen,
+  Folder,
+  Bot,
+  Send,
+  Dna,
+  ScrollText,
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+
+import { cn } from "@/lib/utils"
+// import { useMediaQuery } from "@/hooks/use-media-query"
+// import Link from "next/link"
+import { Link, } from "react-router-dom"
+import { SignedIn, SignedOut, 
+  // SignIn, 
+  //   SignUp, 
+    // SignOutButton, 
+    UserButton, 
+    // useUser
+  } from "@clerk/clerk-react";
+import Chat from "@/components/mind/Chat"
+import FLashCard from "@/components/mind/FlashCard"
+import Quizz from "@/components/mind/Quizz"
+import { Textarea } from "@/components/ui/textarea"
+
+export default function Dashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [currentTab, setCurrentTab ] = useState("home")
+//   const isDesktop = useMediaQuery("(min-width: 1024px)")
+
+  const tasks = [
+    {
+      id: 1,
+      title: "Take cold showers only",
+      day: 18,
+      icon: ShowerHead,
+    },
+    {
+      id: 2,
+      title: "Use PanOxyl foaming wash",
+      day: 17,
+      icon: Droplet,
+    },
+    {
+      id: 3,
+      title: "Do 10x Child Pose stretch",
+      day: 18,
+      icon: Yoga,
+    },
+    {
+      id: 4,
+      title: "Do 100 Push Ups",
+      day: 9,
+      icon: Dumbbell,
+    },
+    {
+      id: 5,
+      title: "Test Cora email app",
+      day: 19,
+      icon: Mail,
+    },
+    {
+      id: 6,
+      title: "No social media & entertainment",
+      day: 1,
+      icon: Smartphone,
+    },
+  ]
+
+  return (
+    <div className="flex h-screen bg-gray-100 text-gray-900">
+      {/* Sidebar for desktop */}
+      <aside
+        className={cn(
+          "fixed inset-y-0 z-50 flex w-72 flex-col bg-white shadow-lg transition-transform lg:static lg:translate-x-0",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full",
+        )}
+      >
+        <div className="flex h-16 items-center justify-between px-6 border-b">
+          <h2 className="text-xl font-semibold cursor-pointer" onClick={() => {setCurrentTab("home")}}>MIND</h2>
+          <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
+            <X className="h-5 w-5" />
+          </Button>
+        </div>
+        <nav className="flex-1 overflow-auto p-4">
+          <ul className="space-y-2">
+            <li>
+                
+              <Button variant="secondary" className="w-full justify-start gap-2"
+              onClick={() => {
+                setCurrentTab("home")
+              }}>
+                  <Home className="h-5 w-5" />
+                  Your Activities
+              </Button>
+
+            </li>
+            <li>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>
+                    <Button variant="ghost" className="w-full justify-start gap-2">
+                      <FolderOpen className="h-5 w-5" />
+                      Your folders
+                    </Button>
+                  </AccordionTrigger>
+                  <AccordionContent className="ml-3 max-h-48 overflow-y-auto">
+                    <div className="mb-2 text-sm flex p-1"><Folder className="w-4 h-4 mr-2"/>Learn how to code</div>
+                    <div className="mb-2 text-sm flex p-1"><Folder className="w-4 h-4 mr-2"/>Learn how to code</div>
+                    <div className="mb-2 text-sm flex p-1"><Folder className="w-4 h-4 mr-2"/>Learn how to code</div>
+                    <div className="mb-2 text-sm flex p-1"><Folder className="w-4 h-4 mr-2"/>Learn how to code</div>
+
+                  </AccordionContent>
+                  
+                </AccordionItem>
+              </Accordion>
+            </li>
+
+            <li>
+
+              <Button variant="ghost" className="w-full justify-start gap-2"
+              onClick={() => {
+                setCurrentTab("chat")
+              }}>
+                <Bot className="w-5 h-5"/>Your spaces
+              </Button>
+
+              <div className="ml-3">
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
+              </div>
+
+            </li>
+            <li>
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <User className="h-5 w-5" />
+                  Profile
+                </Button>
+
+            </li>
+            {/* <li>
+              <Link to="/camera">
+                <Button variant="ghost" className="w-full justify-start gap-2">
+                  <Camera className="h-5 w-5" />
+                  Camera
+                </Button>
+              </Link>
+            </li>
+            <li>
+              <Button variant="ghost" className="w-full justify-start gap-2">
+                <Settings className="h-5 w-5" />
+                Settings
+              </Button>
+            </li> */}
+          </ul>
+        </nav>
+      </aside>
+
+      {/* Main content */}
+      
+
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Header */}
+        <header className="flex h-16 items-center justify-between border-b bg-white px-6">
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
+              <Menu className="h-5 w-5" />
+            </Button>
+            {/* <h1 className="text-xl font-semibold lg:hidden">Habit Tracker</h1> */}
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-500">March 27, 2025</span>
+            <SignedIn>                    
+                <div className='flex items-center p-1'>
+                    <div className='rounded-md'>
+                        <UserButton afterSignOutUrl="/mind" afterSwitchSessionUrl="/mind" afterMultiSessionSingleSignOutUrl='/mind' /> 
+                    </div>                                        
+                    {/* <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p> */}
+                </div>                               
+            </SignedIn>
+            <SignedOut>
+              please login to use
+            </SignedOut>
+          </div>
+        </header>
+
+        {/* Main content area */}
+        <main className="flex-1 overflow-auto p-6">
+
+          {
+            currentTab == "home" ? <></> : 
+            <div className="flex">
+              <div className="cursor-pointer mb-5 flex overflow-x-auto whitespace-nowrap space-x-2 lg:w-full scrollbar-hide md:scrollbar-default overflow-hidden rounded-xl mr-5">
+                <div className={`${ currentTab == "report" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`} >
+                  <ScrollText className="w-4 h-4 mr-2"/> Report
+                </div>  
+                <div className={`${ currentTab == "chat" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`}
+                onClick={() => {
+                  setCurrentTab("chat")
+                }}
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg> Chat 
+                </div>
+                <div className={`${ currentTab == "flashcard" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`}
+                onClick={() => {
+                  setCurrentTab("flashcard")
+                }}
+                >
+                
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-sparkles-icon lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>Flashcard
+                </div>
+                <div className={`${ currentTab == "quizz" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`}
+                onClick={() => {
+                  setCurrentTab("quizz")
+                }}
+                >
+                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-rainbow-icon lucide-rainbow"><path d="M22 17a10 10 0 0 0-20 0"/><path d="M6 17a6 6 0 0 1 12 0"/><path d="M10 17a2 2 0 0 1 4 0"/></svg> Quizz
+                </div>      
+                <div className={`${ currentTab == "transcript" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-notepad-text-icon lucide-notepad-text"><path d="M8 2v4"/><path d="M12 2v4"/><path d="M16 2v4"/><rect width="16" height="18" x="4" y="4" rx="2"/><path d="M8 10h6"/><path d="M8 14h8"/><path d="M8 18h5"/></svg>Transcript
+                </div>  
+                
+              </div>
+
+              <div className="cursor-pointer mb-5 flex rounded-full transition-transform hover:scale-[1.02] bg-white border-2 border-gray-200 items-center p-2">
+                <div className="">
+                  <Dna className=""/>
+                </div>
+                
+              </div>
+            </div>
+          }
+
+          {/* Task grid */}
+          { currentTab == "chat" ? 
+          <>
+            <div className="overflow-y-auto h-[75%] rounded-xl p-1 bg-white">
+              <div className="items-center justify-content-center lg:w-[50%] lg:mx-auto"> 
+                <Chat/>
+
+              </div>
+            </div>
+            <div className="">
+              <div className="lg:w-[50%] lg:mx-auto h-fit"> 
+                
+                <div className="flex mb-1 cursor-pointer">
+                  <div className="text-white bg-black items-center justify-content-center pl-5 pr-5 pt-2 pb-2 rounded-xl transition-transform hover:scale-[1.02]">
+                    recomended chat
+                  </div>
+                  <div className="bg-gray-200 ml-auto items-center justify-content-center pl-5 pr-5 pt-2 pb-2 rounded-xl transition-transform hover:scale-[1.02]">
+                    <Send className="w-5 h-5"/>
+                  </div>
+                  
+                </div>
+                <div className="flex">
+                  <Textarea placeholder="Your message..." className="resize-none border-none"/>
+                  
+
+                </div>
+              </div>
+              
+            </div>
+          </> 
+          : 
+          <></>
+          }
+
+          {
+            currentTab == "flashcard" ? 
+            <>
+              <div className="scrollbar-hide md:scrollbar-default overflow-y-auto h-[80%] rounded-xl p-1">
+                <div className="w-[100%] items-center justify-content-center"> 
+                  <FLashCard/>
+                </div>
+              </div>
+            </> : <></>
+          }
+
+          {
+            currentTab == "quizz" ? 
+            <>
+              <div className="scrollbar-hide md:scrollbar-default overflow-y-auto h-[100%] rounded-xl p-1">
+                <div className="w-[100%] items-center justify-content-center"> 
+                  <Quizz/>
+
+                </div>
+              </div>
+            </> : <></>
+          }
+
+          {
+            currentTab == "home" ? 
+            <>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">Where your knowleagde begin</h2>
+                
+                <div className="flex gap-2">
+                  <Link to="/camera">
+                    <Button variant="outline" size="icon" className="rounded-full">
+                      <Camera className="h-5 w-5" />
+                    </Button>
+                  </Link>
+
+                  <Button className="rounded-full">
+                    <Plus className="h-5 w-5 mr-2" />
+                    Add Habit
+                  </Button>
+                </div>
+              </div>
+              <h1 className="text-sm block mb-5">You can upload, capture, record, and more</h1>
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                {tasks.map((task) => (
+                  <div
+                    key={task.id}
+                    className="bg-gray-200 rounded-3xl p-4 flex flex-col h-40 transition-transform hover:scale-[1.02] cursor-pointer"
+                  >
+                    <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
+                      <task.icon className="text-white w-5 h-5" />
+
+                    </div>
+                    <div className="mt-auto">
+                      <h3 className="font-medium text-sm">{task.title}</h3>
+                      <p className="text-gray-500 text-xs mt-1">Day {task.day}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Stats section */}
+              <div className="mt-10">
+                <h2 className="text-2xl font-bold mb-6">Weekly Progress</h2>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                  <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <h3 className="text-lg font-medium mb-2">Completion Rate</h3>
+                    <p className="text-3xl font-bold">87%</p>
+                    <p className="text-sm text-gray-500 mt-1">+12% from last week</p>
+                  </div>
+                  <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <h3 className="text-lg font-medium mb-2">Streak</h3>
+                    <p className="text-3xl font-bold">19 days</p>
+                    <p className="text-sm text-gray-500 mt-1">Your longest streak yet!</p>
+                  </div>
+                  <div className="bg-white rounded-3xl p-6 shadow-sm">
+                    <h3 className="text-lg font-medium mb-2">Total Habits</h3>
+                    <p className="text-3xl font-bold">6 active</p>
+                    <p className="text-sm text-gray-500 mt-1">2 completed this month</p>
+                  </div>
+                </div>
+              </div>
+            </> : <></>
+          }
+
+        </main>
+      </div>
+
+      {/* Mobile navigation */}
+      
+    </div>
+  )
+}
+

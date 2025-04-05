@@ -74,7 +74,7 @@ const Quizz = () => {
     <div>
         {selectedQuiz ? 
                                     
-            <div className='bg-slate-200 ml-5 mr-5 rounded-xl p-2 overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+            <div className=''>
                 {QuizzSession.map((quizz,index) => {
                     return (
                         <div className='mb-2 rounded-xl p-2 cursor-pointer drop-shadow-xl bg-[#4871f7]' key={index}> 
@@ -135,7 +135,7 @@ const Quizz = () => {
             
             :
 
-            <div className='cursor-pointer bg-slate-200 ml-5 p-2 mr-5 rounded-xl overflow-y-auto text-black h-[58vh] mt-2 scrollbar-hide md:scrollbar-default'>
+            <div className=''>
                 <div
                 onClick={() => {
                     setSelectedQuiz(true)

@@ -11,12 +11,14 @@ import PhatNguoi from './_root/page/PhatNguoi'
 import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
 import Mind from './_root/page/Mind'
 import NotFound from './_root/page/NotFound'
+import Dashboard from './_root/page/Mind/page'
+
 // import PhotoBooth from './_root/page/PhotoBooth'
 
 const App = () => {
 
   return (
-  <main className='flex h-screen'> 
+  <main className=''> 
 
     <Routes>
       
@@ -38,6 +40,12 @@ const App = () => {
       <Route path="/mind" element={<Mind/>}> </Route>
       <Route path="/" element={<Mind/>}> </Route>
       <Route path="*" element={<NotFound/>} ></Route>
+      <Route path="/ver2" element={< Dashboard/>} >
+        {/* <Route path="profile" element={<ProfileSettings />} /> */}
+        {/* <Route path="chat" element={<div className='scrollbar-hide md:scrollbar-default overflow-y-auto h-[80%] rounded-xl'>
+                                    < Chat />
+                                </div>} ></Route> */}
+      </Route>
       {/* <Route path="/booth" element={<PhotoBooth/>} ></Route> */}
       
 
