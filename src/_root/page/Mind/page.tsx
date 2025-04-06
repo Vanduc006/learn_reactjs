@@ -207,7 +207,9 @@ export default function Dashboard() {
                 </div>                               
             </SignedIn>
             <SignedOut>
-              please login to use
+              <div className="flex items-center justify-content-center bg-gray-200 pl-3 pr-3 pt-1 pb-1 rounded-xl cursor-pointer">
+                Sign In <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 ml-2 lucide lucide-ampersand-icon lucide-ampersand"><path d="M17.5 12c0 4.4-3.6 8-8 8A4.5 4.5 0 0 1 5 15.5c0-6 8-4 8-8.5a3 3 0 1 0-6 0c0 3 2.5 8.5 12 13"/><path d="M16 12h3"/></svg> Sign Up
+              </div>
             </SignedOut>
           </div>
         </header>
@@ -217,6 +219,7 @@ export default function Dashboard() {
 
           {
             currentTab == "home" ? <></> : 
+            
             <div className="flex">
               <div className="cursor-pointer mb-5 flex overflow-x-auto whitespace-nowrap space-x-2 lg:w-full scrollbar-hide md:scrollbar-default overflow-hidden rounded-xl mr-5">
                 <div className={`${ currentTab == "report" ? "bg-gray-200" : "bg-white border-2 border-gray-200"} flex items-center transition-transform hover:scale-[1.02] pl-5 pr-5 pt-2 pb-2 font-bold rounded-xl`} >
@@ -319,6 +322,7 @@ export default function Dashboard() {
           {
             currentTab == "home" ? 
             <>
+            <SignedIn>
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold">Where your knowleagde begin</h2>
                 
@@ -375,6 +379,7 @@ export default function Dashboard() {
                   </div>
                 </div>
               </div>
+              </SignedIn>
             </> : <></>
           }
 

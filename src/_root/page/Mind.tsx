@@ -178,7 +178,7 @@ const Mind = () => {
           footerActionLink: "hidden", // Hides the link (Sign In / Sign Up)
           footerActionText: "hidden", // Hides the text (e.g., "Already have an account?")
         },
-      };
+    };
       
     // upload
     // const [Havefile,isHavefile] = useState(false)
