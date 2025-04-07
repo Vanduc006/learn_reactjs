@@ -34,7 +34,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 const App = () => {
-  const {user} = useUser()
+  // const {user} = useUser()
   return (
   <main className=''> 
 

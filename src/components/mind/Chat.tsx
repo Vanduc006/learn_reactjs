@@ -1,4 +1,4 @@
-import TranslatorList, { isHaveTranslator } from '@/services/Supabase/TranslatorList';
+import TranslatorList from '@/services/Supabase/TranslatorList';
 import { SignedIn, useUser } from '@clerk/clerk-react';
 import { ScanText, ThumbsDown, ThumbsUp, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
@@ -10,7 +10,7 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
     const { user } = useUser();
     const [chatSession, setChatSession] = useState<any[]>([]);
     const [isHave, setIsHave ] = useState(true)
-
+    setIsHave(true)
     const [loadingChat,setLoadingChat] = useState(false)
     const [moreChat,setMoreChat] = useState(true)
     const lastChatRef = useRef(null)
@@ -21,18 +21,19 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
         threshold: 1.0
     };
 
-    useEffect(() => {
-        if (user) {
-            if (currentSpace) {
-                isHaveTranslator(currentSpace).then((data) => {
-                    setIsHave(data)
+    // useEffect(() => {
+    //     // if (currentSpace) {
+    //     //     isHaveTranslator(currentSpace).then((data) => {
+                
+    //     //         setIsHave(data)
 
-                })
-            }    
-        }
-    },[user,currentSpace])
+    //     //     })
+    //     // }  
+
+    // },[user,currentSpace])
 
     async function CallTranslatorList(spaceID : string,cursor = null) {
+
         TranslatorList(spaceID,cursor).then((data) => {
 
             // if (!moreChat || loadingChat) {
@@ -65,6 +66,7 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
 
   // Load lại dữ liệu khi `currentSpace` thay đổi
     useEffect(() => {
+
         // Reset chat session và trạng thái liên quan khi currentSpace thay đổi
         setChatSession([]);  // Clear current chat session
         setMoreChat(true);   // Reset moreChat để có thể load thêm
@@ -73,6 +75,8 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
         if (currentSpace) {
             CallTranslatorList(currentSpace);
         }
+
+  
     }, [currentSpace]);
 
     useEffect(() => {
@@ -106,7 +110,7 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
                 // }
             }
         }
-    },[observerOptions,loadingChat,user,isHave,currentSpace]);
+    },[observerOptions,loadingChat,user,isHave]);
   return (
     <div>
         {/* {isHave ? <p>Có chat</p> : <p>Không có chat</p>} */}

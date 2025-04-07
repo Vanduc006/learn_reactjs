@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import supabase from './ConnectSupabase'
 
 const SpaceList = async(clerkUserId: string, cursor = null):Promise<any[]> => {

@@ -54,8 +54,12 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
         }
     },[observerOptions,loadingSpace,user])
     //hadle click space
+
+    const [selectBackground, setSelectBackground] = useState<string>('');
     const handleSpaceSelect = (id: string) => {
         setCurrentSpace(id); // Cập nhật currentSpace khi chọn
+        setSelectBackground(id);
+        
     };
 
     // handle change
@@ -96,9 +100,10 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
         </div> */}
         <div>
             {spaceSession.map((space,index) => {
+                
                 return (
-                    <div key={index}>
-                        <div className="mb-2 text-sm flex p-1 hover:scale-[1.05] hover:bg-gray-50 rounded-xl cursor-pointer"> 
+                    <div key={index} >
+                        <div className={`${space.id == selectBackground ? "bg-gray-300 hover:bg-gray-300 hover:scale-[1]" : 'hover:bg-gray-50'} mb-2 text-sm flex p-1 hover:scale-[1.05] rounded-xl cursor-pointer`}> 
                         <Popover 
                         open={openPopover === space.id} 
                         onOpenChange={(open) => {

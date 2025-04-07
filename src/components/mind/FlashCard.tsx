@@ -168,9 +168,10 @@ const FLashCard = () => {
         </div>
         {/* drawer bottom */}
         <div>
+            
         <Sheet open={Open} onOpenChange={CloseSheet}>
 
-            <SheetContent side={'bottom'} className="h-[60%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
+            <SheetContent side={'bottom'} className="lg:w-[20%] mx-auto h-[60%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
                 <SheetTitle className='font-bold text-lg mb-1'>Flashcard Mode</SheetTitle>
                 <p className='pl-2 pr-2 bg-[#4871f7] text-white w-fit rounded-xl'>Click to reveal answer</p>
 
