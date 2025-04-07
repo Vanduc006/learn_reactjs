@@ -56,7 +56,7 @@ const MindAuth = () => {
 
         <footer className="border-t bg-white p-4 text-center text-sm text-gray-500">
             <div className="container mx-auto max-w-6xl">
-                © {new Date().getFullYear()} Habit Tracker. All rights reserved.
+                © {new Date().getFullYear()} IMASIS MIND. All rights reserved.
             </div>
         </footer>
   </div>

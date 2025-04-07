@@ -1,10 +1,10 @@
 import supabase from "./ConnectSupabase";
 
-const TranslatorList = async (clerkUserId: string,cursor = null): Promise<any[]> => {
+const TranslatorList = async (spaceID: string,cursor = null): Promise<any[]> => {
     let query = supabase
         .from('translator')
         .select('*')
-        .eq('userid', clerkUserId)
+        .eq('spaceid', spaceID)
         .order("created_at", { ascending: false })
         // .order("id", { ascending: false })
         .limit(10)
@@ -36,11 +36,11 @@ export const TranslatorNew = async (clerkId: any,listImages: any,GeminiRespone: 
   
 }
 
-export const isHaveTranslator = async(clerkUserId:string):Promise<boolean> => {
+export const isHaveTranslator = async(spaceID:string):Promise<boolean> => {
     const { count, error } = await supabase
         .from("translator")
         .select("*", { count: "exact", head: true })
-        .eq("userid",clerkUserId)
+        .eq("spaceid",spaceID)
     if (error) {
         console.error("Lỗi khi kiểm tra chat:", error);
         return false;

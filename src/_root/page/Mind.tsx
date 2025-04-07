@@ -66,7 +66,7 @@ import Marquee from 'react-fast-marquee';
 import { UploadImages } from '@/services/Cloudinary/UploadImages';
 import { TranslatorNew } from '@/services/Supabase/TranslatorList';
 import VideoPlayer from '@/components/mind/VideoRender';
-import Chat from '@/components/mind/Chat';
+// import Chat from '@/components/mind/Chat';
 import PreviewVoice from '@/components/mind/PreviewVoice';
 import FLashCard from '@/components/mind/FlashCard';
 import Quizz from '../../components/mind/Quizz';
@@ -606,7 +606,7 @@ const Mind = () => {
 
                             <SignedIn>
                                 <div className='scrollbar-hide md:scrollbar-default overflow-y-auto h-[90%] rounded-xl'>
-                                    < Chat />
+                                    {/* < Chat /> */}
                                 </div>
                             </SignedIn>
                         </div>

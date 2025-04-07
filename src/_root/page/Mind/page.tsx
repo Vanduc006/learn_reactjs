@@ -18,8 +18,9 @@ import {
   Folder,
   Bot,
   Send,
-  Dna,
+  // Dna,
   ScrollText,
+  // CircleEllipsis,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -44,10 +45,12 @@ import Chat from "@/components/mind/Chat"
 import FLashCard from "@/components/mind/FlashCard"
 import Quizz from "@/components/mind/Quizz"
 import { Textarea } from "@/components/ui/textarea"
+import Space from "@/components/mind/space/Space"
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentTab, setCurrentTab ] = useState("home")
+  const [currentSpace, setCurrentSpace] = useState<string | null>(null);
 //   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
   const tasks = [
@@ -104,7 +107,7 @@ export default function Dashboard() {
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <nav className="flex-1 overflow-auto p-4">
+        <nav className="flex-1 overflow-auto p-4 scrollbar-hide">
           <ul className="space-y-2">
             <li>
                 
@@ -139,33 +142,30 @@ export default function Dashboard() {
             </li>
 
             <li>
-
-              <Button variant="ghost" className="w-full justify-start gap-2"
-              onClick={() => {
-                setCurrentTab("chat")
-              }}>
-                <Bot className="w-5 h-5"/>Your spaces
-              </Button>
-
-              <div className="ml-3">
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-                <div className="mb-2 text-sm flex p-1"> Learn how to code</div>
-              </div>
-
-            </li>
-            <li>
                 <Button variant="ghost" className="w-full justify-start gap-2">
                   <User className="h-5 w-5" />
                   Profile
                 </Button>
 
             </li>
+            
+            <li>
+
+              <Button variant="ghost" className="w-full justify-start gap-2"
+>
+                <Bot className="w-5 h-5"/>Your spaces
+              </Button>
+
+              <div className="ml-3 overflow-hidden overflow-y-auto"
+                onClick={() => {
+                  setCurrentTab("chat")
+                }}
+              >
+                <Space setCurrentSpace={setCurrentSpace} />
+              </div>
+
+            </li>
+
             {/* <li>
               <Link to="/camera">
                 <Button variant="ghost" className="w-full justify-start gap-2">
@@ -253,12 +253,12 @@ export default function Dashboard() {
                 
               </div>
 
-              <div className="cursor-pointer mb-5 flex rounded-full transition-transform hover:scale-[1.02] bg-white border-2 border-gray-200 items-center p-2">
+              {/* <div className="cursor-pointer mb-5 flex rounded-full transition-transform hover:scale-[1.02] bg-white border-2 border-gray-200 items-center p-2">
                 <div className="">
                   <Dna className=""/>
                 </div>
                 
-              </div>
+              </div> */}
             </div>
           }
 
@@ -267,7 +267,8 @@ export default function Dashboard() {
           <>
             <div className="overflow-y-auto h-[75%] rounded-xl p-1 bg-white">
               <div className="items-center justify-content-center lg:w-[50%] lg:mx-auto"> 
-                <Chat/>
+
+                <Chat currentSpace={currentSpace}/>
 
               </div>
             </div>

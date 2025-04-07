@@ -6,10 +6,11 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import parse from 'html-react-parser';
 import DateFormat from './DateFormat';
 
-const Chat = () => {
+const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
     const { user } = useUser();
     const [chatSession, setChatSession] = useState<any[]>([]);
     const [isHave, setIsHave ] = useState(true)
+
     const [loadingChat,setLoadingChat] = useState(false)
     const [moreChat,setMoreChat] = useState(true)
     const lastChatRef = useRef(null)
@@ -19,16 +20,20 @@ const Chat = () => {
         rootMargin: "0px",
         threshold: 1.0
     };
+
     useEffect(() => {
         if (user) {
-            isHaveTranslator(user?.id).then((data) => {
-                setIsHave(data)
-            })
-        }
-    },[user])
+            if (currentSpace) {
+                isHaveTranslator(currentSpace).then((data) => {
+                    setIsHave(data)
 
-    async function CallTranslatorList(clerkUserId : string,cursor = null) {
-        TranslatorList(clerkUserId,cursor).then((data) => {
+                })
+            }    
+        }
+    },[user,currentSpace])
+
+    async function CallTranslatorList(spaceID : string,cursor = null) {
+        TranslatorList(spaceID,cursor).then((data) => {
 
             // if (!moreChat || loadingChat) {
             //     console.log("morechat false , loading false")
@@ -57,6 +62,19 @@ const Chat = () => {
         })
     }
 
+
+  // Load lại dữ liệu khi `currentSpace` thay đổi
+    useEffect(() => {
+        // Reset chat session và trạng thái liên quan khi currentSpace thay đổi
+        setChatSession([]);  // Clear current chat session
+        setMoreChat(true);   // Reset moreChat để có thể load thêm
+        setLastCreatedAt(null); // Reset lastCreatedAt
+
+        if (currentSpace) {
+            CallTranslatorList(currentSpace);
+        }
+    }, [currentSpace]);
+
     useEffect(() => {
         if (isHave) {
             const observer = new IntersectionObserver((entries) => {
@@ -68,14 +86,15 @@ const Chat = () => {
                 observer.observe(lastChatRef.current)
                 // console.log(loadingChat)
             } 
-            if (loadingChat && user ) {
-                const clerkUserId = user?.id
+            if (loadingChat && currentSpace ) {
+                // const clerkUserId = user?.id
+                const spaceID = currentSpace;
                 if (!moreChat) {
                     console.log("No more chat")
                     return
                 }
                 else {
-                    CallTranslatorList(clerkUserId,lastCreatedAt)
+                    CallTranslatorList(spaceID,lastCreatedAt)
                 }
                 
                 // console.log(clerkUserId)
@@ -87,7 +106,7 @@ const Chat = () => {
                 // }
             }
         }
-    },[observerOptions,loadingChat,user,isHave]);
+    },[observerOptions,loadingChat,user,isHave,currentSpace]);
   return (
     <div>
         {/* {isHave ? <p>Có chat</p> : <p>Không có chat</p>} */}
@@ -159,7 +178,9 @@ const Chat = () => {
 
             </div>    
             : 
-            <div className='bg-[#4871f7] text-white p-2 rounded-xl'>Chào mừng bạn đến với MIND</div>
+            <div className='bg-gray-200 text-black text-sm font-bold p-2 rounded-xl text-center mt-2'>
+                Ask me anything !
+            </div>
             // guider hereeee
         }
     </div>
