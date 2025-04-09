@@ -1,15 +1,15 @@
 import FlashcardList from '@/services/Supabase/FlashcardList';
 import { useEffect, useRef, useState } from 'react'
 import { useUser } from '@clerk/clerk-react';
-import { CircleDashed, Pin, PinOff } from 'lucide-react';
-import {
-    Sheet,
-    SheetContent,
-    // SheetDescription,
-    // SheetHeader,
-    SheetTitle,
-    // SheetTrigger,
-  } from "@/components/ui/sheet"
+import { CircleDashed, Pin, PinOff, Plus } from 'lucide-react';
+// import {
+//     Sheet,
+//     SheetContent,
+//     // SheetDescription,
+//     // SheetHeader,
+//     SheetTitle,
+//     // SheetTrigger,
+//   } from "@/components/ui/sheet"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { motion } from 'framer-motion';
 import { EffectCards } from 'swiper/modules';
@@ -17,7 +17,7 @@ import BeatLoader from 'react-spinners/BeatLoader';
 import DateFormat from './DateFormat';
   
 const FLashCard = () => {
-    const [Open, setOpen] = useState<boolean>(false);
+    // const [Open, setOpen] = useState<boolean>(false);
     // show list
     const { user } = useUser();
     const [flashcardSession, setFlashcardSession] = useState<any[]>([]);
@@ -87,18 +87,68 @@ const FLashCard = () => {
     //     }
 
     // },[user])
-    const OpenSheet = (card:any) => {
-        setOpen(true)
-        console.log(card)
-        setSelectedFlashcard(card)
+    // const OpenSheet = (card:any) => {
+    //     setOpen(true)
+    //     console.log(card)
+    //     setSelectedFlashcard(card)
 
+    // }
+    // const CloseSheet = () => {
+    //     setOpen(false)
+    // }
+
+    const [openFlashcard, setOpenFlashcard] = useState(false);
+    const handleOpenFlashcard = (card:any) => {
+        setSelectedFlashcard(card)
     }
-    const CloseSheet = () => {
-        setOpen(false)
-    }
+
   return (
     <div>
-        <div>
+        <div className='p-2 bg-black text-white cursor-pointer w-fit rounded-xl mb-2 text-sm font-bold items-center justify-content-center flex'><Plus className='w-4 h-4'/> Create flashcard</div>
+        
+        <div className={`${openFlashcard ? "flex" : ""} h-[100%] `}>
+            <div className={`${openFlashcard ? "hidden sm:w-3/5 sm:block" : "w-full"} h-[100%]`}>
+
+            
+            {flashcardSession.map((flashcard,index) => {
+                // const date = new Date(flashcard.created_at)
+                // date.setHours(date.getHours() + 7);
+                // const formatDate = date.toLocaleString("en-GB", {
+                //     day: "2-digit",
+                //     month: "short",
+                //     hour: "2-digit",
+                //     minute: "2-digit",
+                //     second: "2-digit",
+                //     hour12: false, // 24-hour format
+                // }).replace(",", "");
+
+                return (
+                    <div key={index}>
+                        <div className='bg-gray-200 p-1 rounded-xl mb-2 cursor-pointer p-2'>
+                            <div className='text-black flex  items-center justify-content-center font-bold'
+                            >
+                                <CircleDashed className='w-4 h-4 items-center justify-content-center mr-1'/>{flashcard.title_flashcard}
+                                {flashcard.ispin ? <PinOff className="w-4 h-4 ml-auto" /> : <Pin className="w-4 h-4 ml-auto" />}
+                                {/* <Pin className="w-4 h-4 ml-auto" /> */}
+                            </div> 
+                            <br />
+                            <div  className='flex'>
+                                <div className='text-black  pr-5 pt-2 pb-2'><DateFormat utcTime={flashcard.created_at} /></div>
+                                <div className='ml-auto bg-slate-300 rounded-xl pl-5 pr-5 pt-2 pb-2'
+                                    onClick={() => {
+                                        // console.log('open')
+                                        setIsReveal(false)
+                                        setOpenFlashcard(true)
+                                        handleOpenFlashcard(flashcard.card_json?.card_sets)
+                                        // OpenSheet(flashcard.card_json?.card_sets)
+                                        
+                                    }}
+                                >View</div>
+                            </div>
+                        </div>
+                    </div>
+                )
+            })}
 
             {flashcardSession.map((flashcard,index) => {
                 // const date = new Date(flashcard.created_at)
@@ -128,7 +178,9 @@ const FLashCard = () => {
                                     onClick={() => {
                                         // console.log('open')
                                         setIsReveal(false)
-                                        OpenSheet(flashcard.card_json?.card_sets)
+                                        setOpenFlashcard(true)
+                                        handleOpenFlashcard(flashcard.card_json?.card_sets)
+                                        // OpenSheet(flashcard.card_json?.card_sets)
                                         
                                     }}
                                 >View</div>
@@ -137,6 +189,48 @@ const FLashCard = () => {
                     </div>
                 )
             })}
+            </div>
+
+            <div className={`${openFlashcard ? "sm:w-2/5 w-full" : "hidden"} `}>
+                <div className='ml-2'>
+                    <Swiper
+                        onSlideChange={(swiper) => {
+                            setIsReveal(false)
+                            setActiveIndex(swiper.activeIndex)
+                            // con
+                        }}
+                        effect={'cards'}
+                        grabCursor={true}
+                        modules={[EffectCards]}
+                        className='w-[80%] h-[300px] rounded-xl items-center justify-content-center scrollbar-hide overflow-hidden overflow-y-auto' 
+                    >
+                        {Array.isArray(selectedFlashcard) && selectedFlashcard.map((card, index) => {
+                            return (
+                                <SwiperSlide key={index} className="bg-gray-300 rounded-xl mt-2" onClick={() => index === activeIndex && setIsReveal(true)}>
+                                <div className="p-2" >
+                                    <p className="text-center font-bold text-xl mt-[30%]">{card.question}</p>
+    
+
+                                    <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: isReveal && index === activeIndex ? 1 : 0, y: isReveal && index === activeIndex ? 0 : -10 }}
+                                    transition={{ duration: 0.1, ease: "easeInOut" }}
+                                    className="absolute bottom-0 transform w-11/12 max-w-md p-4 bg-gray-100 rounded-md shadow-lg text-center mb-2"
+                                    >
+                                    {isReveal && index === activeIndex && <div>{card.answer}</div>}
+                                    </motion.div>
+                                </div>
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Swiper>
+                    <div 
+                    className='w-[80%] mx-auto cursor-pointer text-center text-sm font-bold p-2 mt-5 bg-black text-white rounded-xl'
+                    onClick={() => {
+                        setOpenFlashcard(false)
+                    }}>Close</div>
+                </div>
+            </div>
         </div>
         {/* <div className='bg-[#4871f7] p-1 rounded-xl mb-2 cursor-pointer drop-shadow-xl'>
             <div className='text-white flex  items-center justify-content-center'
@@ -168,14 +262,14 @@ const FLashCard = () => {
         </div>
         {/* drawer bottom */}
         <div>
-            
+{/*             
         <Sheet open={Open} onOpenChange={CloseSheet}>
 
             <SheetContent side={'bottom'} className="lg:w-[20%] mx-auto h-[60%] bg-white text-black rounded-tl-xl rounded-tr-xl justify-content-center "> 
                 <SheetTitle className='font-bold text-lg mb-1'>Flashcard Mode</SheetTitle>
                 <p className='pl-2 pr-2 bg-[#4871f7] text-white w-fit rounded-xl'>Click to reveal answer</p>
 
-                <div className=' h-[88%] mt-5 rounded-xl overflow-y-auto'>
+                <div className=' h-[88%] mt-5 rounded-xl'>
                     <Swiper
                         onSlideChange={(swiper) => {
                             setIsReveal(false)
@@ -185,7 +279,7 @@ const FLashCard = () => {
                         effect={'cards'}
                         grabCursor={true}
                         modules={[EffectCards]}
-                        className='w-[80%] h-[300px] mt-2 rounded-xl items-center justify-content-center'
+                        className='w-[80%] overflow-y-auto h-[300px] mt-2 rounded-xl items-center justify-content-center'
                     >
                         {Array.isArray(selectedFlashcard) && selectedFlashcard.map((card, index) => {
                             return (
@@ -209,7 +303,7 @@ const FLashCard = () => {
                     </Swiper>
                 </div>
             </SheetContent>
-        </Sheet>
+        </Sheet> */}
         </div>
     </div>
   )

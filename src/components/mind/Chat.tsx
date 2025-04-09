@@ -1,4 +1,4 @@
-import TranslatorList from '@/services/Supabase/TranslatorList';
+import TranslatorList, { isHaveTranslator } from '@/services/Supabase/TranslatorList';
 import { SignedIn, useUser } from '@clerk/clerk-react';
 import { ScanText, ThumbsDown, ThumbsUp, User } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
@@ -10,7 +10,6 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
     const { user } = useUser();
     const [chatSession, setChatSession] = useState<any[]>([]);
     const [isHave, setIsHave ] = useState(true)
-    setIsHave(true)
     const [loadingChat,setLoadingChat] = useState(false)
     const [moreChat,setMoreChat] = useState(true)
     const lastChatRef = useRef(null)
@@ -21,16 +20,16 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
         threshold: 1.0
     };
 
-    // useEffect(() => {
-    //     // if (currentSpace) {
-    //     //     isHaveTranslator(currentSpace).then((data) => {
+    useEffect(() => {
+        if (currentSpace) {
+            isHaveTranslator(currentSpace).then((data) => {
                 
-    //     //         setIsHave(data)
+                setIsHave(data)
 
-    //     //     })
-    //     // }  
+            })
+        }  
 
-    // },[user,currentSpace])
+    },[user,currentSpace,isHave,setMoreChat])
 
     async function CallTranslatorList(spaceID : string,cursor = null) {
 

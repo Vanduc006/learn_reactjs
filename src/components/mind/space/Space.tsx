@@ -33,6 +33,7 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
             setLoadingSpace(false)
         })
     }
+    
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
             const [entry] = entries;
@@ -112,8 +113,8 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
                           }}
                         >
                             <PopoverTrigger asChild>
-                                <div className="mr-2 items-center justify-content-center p-1 cursor-pointer">
-                                <CircleEllipsis className="w-4 h-4 items-center justify-content-center" />
+                                <div className="mr-2 items-center justify-content-center p-1 cursor-pointer hover:scale-[1.09]">
+                                    <CircleEllipsis className="w-4 h-4 items-center justify-content-center" />
                                 </div>
                             </PopoverTrigger>
 
@@ -158,7 +159,7 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
                     Getting your space    
                     <BeatLoader
                         color='#4871f7'
-                        className=''
+                        className='ml-2'
                         loading={true}
                         size={10}
                     />
