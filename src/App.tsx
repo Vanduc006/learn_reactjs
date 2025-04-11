@@ -56,11 +56,11 @@ const App = () => {
       <Route path="/phatnguoi" element={<PhatNguoi />} />
       <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
       <Route path="/mind" element={<Mind/>}> </Route>
-      <Route path="/" element={<Mind/>}> </Route>
+      <Route path="/old" element={<Mind/>}> </Route>
       <Route path="*" element={<NotFound/>} ></Route>
       
       <Route
-        path="/ver2"
+        path="/"
         element={
           <ProtectedRoute>
             <Dashboard />

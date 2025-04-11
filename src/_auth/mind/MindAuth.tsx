@@ -7,8 +7,8 @@ const MindAuth = () => {
       try {
         await signIn?.authenticateWithRedirect({
           strategy: provider,
-          redirectUrl: "/ver2", // Tùy route bạn xử lý
-          redirectUrlComplete: "/ver2", // Sau đăng nhập thành công
+          redirectUrl: "/", // Tùy route bạn xử lý
+          redirectUrlComplete: "/", // Sau đăng nhập thành công
         });
       } catch (err) {
         console.error("Social sign-in error:", err);
@@ -19,7 +19,7 @@ const MindAuth = () => {
     <div className="min-h-screen flex flex-col">
         <main className="flex-1 flex items-center justify-center p-4 bg-gray-50 text-black">
             <div className="w-full max-w-md ">
-                <a href='/ver2' className='font-semibold text-2xl flex items-center justify-content-center border-b cursor-pointer'>
+                <a href='/' className='font-semibold text-2xl flex items-center justify-content-center border-b cursor-pointer'>
                     MIND
                 </a>
                 <Card className='p-5 w-[100%] mt-5'>

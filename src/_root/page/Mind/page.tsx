@@ -50,6 +50,7 @@ import Space from "@/components/mind/space/Space"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import FolderSpace from "@/components/mind/space/FolderSpace"
 import ResizablePanel from "@/components/mind/space/ResizablePanel"
+import DragnDrop from "@/components/mind/file/DragnDrop"
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -204,7 +205,7 @@ export default function Dashboard() {
             <SignedIn>                    
                 <div className='flex items-center p-1'>
                     <div className='rounded-md'>
-                        <UserButton afterSignOutUrl="/ver2" afterSwitchSessionUrl="/ver2" afterMultiSessionSingleSignOutUrl='/ver2' /> 
+                        <UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" afterMultiSessionSingleSignOutUrl='/' /> 
                     </div>                                        
                     {/* <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p> */}
                 </div>                               
@@ -411,8 +412,9 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div>
-                dnd
+              <div className="mb-5 mt-5">
+                
+                <DragnDrop/>
               </div>
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {tasks.map((task) => (
