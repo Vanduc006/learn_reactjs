@@ -1,10 +1,3 @@
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogTrigger,
-} from "@/components/ui/dialog"
-
 import { useEffect, useMemo } from "react";
 
 const PreviewAudio = ({File}: {File: any}) => {
@@ -17,33 +10,8 @@ const PreviewAudio = ({File}: {File: any}) => {
   }, [audioUrl]);
   
   return (
-    <div className="flex items-center mb-2">
-
-        <div className="flex font-semibold "> 
-            <svg className="w-5 h-5 mr-2" viewBox="-4 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g fill-rule="evenodd" clip-rule="evenodd"> <path d="M5.151.012c-2.802 0-5.073 2.272-5.073 5.073v53.842c0 2.802 2.272 5.073 5.073 5.073h45.774c2.803 0 5.075-2.271 5.075-5.073v-38.606l-18.903-20.309h-31.946z" fill="#379FD3"></path> <path d="M56 20.357v1h-12.8s-6.312-1.26-6.128-6.707c0 0 .208 5.707 6.003 5.707h12.925z" fill="#2987C8"></path> <path d="M37.097.006v14.561c0 1.656 1.104 5.791 6.104 5.791h12.8l-18.904-20.352z" opacity=".5" fill="#ffffff"></path> <path d="M29.798 34.036l-14.165 1.814v13.438c-.738-.205-1.628-.243-2.531-.064-2.009.394-3.325 1.702-2.938 2.918.386 1.215 2.325 1.88 4.333 1.48 1.764-.348 2.994-1.397 3.005-2.473h.002v-10.74l10.422-1.288v8.306c-.75-.212-1.655-.251-2.572-.068-2.03.399-3.357 1.718-2.969 2.947.389 1.229 2.35 1.897 4.379 1.499 1.849-.366 3.116-1.494 3.031-2.621v-15.148z" fill="#ffffff"></path> </g> </g></svg>
-            {File.name}
-        </div>
-        <div className="gap-2 ml-auto flex items-center justify-content-center">
-          <Dialog>
-            <DialogTrigger className="flex items-center justify-content-center bg-gray-200 rounded-xl hover:scale-[1.02]">
-                
-                <div className="bg-black text-white p-1 rounded-md">
-                  Preview File
-                </div>
-
-            </DialogTrigger>
-            <DialogContent className="text-black bg-gray-200 border-none p-1 bg-gray-50 overflow-hidden overflow-x-auto overflow-y-auto scrollbar-hide">
-                <DialogDescription className="">
-                    <audio src={audioUrl} controls className="w-full h-[40px] rounded-md bg-white" />
-                </DialogDescription>
-
-            </DialogContent>
-          </Dialog>
-          <div className="p-1 bg-red cursor-pointer rounded-md text-white">
-            Remove
-          </div>
-        </div>
-
+    <div>
+      <audio src={audioUrl} controls className="w-full h-[40px] rounded-md bg-white" />
     </div>
   )
 }

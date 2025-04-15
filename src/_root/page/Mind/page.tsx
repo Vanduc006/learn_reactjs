@@ -10,7 +10,6 @@ import {
   Smartphone,
   Plus,
   Menu,
-  Home,
   User,
   X,
   // FolderOpen,
@@ -36,12 +35,12 @@ import { cn } from "@/lib/utils"
 // import { useMediaQuery } from "@/hooks/use-media-query"
 // import Link from "next/link"
 // import { Link, } from "react-router-dom"
-import { SignedIn, SignedOut, 
+import { SignedIn,
   // SignIn, 
   //   SignUp, 
     // SignOutButton, 
     UserButton, 
-    // useUser
+    useUser
   } from "@clerk/clerk-react";
 import Chat from "@/components/mind/Chat"
 import FLashCard from "@/components/mind/FlashCard"
@@ -103,6 +102,7 @@ export default function Dashboard() {
       icon: Smartphone,
     },
   ]
+  const { user } = useUser()
 
   return (
     <div className="flex h-screen bg-gray-100 text-gray-900">
@@ -119,17 +119,17 @@ export default function Dashboard() {
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <nav className="flex-1 overflow-auto p-4 scrollbar-hide">
-          <ul className="space-y-1">
+        <nav className="flex flex-col h-full overflow-auto p-4 scrollbar-hide">
+          <ul className="space-y-1 flex-1 overflow-auto">
             <li>
                 
-              <Button variant="secondary" className="w-full justify-start gap-2"
+              <div className="w-full text-sm justify-start gap-2 flex items-center justify-content-center pl-4 pr-4 pt-2 pb-2 bg-gray-200 text-black rounded-md"
               onClick={() => {
                 setCurrentTab("home")
               }}>
-                  <Home className="h-5 w-5" />
-                  Your Activities
-              </Button>
+                  <Plus className="h-5 w-5" />
+                  New Space
+              </div>
 
             </li>
             {/* <li>
@@ -162,8 +162,7 @@ export default function Dashboard() {
             
             <li>
 
-              <Button variant="ghost" className="w-full justify-start gap-2"
->
+              <Button variant="ghost" className="w-full justify-start gap-2">
                 <Bot className="w-5 h-5"/>Your spaces
               </Button>
 
@@ -191,7 +190,32 @@ export default function Dashboard() {
                 Settings
               </Button>
             </li> */}
+
+            {/* make this li to bottom bar */}
+
           </ul>
+          <div className="border-t pt-2">
+              <SignedIn>                    
+                  <div className='flex items-center p-1 w-full'>
+                      <div className='rounded-md flex items-center justify-center w-full'>
+                          <UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" afterMultiSessionSingleSignOutUrl='/' /> 
+                          <div className="text-sm ml-2">
+                            <div className="font-bold">{user?.firstName} {user?.lastName}</div>
+                            <div className="text-gray-500 ">Your Plan : Free</div>
+                          </div>
+                          <div className="ml-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                          </div>
+                      </div>                                        
+                      
+                  </div>                               
+              </SignedIn>
+              {/* <SignedOut>
+                <div className="flex items-center justify-content-center bg-gray-200 pl-3 pr-3 pt-1 pb-1 rounded-xl cursor-pointer">
+                  Sign In <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 ml-2 lucide lucide-ampersand-icon lucide-ampersand"><path d="M17.5 12c0 4.4-3.6 8-8 8A4.5 4.5 0 0 1 5 15.5c0-6 8-4 8-8.5a3 3 0 1 0-6 0c0 3 2.5 8.5 12 13"/><path d="M16 12h3"/></svg> Sign Up
+                </div>
+              </SignedOut> */}
+          </div>
         </nav>
       </aside>
 
@@ -205,23 +229,11 @@ export default function Dashboard() {
             <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(true)}>
               <Menu className="h-5 w-5" />
             </Button>
-            {/* <h1 className="text-xl font-semibold lg:hidden">Habit Tracker</h1> */}
+
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-500">March 27, 2025</span>
-            <SignedIn>                    
-                <div className='flex items-center p-1'>
-                    <div className='rounded-md'>
-                        <UserButton afterSignOutUrl="/" afterSwitchSessionUrl="/" afterMultiSessionSingleSignOutUrl='/' /> 
-                    </div>                                        
-                    {/* <p className='ml-2'>Xin chào {user?.firstName} {user?.lastName}</p> */}
-                </div>                               
-            </SignedIn>
-            <SignedOut>
-              <div className="flex items-center justify-content-center bg-gray-200 pl-3 pr-3 pt-1 pb-1 rounded-xl cursor-pointer">
-                Sign In <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 ml-2 lucide lucide-ampersand-icon lucide-ampersand"><path d="M17.5 12c0 4.4-3.6 8-8 8A4.5 4.5 0 0 1 5 15.5c0-6 8-4 8-8.5a3 3 0 1 0-6 0c0 3 2.5 8.5 12 13"/><path d="M16 12h3"/></svg> Sign Up
-              </div>
-            </SignedOut>
+            <span className="text-sm text-gray-500">{currentTab}</span>
+
           </div>
         </header>
 
