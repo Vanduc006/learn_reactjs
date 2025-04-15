@@ -14,6 +14,7 @@ import makeAnimated from 'react-select/animated';
 import PreviewVideo from "./PreviewVideo";
 import PreviewPDF from "./PreviewPDF";
 import PreviewImage from "./PreviewImage";
+import streamFile from "@/services/Cloudinary/StreamFile";
 
 
 const Upload = () => {
@@ -98,6 +99,35 @@ const Upload = () => {
         // }
         
     }
+    const handleFormdata = () => {
+        console.log(selectedFiles)
+        let n = 0 
+        selectedFiles.forEach(file => {
+            n = n + 1
+            const formData = new FormData()
+            formData.append('file', file);
+            streamFile(formData).then(data => {
+                console.log(data)
+                console.log(n)
+                
+            })
+        });
+        // setSelectedFiles([])
+
+    }
+
+    // const handleTest = async() => {
+    //     try {
+    //         const respone = await fetch('https://psychic-palm-tree-9gq4p4wqpgq3pwxq-3000.app.github.dev/upload', {
+    //             method : "GET",
+    //             credentials: 'include',
+    //         })
+    //         const data = await respone.json()
+    //         console.log(data)
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     function formatFileSize(bytes: number): string {
         if (bytes === 0) return "0 Bytes"
@@ -290,6 +320,12 @@ const Upload = () => {
                     })}
                 </div>
             }
+        </div>
+
+        <div className="text-white font-bold text-lg cursor-pointer" 
+        onClick={() => handleFormdata()}>
+            Upload
+
         </div>
 
 
