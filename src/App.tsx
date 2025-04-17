@@ -15,6 +15,8 @@ import Dashboard from './_root/page/Mind/page'
 import { useUser } from '@clerk/clerk-react'
 import MindAuth from './_auth/mind/MindAuth'
 import BounceLoader from 'react-spinners/BounceLoader'
+import TestGift from './_root/page/TestGift'
+
 // import PhotoBooth from './_root/page/PhotoBooth'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -58,7 +60,7 @@ const App = () => {
       <Route path="/mind" element={<Mind/>}> </Route>
       <Route path="/old" element={<Mind/>}> </Route>
       <Route path="*" element={<NotFound/>} ></Route>
-      
+      <Route path='/gift' element={<TestGift/>}></Route>
       <Route
         path="/"
         element={
