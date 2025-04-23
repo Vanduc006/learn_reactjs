@@ -1,12 +1,7 @@
 
-.hide-scrollbar {
-  overflow-x: auto; /* Enable horizontal scrolling */
-  scrollbar-width: none; /* For Firefox */
-}
 
-.hide-scrollbar::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Edge */
-}
+/* width */
+
 .scrollbar-hide {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
@@ -24,6 +19,15 @@
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.thin-scrollbar {
+  scrollbar-width: thin;
+  width: thin;
+}
+.thin-scrollbar::-webkit-scrollbar {
+  scrollbar-width: thin;
+  width: thin;
 }
 /* .swiper-slide {
   display: flex;

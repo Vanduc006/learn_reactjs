@@ -94,7 +94,7 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
     
 
   return (
-    <div>
+    <div className='mt-2'>
         {/* <div className="mb-2 text-sm flex p-1 hover:scale-[1.05] hover:bg-gray-50 rounded-xl cursor-pointer"> 
             <div className="mr-2 items-center justify-content-center p-1 cursor-pointer"><CircleEllipsis className="w-4 h-4 items-center justify-content-center"/> </div>
             <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide">Learn how to build the fucking shiet mvp with reactjs</div>
@@ -104,7 +104,7 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
                 
                 return (
                     <div key={index} >
-                        <div className={`${space.id == selectBackground ? "bg-gray-300 hover:bg-gray-300 hover:scale-[1]" : 'hover:bg-gray-50'} mb-2 text-sm flex p-1 hover:scale-[1.05] rounded-xl cursor-pointer`}> 
+                        <div className={`${space.id == selectBackground ? "bg-gray-300 hover:bg-gray-300 font-bold" : 'hover:bg-gray-100 hover:scale-[1.06]'} mb-2 text-sm flex p-1 rounded-xl cursor-pointer`}> 
                         <Popover 
                         open={openPopover === space.id} 
                         onOpenChange={(open) => {
@@ -143,11 +143,15 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
                             </PopoverContent>
                             </Popover>
                             
-                        <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide" onClick={() => {
-                            handleSpaceSelect(space.id);
-                            setCurrentSpace(space.id);
-                        }}>
-                            {space.topic}</div>
+                        <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide" >
+                            <div
+                            onClick={() => {
+                                handleSpaceSelect(space.id);
+                                setCurrentSpace(space.id);
+                            }}>
+                                {space.topic}
+                            </div>
+                            </div>
                         </div>
                     </div>
                 )

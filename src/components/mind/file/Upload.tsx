@@ -9,12 +9,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated';
 import PreviewVideo from "./PreviewVideo";
 import PreviewPDF from "./PreviewPDF";
 import PreviewImage from "./PreviewImage";
 import streamFile from "@/services/Cloudinary/StreamFile";
+import WrongFile from "./WrongFile";
 
 
 const Upload = () => {
@@ -34,7 +36,7 @@ const Upload = () => {
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])
     const [filesLeft, setFilesLeft] = useState<number>(10)
-
+    const [wrongFiles, setWrongFiles ] = useState<File[]>([])
     const handleUpload = (type: string) => {
         if (fileInputRef.current) {
             let accept = ""
@@ -56,6 +58,7 @@ const Upload = () => {
     }
     console.log(currentFileType)
     console.log(filesLeft)
+
     const handleRemoveFile = (index: number) => {
         setSelectedFiles(prev => {
           const newFiles = prev.filter((_, i) => i !== index);
@@ -73,11 +76,20 @@ const Upload = () => {
 
     const handleFileChange = (event : React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files
-        console.log(files)
-        if ( files ) {
-
-            setSelectedFiles((prev) => [...prev,...Array.from(files)])
-            console.log(selectedFiles)
+        setWrongFiles([])
+        // console.log(files)
+        if ( files && currentFileType) {
+            Array.from(files).map(file => {
+                if ( !file.type.includes(currentFileType) ) {
+                    console.log(currentFileType)
+                    console.log(file.type)
+                    setWrongFiles((prev) => [...prev,file])
+                    return
+                }
+                setSelectedFiles((prev) => [...prev,file])
+                
+            })
+            // console.log(selectedFiles)
         }
         
 
@@ -100,15 +112,15 @@ const Upload = () => {
         
     }
     const handleFormdata = () => {
-        console.log(selectedFiles)
-        let n = 0 
+        // console.log(selectedFiles)
+        // let n = 0 
         selectedFiles.forEach(file => {
-            n = n + 1
+            // n = n + 1
             const formData = new FormData()
             formData.append('file', file);
             streamFile(formData).then(data => {
                 console.log(data)
-                console.log(n)
+                // console.log(n)
                 
             })
         });
@@ -140,16 +152,16 @@ const Upload = () => {
     }
 
   return (
-    <div className="bg-black rounded-xl p-4">
-        <div className="flex text-white items-center justify-center">
+    <div className="bg-[#4871f7] rounded-xl p-4">
+        <div className="sm:flex block text-white items-center justify-center">
             <div className="font-bold text-xl">
                 Choose your files to creat new space
             </div>
             
-            <div className="ml-auto flex items-center justify-center">
+            <div className="sm:ml-auto m-0">
                 <div className="text-black flex font-semibold">
                     
-                    {/* <Plus className="w-4 h-4 mr-2"/> <div className="text-sm">Add language</div> */}
+                    
                     <Select
                         className='border-none bg-gray-200 rounded-full'
                         closeMenuOnSelect={false}
@@ -161,7 +173,7 @@ const Upload = () => {
                 </div>
             </div>
         </div>
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-white">
             10 files left
         </div>
 
@@ -227,6 +239,11 @@ const Upload = () => {
         </div>
 
         <div className="">
+            { wrongFiles.length > 0 && 
+                <div>
+                    {currentFileType && <WrongFile numfile={wrongFiles.length}/>}  
+                </div>
+            }
             { selectedFiles.length > 0 &&       
                 <div className="text-sm bg-gray-200 rounded-xl mt-5 p-2">
                     
@@ -257,7 +274,7 @@ const Upload = () => {
 
                                                 </DialogTrigger>
                                                 {file.type.includes("pdf") && (
-                                                    <DialogContent className="sm:w-full w-[90%] mx-auto sm:m-0 text-black bg-gray-200 border-none p-1 bg-gray-50 overflow-hidden overflow-x-auto overflow-y-auto scrollbar-hide">
+                                                    <DialogContent className="h-[90%] rounded-xl sm:w-full w-[90%] mx-auto sm:m-0 text-black bg-gray-200 border-none p-1 bg-gray-50 overflow-hidden overflow-x-auto overflow-y-auto scrollbar-hide">
                                                         <DialogTitle className="text-sm font-semibold">{file.name}</DialogTitle>
                                                         <DialogDescription className="">
                                                             <PreviewPDF File={file} />
@@ -267,7 +284,7 @@ const Upload = () => {
                                                 )}
 
                                                 {file.type.includes("image") && (
-                                                    <DialogContent className="sm:w-full w-[90%] mx-auto sm:m-0 text-black bg-gray-200 border-none p-1 bg-gray-50 overflow-hidden overflow-x-auto overflow-y-auto scrollbar-hide">
+                                                    <DialogContent className="h-[90%] sm:w-full w-[90%] mx-auto sm:m-0 text-black bg-gray-200 border-none p-1 bg-gray-50 overflow-hidden overflow-x-auto overflow-y-auto scrollbar-hide">
                                                         <DialogTitle className="text-sm font-semibold">{file.name}</DialogTitle>
                                                         <DialogDescription className="">
                                                             <PreviewImage File={file} />
@@ -322,11 +339,12 @@ const Upload = () => {
             }
         </div>
 
-        <div className="text-white font-bold text-lg cursor-pointer" 
-        onClick={() => handleFormdata()}>
-            Upload
+        {selectedFiles.length > 0 &&         
+        <div className="font-semibold text-sm cursor-pointer p-2 bg-gray-200 mt-2 rounded-md w-fit text-black" 
+            onClick={() => handleFormdata()}>
+            Upload & Create space
+        </div>}
 
-        </div>
 
 
     </div>
