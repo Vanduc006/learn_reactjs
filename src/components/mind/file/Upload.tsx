@@ -15,14 +15,16 @@ import makeAnimated from 'react-select/animated';
 import PreviewVideo from "./PreviewVideo";
 import PreviewPDF from "./PreviewPDF";
 import PreviewImage from "./PreviewImage";
-import streamFile from "@/services/Cloudinary/StreamFile";
 import WrongFile from "./WrongFile";
-
+import { useUser } from "@clerk/clerk-react";
+import { v4 as uuidv4 } from 'uuid';
+import S3Storage from "@/services/AWS/S3Storage";
 
 const Upload = () => {
+    const { user } = useUser()
     const animatedComponents = makeAnimated();
     const list_languages_sp = [
-        {"value":"Auto","label":'🤖 Auto'},
+        {"value":"Auto","label":'🤖 Auto detect language'},
         {"value":"VN","label":"🇻🇳 Vietnam"},
         { "value": "CN", "label": "🇨🇳 China" },
         { "value": "EN", "label": "🇬🇧 English" },
@@ -114,17 +116,41 @@ const Upload = () => {
     const handleFormdata = () => {
         // console.log(selectedFiles)
         // let n = 0 
-        selectedFiles.forEach(file => {
+        selectedFiles.forEach(async (file) => {
             // n = n + 1
             const formData = new FormData()
-            formData.append('file', file);
-            streamFile(formData).then(data => {
-                console.log(data)
-                // console.log(n)
+            const fileKey = user?.id + '/' + uuidv4() + '-' + file.name
+            const data = await S3Storage(fileKey,formatFileSize(file.size),"60")
                 
+            // console.log(data.key)
+            // console.log(data.url.url)
+            // console.log(data.url.fields)
+            // console.log(data.size)
+            Object.entries(data.url.fields).forEach(([key, value]) => {
+                if (typeof value === 'string') {
+                    formData.append(key, value);  // value is guaranteed to be a string now
+                } else {
+                    console.error(`Invalid field value type for key ${key}`);
+                }
+            });
+            formData.append('file',file)
+
+            const respone = await fetch(data.url.url,{
+                method: "POST",
+                body: formData,
             })
+            console.log(respone)
+
+
+            // const formData = new FormData()
+            // formData.append('file', file);
+            // streamFile(formData).then(data => {
+            //     console.log(data)
+            //     // console.log(n)
+                
+            // })
         });
-        // setSelectedFiles([])
+        setSelectedFiles([])
 
     }
 
@@ -158,12 +184,10 @@ const Upload = () => {
                 Choose your files to creat new space
             </div>
             
-            <div className="sm:ml-auto m-0">
-                <div className="text-black flex font-semibold">
-                    
-                    
+            <div className="sm:ml-auto mt-2 sm:w-fit w-full">
+                <div className="text-black flex font-semibold sm:w-fit w-full">
                     <Select
-                        className='border-none bg-gray-200 rounded-full'
+                        className='border-none bg-gray-200 rounded-full sm:w-fit w-full'
                         closeMenuOnSelect={false}
                         components={animatedComponents}
                         defaultValue={[list_languages_sp[0]]}
