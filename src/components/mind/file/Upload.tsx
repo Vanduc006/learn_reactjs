@@ -19,6 +19,7 @@ import WrongFile from "./WrongFile";
 import { useUser } from "@clerk/clerk-react";
 import { v4 as uuidv4 } from 'uuid';
 import S3Storage from "@/services/AWS/S3Storage";
+import ProgressBar from "@ramonak/react-progress-bar";
 
 const Upload = () => {
     const { user } = useUser()
@@ -39,6 +40,7 @@ const Upload = () => {
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])
     const [filesLeft, setFilesLeft] = useState<number>(10)
     const [wrongFiles, setWrongFiles ] = useState<File[]>([])
+    const [totalSize, setTotalSize ] = useState<number>(1048576)
     const handleUpload = (type: string) => {
         if (fileInputRef.current) {
             let accept = ""
@@ -89,6 +91,8 @@ const Upload = () => {
                     return
                 }
                 setSelectedFiles((prev) => [...prev,file])
+                console.log(file.size)
+                setTotalSize(totalSize - file.size)
                 
             })
             // console.log(selectedFiles)
@@ -197,8 +201,18 @@ const Upload = () => {
                 </div>
             </div>
         </div>
-        <div className="text-sm text-white">
-            10 files left
+        <div className="text-sm text-white  mt-2">
+            {/* {totalSize} MB left */}
+            <ProgressBar 
+                completed={60}
+                bgColor="#000"
+                height="15px"
+                borderRadius="20px"
+                baseBgColor="#ffffff"
+                labelColor="#ffffff"
+                animateOnRender
+                maxCompleted={100}
+            />
         </div>
 
         <div className="cursor-pointer text-sm text-white flex gap-2 mt-5 overflow-y-auto scrollbar-hide rounded-full">
