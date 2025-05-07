@@ -19,7 +19,7 @@ import WrongFile from "./WrongFile";
 import { useUser } from "@clerk/clerk-react";
 import { v4 as uuidv4 } from 'uuid';
 import S3Storage from "@/services/AWS/S3Storage";
-import ProgressBar from "@ramonak/react-progress-bar";
+// import ProgressBar from "@ramonak/react-progress-bar";
 
 const Upload = () => {
     const { user } = useUser()
@@ -201,8 +201,8 @@ const Upload = () => {
                 </div>
             </div>
         </div>
-        <div className="text-sm text-white  mt-2">
-            {/* {totalSize} MB left */}
+        {/* <div className="text-sm text-white  mt-2">
+            
             <ProgressBar 
                 completed={60}
                 bgColor="#000"
@@ -213,7 +213,7 @@ const Upload = () => {
                 animateOnRender
                 maxCompleted={100}
             />
-        </div>
+        </div> */}
 
         <div className="cursor-pointer text-sm text-white flex gap-2 mt-5 overflow-y-auto scrollbar-hide rounded-full">
             <input 
