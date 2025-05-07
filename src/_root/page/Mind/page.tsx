@@ -116,7 +116,7 @@ export default function Dashboard() {
       >
         <div className="flex items-center justify-between h-16 px-6">
           <h2 className="text-xl font-semibold cursor-pointer flex items-center justify-content-center" onClick={() => {setCurrentTab("home")}}>
-            <img src="./public/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
+            <img src="/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
             MIND
           </h2>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
@@ -397,7 +397,7 @@ export default function Dashboard() {
             
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold flex items-center justify-content-center">                  
-                  <img src="./public/upload.png" className="w-10 h-10 rounded-xl mr-2"/>
+                  <img src="/upload.png" className="w-10 h-10 rounded-xl mr-2"/>
                   
                   Where your knowleagde begin
                   
@@ -443,7 +443,7 @@ export default function Dashboard() {
                 
               </div> */}
               <h2 className="text-2xl font-bold flex items-center justify-content-center mb-1">
-                <img src="./public/space.png" className="w-10 h-10 rounded-xl mr-2"/>
+                <img src="/space.png" className="w-10 h-10 rounded-xl mr-2"/>
                 Your Spaces
               </h2>
               <h1 className="text-sm block mb-5">Keep learning everyday !</h1>
@@ -469,7 +469,7 @@ export default function Dashboard() {
               {/* Stats section */}
               <div className="mt-10">
                 <h2 className="text-2xl font-bold mb-6 flex items-center justify-content-center">
-                  <img src="./public/userplan.png" className="w-10 h-10 rounded-xl mr-2"/>
+                  <img src="/userplan.png" className="w-10 h-10 rounded-xl mr-2"/>
                   Your Plan
                 </h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">

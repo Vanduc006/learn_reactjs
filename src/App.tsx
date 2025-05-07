@@ -26,7 +26,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className='min-h-screen bg-gray-200 flex flex-col'>
         <div className='flex-1 flex items-center justify-center bg-gray-200 text-black'>
-          <img src="./public/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
+          <img src="/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
           <div className='text-2xl font-bold flex items-center justify-center'>MIND 
             <BounceLoader size={20} className='ml-2' color='#4871f7'/> 
           </div>
