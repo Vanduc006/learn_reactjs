@@ -55,6 +55,7 @@ import Upload from "@/components/mind/file/Upload"
 // import { DialogTitle } from "@radix-ui/react-dialog"
 // import { Input } from "@/components/ui/input"
 
+
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentTab, setCurrentTab ] = useState("home")
@@ -114,7 +115,10 @@ export default function Dashboard() {
         )}
       >
         <div className="flex items-center justify-between h-16 px-6">
-          <h2 className="text-xl font-semibold cursor-pointer" onClick={() => {setCurrentTab("home")}}>MIND</h2>
+          <h2 className="text-xl font-semibold cursor-pointer flex items-center justify-content-center" onClick={() => {setCurrentTab("home")}}>
+            <img src="./public/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
+            MIND
+          </h2>
           <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setSidebarOpen(false)}>
             <X className="h-5 w-5" />
           </Button>
@@ -392,7 +396,13 @@ export default function Dashboard() {
             <>
             
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold">Where your knowleagde begin</h2>
+                <h2 className="text-2xl font-bold flex items-center justify-content-center">                  
+                  <img src="./public/upload.png" className="w-10 h-10 rounded-xl mr-2"/>
+                  
+                  Where your knowleagde begin
+                  
+                  </h2>
+                
                 
                 {/* <div className="flex gap-2">
 
@@ -410,7 +420,7 @@ export default function Dashboard() {
               </div>
               <h1 className="text-sm block mb-5">Support up to 1GB per space</h1>
               
-              <div className="mt-5 mb-5">
+              <div className="mt-5 mb-10">
                 <Upload/>
               </div>
               {/* <div className="mb-5 mt-5">
@@ -432,6 +442,12 @@ export default function Dashboard() {
                 }
                 
               </div> */}
+              <h2 className="text-2xl font-bold flex items-center justify-content-center mb-1">
+                <img src="./public/space.png" className="w-10 h-10 rounded-xl mr-2"/>
+                Your Spaces
+              </h2>
+              <h1 className="text-sm block mb-5">Keep learning everyday !</h1>
+
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {tasks.map((task) => (
                   <div

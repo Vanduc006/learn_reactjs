@@ -24,7 +24,7 @@ const Upload = () => {
     const { user } = useUser()
     const animatedComponents = makeAnimated();
     const list_languages_sp = [
-        {"value":"Auto","label":'🤖 Auto detect language'},
+        {"value":"Auto","label":'🤖 MIND detect'},
         {"value":"VN","label":"🇻🇳 Vietnam"},
         { "value": "CN", "label": "🇨🇳 China" },
         { "value": "EN", "label": "🇬🇧 English" },
