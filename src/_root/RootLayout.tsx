@@ -9,7 +9,7 @@ const RootLayout = () => {
     <main className="w-full h-screen flex flex-col bg-white">
       {/* Navbar */}
       <div className="w-full fixed top-0 left-0">
-        <Navbar />
+        {/* <Navbar /> */}
       </div>
 
       {/* Dynamic content for child routes */}
