@@ -468,7 +468,10 @@ export default function Dashboard() {
 
               {/* Stats section */}
               <div className="mt-10">
-                <h2 className="text-2xl font-bold mb-6">Your Plan</h2>
+                <h2 className="text-2xl font-bold mb-6 flex items-center justify-content-center">
+                  <img src="./public/userplan.png" className="w-10 h-10 rounded-xl mr-2"/>
+                  Your Plan
+                </h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
                   <div className="bg-white rounded-3xl p-6 shadow-sm">
                     <h3 className="text-lg font-medium mb-2">Completion Rate</h3>
