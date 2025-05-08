@@ -1,4 +1,4 @@
-import { CircleEllipsis } from 'lucide-react'
+import { CircleEllipsis, LibraryBig } from 'lucide-react'
 import SpaceList from '@/services/Supabase/SpaceList'
 import React, { useEffect, useRef, useState } from 'react'
 import { useUser } from '@clerk/clerk-react';
@@ -7,8 +7,12 @@ import DateFormat from '../DateFormat';
 import BeatLoader from 'react-spinners/BeatLoader';
 import supabase from '@/services/Supabase/ConnectSupabase';
 
+type SpaceProps = {
+    setCurrentSpace: React.Dispatch<React.SetStateAction<string | null>>;
+    parent: string;
+};
 // set gia tri current space
-const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetStateAction<string | null>> }) => {
+const Space = ({ setCurrentSpace, parent }: SpaceProps) => {
     const { user } = useUser()
     const [spaceSession, setSpaceSession] = useState<any[]>([])
     const [loadingSpace, setLoadingSpace] = useState(false)
@@ -52,8 +56,11 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
             }
         }
         return () => {
+            // if ( spaceSession.length == 0) {
+            //     console.log('ok')
+            // }
         }
-    },[observerOptions,loadingSpace,user])
+    },[observerOptions])
     //hadle click space
 
     const [selectBackground, setSelectBackground] = useState<string>('');
@@ -95,68 +102,103 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
 
   return (
     <div className='mt-2'>
-        {/* <div className="mb-2 text-sm flex p-1 hover:scale-[1.05] hover:bg-gray-50 rounded-xl cursor-pointer"> 
-            <div className="mr-2 items-center justify-content-center p-1 cursor-pointer"><CircleEllipsis className="w-4 h-4 items-center justify-content-center"/> </div>
-            <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide">Learn how to build the fucking shiet mvp with reactjs</div>
-        </div> */}
+        
         <div>
-            {spaceSession.map((space,index) => {
+            {parent == "dash" && 
+                <div>
+
+                    {spaceSession.map((space,index) => {
                 
-                return (
-                    <div key={index} >
-                        <div className={`${space.id == selectBackground ? "bg-gray-300 hover:bg-gray-300 font-bold" : 'hover:bg-gray-100 hover:scale-[1.06]'} mb-2 text-sm flex p-1 rounded-xl cursor-pointer`}> 
-                        <Popover 
-                        open={openPopover === space.id} 
-                        onOpenChange={(open) => {
-                            setOpenPopover(open ? space.id : null);
-                            if (open) setEditingValue(space.topic); // Gán value mỗi khi mở popover
-                          }}
-                        >
-                            <PopoverTrigger asChild>
-                                <div className="mr-2 items-center justify-content-center p-1 cursor-pointer hover:scale-[1.09]">
-                                    <CircleEllipsis className="w-4 h-4 items-center justify-content-center" />
-                                </div>
-                            </PopoverTrigger>
+                        return (
+                            <div>
+                                
+                                    <div key={index} >
+                                        <div className={`${space.id == selectBackground ? "bg-gray-300 hover:bg-gray-300 font-bold" : 'hover:bg-gray-100 hover:scale-[1.06]'} mb-2 text-sm flex p-1 rounded-xl cursor-pointer`}> 
+                                        <Popover 
+                                        open={openPopover === space.id} 
+                                        onOpenChange={(open) => {
+                                            setOpenPopover(open ? space.id : null);
+                                            if (open) setEditingValue(space.topic); // Gán value mỗi khi mở popover
+                                        }}
+                                        >
+                                            <PopoverTrigger asChild>
+                                                <div className="mr-2 items-center justify-content-center p-1 cursor-pointer hover:scale-[1.09]">
+                                                    <CircleEllipsis className="w-4 h-4 items-center justify-content-center" />
+                                                </div>
+                                            </PopoverTrigger>
 
-                            <PopoverContent className="mx-auto lg:w-[90%]">
-                                <div className="text-black text-sm flex">
-                                <div className="font-bold">Time :</div>
-                                <DateFormat utcTime={space.created_at} />
-                                </div>
+                                            <PopoverContent className="mx-auto lg:w-[90%]">
+                                                <div className="text-black text-sm flex">
+                                                <div className="font-bold">Time :</div>
+                                                <DateFormat utcTime={space.created_at} />
+                                                </div>
 
-                                <div className="mt-2">
-                                <div className="text-black text-sm flex font-bold mb-1">Change name</div>
-                                <input
-                                    type="text"
-                                    value={editingValue}
-                                    onChange={(e) => setEditingValue(e.target.value)}
-                                    className="border-2 border-black rounded-md p-1 w-full"
-                                />
-                                </div>
+                                                <div className="mt-2">
+                                                <div className="text-black text-sm flex font-bold mb-1">Change name</div>
+                                                <input
+                                                    type="text"
+                                                    value={editingValue}
+                                                    onChange={(e) => setEditingValue(e.target.value)}
+                                                    className="border-2 border-black rounded-md p-1 w-full"
+                                                />
+                                                </div>
 
-                                <div
-                                className="text-center mt-2 cursor-pointer bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
-                                onClick={() => handleSave(space.id)}
-                                >
-                                Save
-                                </div>
-                            </PopoverContent>
-                            </Popover>
-                            
-                        <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide" >
-                            <div
+                                                <div
+                                                className="text-center mt-2 cursor-pointer bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
+                                                onClick={() => handleSave(space.id)}
+                                                >
+                                                Save
+                                                </div>
+                                            </PopoverContent>
+                                            </Popover>
+                                            
+                                        <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide" >
+                                            <div
+                                                onClick={() => {
+                                                    handleSpaceSelect(space.id);
+                                                    setCurrentSpace(space.id);
+                                                }}
+                                            >
+                                                {space.topic}
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        )
+                    })}
+                </div>
+            }
+
+            {parent == "homescreen" && 
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                    {spaceSession.map((space,index) => {
+                        return (
+                            <div key={index} 
+                            className="bg-gray-200 rounded-3xl p-4 flex flex-col h-40 transition-transform hover:scale-[1.02] cursor-pointer"
                             onClick={() => {
+                                // console.log('click')
+                                // console.log(space.id)
                                 handleSpaceSelect(space.id);
                                 setCurrentSpace(space.id);
-                            }}>
-                                {space.topic}
+                            }}
+                            >
+                                <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
+                                    <LibraryBig className='text-white w-4 h-4'/>
+                                </div>
+                                <div className="mt-auto">
+                                    <h3 className="font-medium text-sm">{space.topic}</h3>
+                                    <p className="text-gray-500 text-xs mt-1"><DateFormat utcTime={space.created_at} /></p>
+                                </div> 
                             </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            })}
+                        )
+                    })}
+                </div>
+            }
+            
         </div>
+        
+
         <div ref={lastSpaceRef}>
             {moreSpace && 
                 <p className='flex items-center text-sm'>  
@@ -169,6 +211,7 @@ const Space = ({ setCurrentSpace }: { setCurrentSpace: React.Dispatch<React.SetS
                     />
                 </p>}
         </div>
+        
     </div>
   )
 }

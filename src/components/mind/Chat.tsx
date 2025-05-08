@@ -93,7 +93,7 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
                 // const clerkUserId = user?.id
                 const spaceID = currentSpace;
                 if (!moreChat) {
-                    console.log("No more chat")
+                    // console.log("No more chat")
                     return
                 }
                 else {
@@ -101,7 +101,7 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
                 }
                 
                 // console.log(clerkUserId)
-                console.log(loadingChat)
+                // console.log(loadingChat)
             }
             return () => {
                 // if (lastChatRef.current) {

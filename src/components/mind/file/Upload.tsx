@@ -85,13 +85,13 @@ const Upload = () => {
         if ( files && currentFileType) {
             Array.from(files).map(file => {
                 if ( !file.type.includes(currentFileType) ) {
-                    console.log(currentFileType)
-                    console.log(file.type)
+                    // console.log(currentFileType)
+                    // console.log(file.type)
                     setWrongFiles((prev) => [...prev,file])
                     return
                 }
                 setSelectedFiles((prev) => [...prev,file])
-                console.log(file.size)
+                // console.log(file.size)
                 setTotalSize(totalSize - file.size)
                 
             })
@@ -117,11 +117,13 @@ const Upload = () => {
         // }
         
     }
+    // const [uploadStatus, setUploadStatus] = useState<string>('waiting respone')
     const handleFormdata = () => {
         // console.log(selectedFiles)
         // let n = 0 
         selectedFiles.forEach(async (file) => {
             // n = n + 1
+
             const formData = new FormData()
             const fileKey = user?.id + '/' + uuidv4() + '-' + file.name
             const data = await S3Storage(fileKey,formatFileSize(file.size),"60")
@@ -145,7 +147,6 @@ const Upload = () => {
             })
             console.log(respone)
 
-
             // const formData = new FormData()
             // formData.append('file', file);
             // streamFile(formData).then(data => {
@@ -155,6 +156,8 @@ const Upload = () => {
             // })
         });
         setSelectedFiles([])
+        // setUploadStatus('Sucessfull up load your files to space')
+
 
     }
 
@@ -381,7 +384,14 @@ const Upload = () => {
         <div className="font-semibold text-sm cursor-pointer p-2 bg-gray-200 mt-2 rounded-md w-fit text-black" 
             onClick={() => handleFormdata()}>
             Upload & Create space
-        </div>}
+        </div>
+
+        }
+
+        {/* { uploadStatus == 'waiting respone' && 
+        <div className="text-black">
+            {uploadStatus}
+        </div>}  */}
 
 
 

@@ -2,12 +2,6 @@
 
 import { useState } from "react"
 import {
-  ShowerHead,
-  Droplet,
-  SpaceIcon as Yoga,
-  Dumbbell,
-  Mail,
-  Smartphone,
   Plus,
   Menu,
   User,
@@ -65,44 +59,6 @@ export default function Dashboard() {
 
 //   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
-  const tasks = [
-    {
-      id: 1,
-      title: "Take cold showers only",
-      day: 18,
-      icon: ShowerHead,
-    },
-    {
-      id: 2,
-      title: "Use PanOxyl foaming wash",
-      day: 17,
-      icon: Droplet,
-    },
-    {
-      id: 3,
-      title: "Do 10x Child Pose stretch",
-      day: 18,
-      icon: Yoga,
-    },
-    {
-      id: 4,
-      title: "Do 100 Push Ups",
-      day: 9,
-      icon: Dumbbell,
-    },
-    {
-      id: 5,
-      title: "Test Cora email app",
-      day: 19,
-      icon: Mail,
-    },
-    {
-      id: 6,
-      title: "No social media & entertainment",
-      day: 1,
-      icon: Smartphone,
-    },
-  ]
   const { user } = useUser()
 
   return (
@@ -110,7 +66,7 @@ export default function Dashboard() {
       {/* Sidebar for desktop */}
       <aside
         className={cn(
-          "fixed inset-y-0 z-50 flex w-72 flex-col bg-gray-200 transition-transform lg:static lg:translate-x-0",
+          "fixed inset-y-0 z-50 flex w-72 flex-col bg-gray-200 transition-transform lg:static lg:translate-x-0 ",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
@@ -178,7 +134,7 @@ export default function Dashboard() {
                   setCurrentTab("chat")
                 }}
               >
-                <Space setCurrentSpace={setCurrentSpace} />
+                <Space setCurrentSpace={setCurrentSpace} parent={"dash"}/>
               </div>
 
             </li>
@@ -447,8 +403,10 @@ export default function Dashboard() {
                 Your Spaces
               </h2>
               <h1 className="text-sm block mb-5">Keep learning everyday !</h1>
-
-              <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              <Space parent="homescreen" setCurrentSpace={setCurrentSpace}/>
+              
+              {/* <div 
+              className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {tasks.map((task) => (
                   <div
                     key={task.id}
@@ -464,7 +422,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               {/* Stats section */}
               <div className="mt-10">
@@ -473,21 +431,12 @@ export default function Dashboard() {
                   Your Plan
                 </h2>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                  <div className="bg-white rounded-3xl p-6 shadow-sm">
-                    <h3 className="text-lg font-medium mb-2">Completion Rate</h3>
-                    <p className="text-3xl font-bold">87%</p>
-                    <p className="text-sm text-gray-500 mt-1">+12% from last week</p>
+                  <div className="bg-white rounded-3xl shadow-sm">
+                    <h3 className="text-lg font-medium mb-2">Your spaces left</h3>
+                    <p className="text-3xl font-bold">15 Spaces</p>
+                    <p className="text-sm text-gray-500 mt-1">The total spaces you can create will reset next month</p>
                   </div>
-                  <div className="bg-white rounded-3xl p-6 shadow-sm">
-                    <h3 className="text-lg font-medium mb-2">Streak</h3>
-                    <p className="text-3xl font-bold">19 days</p>
-                    <p className="text-sm text-gray-500 mt-1">Your longest streak yet!</p>
-                  </div>
-                  <div className="bg-white rounded-3xl p-6 shadow-sm">
-                    <h3 className="text-lg font-medium mb-2">Total Habits</h3>
-                    <p className="text-3xl font-bold">6 active</p>
-                    <p className="text-sm text-gray-500 mt-1">2 completed this month</p>
-                  </div>
+    
                 </div>
               </div>
               
@@ -495,7 +444,9 @@ export default function Dashboard() {
           }
 
         </main>
+        
       </div>
+      
 
       {/* Mobile navigation */}
       
