@@ -1,4 +1,5 @@
 // import React from 'react'
+
 import supabase from './ConnectSupabase'
 
 const SpaceList = async(clerkUserId: string, cursor = null):Promise<any[]> => {
@@ -19,3 +20,16 @@ const SpaceList = async(clerkUserId: string, cursor = null):Promise<any[]> => {
     return data || [];
 }
 export default SpaceList
+
+const SpaceNew = async(clerkUserId : string, topic : string,spaceID : number):Promise<any[]> => {
+    const { data, error } = await supabase
+    .from('space')
+    .insert({ spaceID: spaceID, topic : topic, userid: clerkUserId})  
+    .select()
+    if (error) {
+        console.log("Create new space fail")
+        return []
+    }
+
+    return data || []
+}

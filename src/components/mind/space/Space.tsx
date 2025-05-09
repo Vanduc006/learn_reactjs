@@ -9,10 +9,11 @@ import supabase from '@/services/Supabase/ConnectSupabase';
 
 type SpaceProps = {
     setCurrentSpace: React.Dispatch<React.SetStateAction<string | null>>;
+    setTab: React.Dispatch<React.SetStateAction<string | null>>;
     parent: string;
 };
 // set gia tri current space
-const Space = ({ setCurrentSpace, parent }: SpaceProps) => {
+const Space = ({ setCurrentSpace, parent,setTab }: SpaceProps) => {
     const { user } = useUser()
     const [spaceSession, setSpaceSession] = useState<any[]>([])
     const [loadingSpace, setLoadingSpace] = useState(false)
@@ -157,6 +158,7 @@ const Space = ({ setCurrentSpace, parent }: SpaceProps) => {
                                                 onClick={() => {
                                                     handleSpaceSelect(space.id);
                                                     setCurrentSpace(space.id);
+                                                    setTab('chat')
                                                 }}
                                             >
                                                 {space.topic}
@@ -181,6 +183,7 @@ const Space = ({ setCurrentSpace, parent }: SpaceProps) => {
                                 // console.log(space.id)
                                 handleSpaceSelect(space.id);
                                 setCurrentSpace(space.id);
+                                setTab("chat")
                             }}
                             >
                                 <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">

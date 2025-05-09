@@ -52,7 +52,7 @@ import Upload from "@/components/mind/file/Upload"
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentTab, setCurrentTab ] = useState("home")
+  const [currentTab, setCurrentTab ] = useState<string | null>("home")
   const [currentSpace, setCurrentSpace] = useState<string | null>(null);
 
 
@@ -130,11 +130,11 @@ export default function Dashboard() {
               </Button>
 
               <div className="ml-3 overflow-hidden overflow-y-auto"
-                onClick={() => {
-                  setCurrentTab("chat")
-                }}
+                // onClick={() => {
+                //   setCurrentTab("chat")
+                // }}
               >
-                <Space setCurrentSpace={setCurrentSpace} parent={"dash"}/>
+                <Space setCurrentSpace={setCurrentSpace} parent={"dash"} setTab={setCurrentTab}/>
               </div>
 
             </li>
@@ -208,18 +208,18 @@ export default function Dashboard() {
             (currentTab == "home" || currentTab == "folder") ? <></> : 
             
             <div className="flex">
-              <div className="p-2 drop-shadow-lg bg-[#4871f7] cursor-pointer mb-2 flex overflow-x-auto whitespace-nowrap space-x-2 lg:w-full scrollbar-hide md:scrollbar-default overflow-hidden rounded-xl mr-5">
-                <div className={`${ currentTab == "report" ? "bg-gray-300 font-semibold" : "bg-gray-200 border-2 border-gray-200 hover:scale-[1.09]"} flex items-center transition-transform pl-5 pr-5 pt-2 pb-2 rounded-xl`} >
+              <div className="p-2 bg-white cursor-pointer mb-2 flex overflow-x-auto whitespace-nowrap space-x-2 lg:w-full scrollbar-hide md:scrollbar-default overflow-hidden rounded-xl shadow-sm border-gray-100 dark:border-gray-800">
+                <div className={`${ currentTab == "report" ? "bg-gray-50 font-semibold text-blue-600" : "text-gray-500 hover:scale-[1.05]"} hover:bg-gray-50 flex items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl`} >
                   <ScrollText className="w-4 h-4 mr-2"/> Report
                 </div>  
-                <div className={`${ currentTab == "chat" ? "bg-gray-300 font-semibold" : "bg-gray-200 border-2 border-gray-200 hover:scale-[1.09]"} flex items-center transition-transform pl-5 pr-5 pt-2 pb-2 rounded-xl`}
+                <div className={`${ currentTab == "chat" ? "bg-gray-50 font-semibold text-blue-600" : "text-gray-500 hover:scale-[1.05]"} hover:bg-gray-50 flex items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl`}
                 onClick={() => {
                   setCurrentTab("chat")
                 }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg> Chat 
                 </div>
-                <div className={`${ currentTab == "flashcard" ? "bg-gray-300 font-semibold" : "bg-gray-200 border-2 border-gray-200 hover:scale-[1.09]"} flex items-center transition-transform pl-5 pr-5 pt-2 pb-2 rounded-xl`}
+                <div className={`${ currentTab == "flashcard" ? "bg-gray-50 font-semibold text-blue-600" : "text-gray-500 hover:scale-[1.05]"} hover:bg-gray-50 flex items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl`}
                 onClick={() => {
                   setCurrentTab("flashcard")
                 }}
@@ -227,14 +227,14 @@ export default function Dashboard() {
                 
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-sparkles-icon lucide-sparkles"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>Flashcard
                 </div>
-                <div className={`${ currentTab == "quizz" ? "bg-gray-300 font-semibold" : "bg-gray-200 border-2 border-gray-200 hover:scale-[1.09]"} flex items-center transition-transform pl-5 pr-5 pt-2 pb-2 rounded-xl`}
+                <div className={`${ currentTab == "quizz" ? "bg-gray-50 font-semibold text-blue-600" : "text-gray-500 hover:scale-[1.05]"} hover:bg-gray-50 flex items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl`}
                 onClick={() => {
                   setCurrentTab("quizz")
                 }}
                 >
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-rainbow-icon lucide-rainbow"><path d="M22 17a10 10 0 0 0-20 0"/><path d="M6 17a6 6 0 0 1 12 0"/><path d="M10 17a2 2 0 0 1 4 0"/></svg> Quizz
                 </div>      
-                <div className={`${ currentTab == "transcript" ? "bg-gray-300 font-semibold" : "bg-gray-200 border-2 border-gray-200 hover:scale-[1.09]"} flex items-center transition-transform pl-5 pr-5 pt-2 pb-2 rounded-xl`}>
+                <div className={`${ currentTab == "transcript" ? "bg-gray-50 font-semibold text-blue-600" : "text-gray-500 hover:scale-[1.05]"} hover:bg-gray-50 flex items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-notepad-text-icon lucide-notepad-text"><path d="M8 2v4"/><path d="M12 2v4"/><path d="M16 2v4"/><rect width="16" height="18" x="4" y="4" rx="2"/><path d="M8 10h6"/><path d="M8 14h8"/><path d="M8 18h5"/></svg>Transcript
                 </div>  
                 
@@ -377,7 +377,7 @@ export default function Dashboard() {
               <h1 className="text-sm block mb-5">Support up to 1GB per space</h1>
               
               <div className="mt-5 mb-10">
-                <Upload/>
+                <Upload setTab={setCurrentTab}/>
               </div>
               {/* <div className="mb-5 mt-5">
                 {isYoutube ?
@@ -403,7 +403,7 @@ export default function Dashboard() {
                 Your Spaces
               </h2>
               <h1 className="text-sm block mb-5">Keep learning everyday !</h1>
-              <Space parent="homescreen" setCurrentSpace={setCurrentSpace}/>
+              <Space parent="homescreen" setCurrentSpace={setCurrentSpace} setTab={setCurrentTab} />
               
               {/* <div 
               className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
