@@ -102,33 +102,14 @@ const Upload = ({setTab} : UploadProps) => {
             // console.log(selectedFiles)
         }
         
-
-        // if ( files ) {
-        //     const fileArray = Array.from(files)
-        //     setSelectedFiles(fileArray)
-        //     setFilesLeft(filesLeft - fileArray.length)
-        //     console.log(selectedFiles)
-            
-        //     // fileArray.map(file => {  
-        //     //     if (file.type !== currentFileType) {
-        //     //         console.log("error with file",file.name)
-                    
-        //     //     }
-        //     // })
-        //     // if ( fileArray.length > 10 ) {
-
-        //     // }
-        // }
         
     }
     // const [uploadStatus, setUploadStatus] = useState<string>('waiting respone')
     const handleFormdata = () => {
-        // console.log(selectedFiles)
-        // let n = 0 
         setUploadDialog(true)
         selectedFiles.forEach(async (file,index) => {
             // n = n + 1
-
+            
             const formData = new FormData()
             const fileKey = user?.id + '/' + uuidv4() + '-' + file.name
             const data = await S3Storage(fileKey,formatFileSize(file.size),"60")
@@ -147,19 +128,10 @@ const Upload = ({setTab} : UploadProps) => {
             })
             console.log(respone)
             if (respone.status == 204) {
+
                 handleRemoveFile(index)
             }
-
-            // const formData = new FormData()
-            // formData.append('file', file);
-            // streamFile(formData).then(data => {
-            //     console.log(data)
-            //     // console.log(n)
-                
-            // })
         });
-        // setSelectedFiles([])
-        // setUploadStatus('Sucessfull up load your files to space')
 
 
     }
@@ -189,6 +161,10 @@ const Upload = ({setTab} : UploadProps) => {
       
         return Number.parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i]
     }
+
+    // function genSpaceID() {
+    //     return Math.floor(10000000 + Math.random() * 90000000);
+    // }
 
   return (
     <div className="bg-[#4871f7] rounded-xl p-4">
