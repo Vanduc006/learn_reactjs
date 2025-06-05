@@ -10,8 +10,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-import Select from 'react-select'
-import makeAnimated from 'react-select/animated';
+// import Select from 'react-select'
+// import makeAnimated from 'react-select/animated';
 import PreviewVideo from "./PreviewVideo";
 import PreviewPDF from "./PreviewPDF";
 import PreviewImage from "./PreviewImage";
@@ -20,24 +20,27 @@ import { useUser } from "@clerk/clerk-react";
 import { v4 as uuidv4 } from 'uuid';
 import S3Storage from "@/services/AWS/S3Storage";
 import DotLoader from 'react-spinners/DotLoader'
+import { Plus } from "lucide-react";
 // import ProgressBar from "@ramonak/react-progress-bar";
-type UploadProps = {
-    setTab: React.Dispatch<React.SetStateAction<string | null>>;
-};
-const Upload = ({setTab} : UploadProps) => {
+// type UploadProps = {
+//     setTab: React.Dispatch<React.SetStateAction<string | null>>;
+// };
+const Upload = (
+    // {setTab} : UploadProps
+) => {
     const { user } = useUser()
-    const animatedComponents = makeAnimated();
-    const list_languages_sp = [
-        {"value":"Auto","label":'🤖 MIND detect'},
-        {"value":"VN","label":"🇻🇳 Vietnam"},
-        { "value": "CN", "label": "🇨🇳 China" },
-        { "value": "EN", "label": "🇬🇧 English" },
-        { "value": "FR", "label": "🇫🇷 France" },
-        { "value": "JP", "label": "🇯🇵 Japan" },
-        { "value": "TH", "label": "🇹🇭 Thailand" },
-        { "value": "DE", "label": "🇩🇪 Đức" },
-        { "value": "ES", "label": "🇪🇸 Tây Ban Nha" }
-    ]
+    // const animatedComponents = makeAnimated();
+    // const list_languages_sp = [
+    //     {"value":"Auto","label":'🤖 MIND detect'},
+    //     {"value":"VN","label":"🇻🇳 Vietnam"},
+    //     { "value": "CN", "label": "🇨🇳 China" },
+    //     { "value": "EN", "label": "🇬🇧 English" },
+    //     { "value": "FR", "label": "🇫🇷 France" },
+    //     { "value": "JP", "label": "🇯🇵 Japan" },
+    //     { "value": "TH", "label": "🇹🇭 Thailand" },
+    //     { "value": "DE", "label": "🇩🇪 Đức" },
+    //     { "value": "ES", "label": "🇪🇸 Tây Ban Nha" }
+    // ]
     const [currentFileType, setCurrentFileType] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null)
     const [selectedFiles, setSelectedFiles] = useState<File[]>([])
@@ -167,39 +170,7 @@ const Upload = ({setTab} : UploadProps) => {
     // }
 
   return (
-    <div className="bg-[#4871f7] rounded-xl p-4">
-        <div className="sm:flex block text-white items-center justify-center">
-            <div className="font-bold text-xl">
-                Choose your files to creat new space
-            </div>
-            
-            <div className="sm:ml-auto mt-2 sm:w-fit w-full">
-                <div className="text-black flex font-semibold sm:w-fit w-full">
-                    <Select
-                        className='border-none bg-gray-200 rounded-full sm:w-fit w-full'
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        defaultValue={[list_languages_sp[0]]}
-                        // isMulti
-                        options={list_languages_sp}
-                    />
-                </div>
-            </div>
-        </div>
-        {/* <div className="text-sm text-white  mt-2">
-            
-            <ProgressBar 
-                completed={60}
-                bgColor="#000"
-                height="15px"
-                borderRadius="20px"
-                baseBgColor="#ffffff"
-                labelColor="#ffffff"
-                animateOnRender
-                maxCompleted={100}
-            />
-        </div> */}
-
+    <div>
         <div className="cursor-pointer text-sm text-white flex gap-2 mt-5 overflow-y-auto scrollbar-hide rounded-full">
             <input 
                 type="file"
@@ -212,12 +183,13 @@ const Upload = ({setTab} : UploadProps) => {
             onClick={() => {
                 handleUpload("pdf")
             }}
-            className="flex items-center justify-center pl-5 pr-5 pt-2 pb-2 bg-gray-200 text-black rounded-full text-sm">
-                <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" enable-background="new 0 0 56 64" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="#8C181A" d="M5.1,0C2.3,0,0,2.3,0,5.1v53.8C0,61.7,2.3,64,5.1,64h45.8c2.8,0,5.1-2.3,5.1-5.1V20.3L37.1,0H5.1z"></path> <path fill="#6B0D12" d="M56,20.4v1H43.2c0,0-6.3-1.3-6.1-6.7c0,0,0.2,5.7,6,5.7H56z"></path> <path opacity="0.5" fill="#FFFFFF" enable-background="new " d="M37.1,0v14.6c0,1.7,1.1,5.8,6.1,5.8H56L37.1,0z"></path> </g> <path fill="#FFFFFF" d="M14.9,49h-3.3v4.1c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h3.7 c2.4,0,3.8,1.7,3.8,3.6C18.7,47.4,17.3,49,14.9,49z M14.8,43.1h-3.2v4.6h3.2c1.4,0,2.4-0.9,2.4-2.3C17.2,44,16.2,43.1,14.8,43.1z M25.2,53.8h-3c-0.6,0-1.1-0.5-1.1-1.1v-9.8c0-0.6,0.5-1.1,1.1-1.1h3c3.7,0,6.2,2.6,6.2,6C31.4,51.2,29,53.8,25.2,53.8z M25.2,43.1 h-2.6v9.3h2.6c2.9,0,4.6-2.1,4.6-4.7C29.9,45.2,28.2,43.1,25.2,43.1z M41.5,43.1h-5.8V47h5.7c0.4,0,0.6,0.3,0.6,0.7 s-0.3,0.6-0.6,0.6h-5.7v4.8c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h6.2c0.4,0,0.6,0.3,0.6,0.7 C42.2,42.8,41.9,43.1,41.5,43.1z"></path> </g></svg>
-                PDFs
+            className="gap-2 flex items-center justify-center pl-5 pr-5 pt-2 pb-2 bg-gray-200 text-black rounded-full text-sm ">
+                {/* <svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" enable-background="new 0 0 56 64" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="#8C181A" d="M5.1,0C2.3,0,0,2.3,0,5.1v53.8C0,61.7,2.3,64,5.1,64h45.8c2.8,0,5.1-2.3,5.1-5.1V20.3L37.1,0H5.1z"></path> <path fill="#6B0D12" d="M56,20.4v1H43.2c0,0-6.3-1.3-6.1-6.7c0,0,0.2,5.7,6,5.7H56z"></path> <path opacity="0.5" fill="#FFFFFF" enable-background="new " d="M37.1,0v14.6c0,1.7,1.1,5.8,6.1,5.8H56L37.1,0z"></path> </g> <path fill="#FFFFFF" d="M14.9,49h-3.3v4.1c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h3.7 c2.4,0,3.8,1.7,3.8,3.6C18.7,47.4,17.3,49,14.9,49z M14.8,43.1h-3.2v4.6h3.2c1.4,0,2.4-0.9,2.4-2.3C17.2,44,16.2,43.1,14.8,43.1z M25.2,53.8h-3c-0.6,0-1.1-0.5-1.1-1.1v-9.8c0-0.6,0.5-1.1,1.1-1.1h3c3.7,0,6.2,2.6,6.2,6C31.4,51.2,29,53.8,25.2,53.8z M25.2,43.1 h-2.6v9.3h2.6c2.9,0,4.6-2.1,4.6-4.7C29.9,45.2,28.2,43.1,25.2,43.1z M41.5,43.1h-5.8V47h5.7c0.4,0,0.6,0.3,0.6,0.7 s-0.3,0.6-0.6,0.6h-5.7v4.8c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h6.2c0.4,0,0.6,0.3,0.6,0.7 C42.2,42.8,41.9,43.1,41.5,43.1z"></path> </g></svg> */}
+                <Plus className="w-4 h-4"/>
+                Create new
             </div>
 
-            <div className="flex items-center justify-center pl-5 pr-5 pt-2 pb-2 bg-gray-200 text-black rounded-full text-sm">
+            {/* <div className="flex items-center justify-center pl-5 pr-5 pt-2 pb-2 bg-gray-200 text-black rounded-full text-sm">
             <svg className="w-5 h-5 mr-2"viewBox="-4 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.112.011c-2.802 0-5.073 2.273-5.073 5.074v53.841c0 2.803 2.272 5.074 5.073 5.074h45.775c2.801 0 5.074-2.271 5.074-5.074v-38.605l-18.904-20.31h-31.945z" fill-rule="evenodd" clip-rule="evenodd" fill="#3C8CEA"></path> <path d="M10.133 37.439h21.564v2.059h-21.564zm0 4.801h21.564v2.057h-21.564zm0 4.801h21.564v2.057h-21.564zm0 4.8h12.233v2.058h-12.233z" fill="#ffffff"></path> <g fill-rule="evenodd" clip-rule="evenodd"> <path d="M55.96 20.377v1h-12.799s-6.312-1.26-6.129-6.707c0 0 .208 5.707 6.004 5.707h12.924z" fill="#2D6FE4"></path> <path d="M37.058.025v14.561c0 1.656 1.104 5.791 6.104 5.791h12.799l-18.903-20.352z" opacity=".5" fill="#ffffff"></path> </g> </g></svg>
                 Documents
             </div>
@@ -258,8 +230,42 @@ const Upload = ({setTab} : UploadProps) => {
             <div className="flex items-center justify-center pl-5 pr-5 pt-2 pb-2 bg-gray-200 text-black rounded-full text-sm">
                 <svg className="w-5 h-5 mr-2" viewBox="-4 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M5.112-.004c-2.802 0-5.073 2.273-5.073 5.074v53.841c0 2.803 2.271 5.074 5.073 5.074h45.774c2.801 0 5.074-2.271 5.074-5.074v-38.605l-18.902-20.31h-31.946z" fill-rule="evenodd" clip-rule="evenodd" fill="#E34221"></path> <g fill-rule="evenodd" clip-rule="evenodd"> <path d="M55.977 20.352v1h-12.799s-6.312-1.26-6.129-6.707c0 0 .208 5.707 6.004 5.707h12.924z" fill="#DC3119"></path> <path d="M37.074 0v14.561c0 1.656 1.104 5.791 6.104 5.791h12.799l-18.903-20.352z" opacity=".5" fill="#ffffff"></path> </g> <path d="M14.964 49.011h-3.331v4.141c0 .414-.324.738-.756.738-.414 0-.738-.324-.738-.738v-10.298c0-.594.486-1.081 1.08-1.081h3.745c2.413 0 3.763 1.657 3.763 3.619 0 1.963-1.387 3.619-3.763 3.619zm-.181-5.906h-3.15v4.573h3.15c1.423 0 2.395-.936 2.395-2.287 0-1.349-.972-2.286-2.395-2.286zm11.197 5.906h-3.332v4.141c0 .414-.324.738-.756.738-.414 0-.738-.324-.738-.738v-10.298c0-.594.486-1.081 1.08-1.081h3.746c2.412 0 3.763 1.657 3.763 3.619 0 1.963-1.387 3.619-3.763 3.619zm-.18-5.906h-3.151v4.573h3.151c1.423 0 2.395-.936 2.395-2.287-.001-1.349-.972-2.286-2.395-2.286zm14.112 0h-3.277v10.047c0 .414-.324.738-.756.738-.414 0-.738-.324-.738-.738v-10.047h-3.259c-.36 0-.647-.288-.647-.684 0-.361.287-.648.647-.648h8.03c.36 0 .648.288.648.685.001.359-.288.647-.648.647z" fill="#ffffff"></path> </g></svg>
                 Slides
-            </div>
+            </div> */}
         </div>
+        <div className=" mt-2">
+        {/* <div className="flex text-white ">
+            <div className="font-bold text-xl">
+                Create new
+            </div>
+            
+            <div className="sm:ml-auto mt-2 sm:w-fit w-full">
+                <div className="text-black flex font-semibold sm:w-fit w-full">
+                    <Select
+                        className='border-none bg-gray-200 rounded-full sm:w-fit w-full'
+                        closeMenuOnSelect={false}
+                        components={animatedComponents}
+                        defaultValue={[list_languages_sp[0]]}
+                        // isMulti
+                        options={list_languages_sp}
+                    />
+                </div>
+            </div>
+        </div> */}
+        {/* <div className="text-sm text-white  mt-2">
+            
+            <ProgressBar 
+                completed={60}
+                bgColor="#000"
+                height="15px"
+                borderRadius="20px"
+                baseBgColor="#ffffff"
+                labelColor="#ffffff"
+                animateOnRender
+                maxCompleted={100}
+            />
+        </div> */}
+
+        
 
         <div className="">
             { wrongFiles.length > 0 && 
@@ -269,14 +275,14 @@ const Upload = ({setTab} : UploadProps) => {
             }
 
             { selectedFiles.length > 0 &&       
-                <div className="text-sm bg-gray-200 rounded-xl mt-5 p-2">
+                <div className="text-sm bg-gray-200 rounded-xl mt-2 p-2">
                     
                     {selectedFiles.map((file,index) => {
            
                         return (
                             <div key={index}>
                                 {/* {file.name} */}
-                                <div className="mb-2">
+                                <div className="p-1">
                                     <div className="flex items-center">
                                         <div className="flex font-semibold "> 
                                             {file.type.includes("pdf") && (<svg className="mr-2 w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" enable-background="new 0 0 56 64" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path fill="#8C181A" d="M5.1,0C2.3,0,0,2.3,0,5.1v53.8C0,61.7,2.3,64,5.1,64h45.8c2.8,0,5.1-2.3,5.1-5.1V20.3L37.1,0H5.1z"></path> <path fill="#6B0D12" d="M56,20.4v1H43.2c0,0-6.3-1.3-6.1-6.7c0,0,0.2,5.7,6,5.7H56z"></path> <path opacity="0.5" fill="#FFFFFF" enable-background="new " d="M37.1,0v14.6c0,1.7,1.1,5.8,6.1,5.8H56L37.1,0z"></path> </g> <path fill="#FFFFFF" d="M14.9,49h-3.3v4.1c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h3.7 c2.4,0,3.8,1.7,3.8,3.6C18.7,47.4,17.3,49,14.9,49z M14.8,43.1h-3.2v4.6h3.2c1.4,0,2.4-0.9,2.4-2.3C17.2,44,16.2,43.1,14.8,43.1z M25.2,53.8h-3c-0.6,0-1.1-0.5-1.1-1.1v-9.8c0-0.6,0.5-1.1,1.1-1.1h3c3.7,0,6.2,2.6,6.2,6C31.4,51.2,29,53.8,25.2,53.8z M25.2,43.1 h-2.6v9.3h2.6c2.9,0,4.6-2.1,4.6-4.7C29.9,45.2,28.2,43.1,25.2,43.1z M41.5,43.1h-5.8V47h5.7c0.4,0,0.6,0.3,0.6,0.7 s-0.3,0.6-0.6,0.6h-5.7v4.8c0,0.4-0.3,0.7-0.8,0.7c-0.4,0-0.7-0.3-0.7-0.7V42.9c0-0.6,0.5-1.1,1.1-1.1h6.2c0.4,0,0.6,0.3,0.6,0.7 C42.2,42.8,41.9,43.1,41.5,43.1z"></path> </g></svg>)}
@@ -363,13 +369,7 @@ const Upload = ({setTab} : UploadProps) => {
             }
         </div>
 
-        {selectedFiles.length > 0 &&         
-        <div className="font-semibold text-sm cursor-pointer p-2 bg-gray-200 mt-2 rounded-md w-fit text-black" 
-            onClick={() => handleFormdata()}>
-            Upload & Create space
-        </div>
 
-        }
 
         <Dialog open={uploadDialog} onOpenChange={() => {handleUploadDialogChange()}}>
             <DialogContent className="mx-auto bg-white text-black max-h-[50%] overflow-auto scrollbar-hide">
@@ -411,7 +411,7 @@ const Upload = ({setTab} : UploadProps) => {
             <div className="px-5 pt-2 pb-2 bg-gray-200 text-sm font-bold w-fit rounded-md cursor-pointer hover:bg-gray-500 hover:text-white hover:scale-[1.09]"
             onClick={() => {
                 handleUploadDialogChange()
-                setTab('chat')
+                // setTab('chat')
             }}
             >Open Space</div>
             </DialogContent>
@@ -425,6 +425,15 @@ const Upload = ({setTab} : UploadProps) => {
 
 
     </div>
+    {selectedFiles.length > 0 &&         
+        <div className="bg-[#4871f7] font-semibold text-sm cursor-pointer p-2 text-white mt-2 rounded-md w-fit text-black w-fit ml-auto" 
+            onClick={() => handleFormdata()}>
+            Upload & Create space
+        </div>
+
+    }
+    </div>
+    
   )
 }
 

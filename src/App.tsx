@@ -1,22 +1,19 @@
 
 import './global.css'
 import { Route, Routes } from 'react-router-dom'
-// import SignInForm from './_auth/form/SignInForm'
-// import Home from './_root/page/Home'
-// import SignUpForm from './_auth/form/SignUpForm'
-// import AuthLayout from './_auth/AuthLayout'
-// import RootLayout from './_root/RootLayout'
-// import GenImage from './_root/page/GenImage'
+
 import PhatNguoi from './_root/page/PhatNguoi'
 import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
 import Mind from './_root/page/Mind'
 import NotFound from './_root/page/NotFound'
-import Dashboard from './_root/page/Mind/page'
+// import Dashboard from './Mind/page'
 import { useUser } from '@clerk/clerk-react'
 import MindAuth from './_auth/mind/MindAuth'
 import BounceLoader from 'react-spinners/BounceLoader'
 import TestGift from './_root/page/TestGift'
-
+import DashLayout from './Mind/DashLayout'
+import HomeSreen from './Mind/HomeSreen'
+import SpaceLayout from './Mind/SpaceLayout'
 // import PhotoBooth from './_root/page/PhotoBooth'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -44,34 +41,25 @@ const App = () => {
   <main className=''> 
 
     <Routes>
-      
-      {/* <Route element={<AuthLayout/>}>
-        <Route path='sign-in' element={<SignInForm/>}/>
-        
-        <Route path='sign-up' element={<SignUpForm/>}/>
-      </Route>
-  
-      
-      <Route element={<RootLayout/>}>
-        <Route index element={<Home/>}/>
-        <Route path='gen-pic' element={<GenImage/>}/>
-        
-      </Route> */}
-
       <Route path="/phatnguoi" element={<PhatNguoi />} />
       <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
       <Route path="/mind" element={<Mind/>}> </Route>
       <Route path="/old" element={<Mind/>}> </Route>
       <Route path="*" element={<NotFound/>} ></Route>
       <Route path='/gift' element={<TestGift/>}></Route>
+
       <Route
         path="/"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <DashLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route index element={<HomeSreen/>} />
+        <Route path='/space' element={<SpaceLayout/> } />
+
+      </Route>
       {/* <Route path="/booth" element={<PhotoBooth/>} ></Route> */}
       
 

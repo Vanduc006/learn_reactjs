@@ -4,6 +4,7 @@ import App from './App.tsx'
 import { BrowserRouter } from 'react-router-dom'
 import { ClerkProvider } from '@clerk/clerk-react'
 import { viVN } from '@clerk/localizations'
+import { MindProvider } from './context/MindProvider.tsx'
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 // console.log(PUBLISHABLE_KEY)
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       localization={viVN}
 
     >
-      <App />
+      <MindProvider>
+        <App />
+      </MindProvider>
     </ClerkProvider>
   
   </BrowserRouter>

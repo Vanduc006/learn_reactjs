@@ -1,20 +1,23 @@
 import { CircleEllipsis, LibraryBig } from 'lucide-react'
 import SpaceList from '@/services/Supabase/SpaceList'
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useUser } from '@clerk/clerk-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import DateFormat from '../DateFormat';
 import BeatLoader from 'react-spinners/BeatLoader';
 import supabase from '@/services/Supabase/ConnectSupabase';
-
+import { useMind } from '@/context/MindProvider';
+// import { useNavigate} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 type SpaceProps = {
-    setCurrentSpace: React.Dispatch<React.SetStateAction<string | null>>;
-    setTab: React.Dispatch<React.SetStateAction<string | null>>;
+
     parent: string;
 };
 // set gia tri current space
-const Space = ({ setCurrentSpace, parent,setTab }: SpaceProps) => {
+const Space = ({ parent }: SpaceProps) => {
     const { user } = useUser()
+    // const navigate =  useNavigate()
+    const { setCurrentSpace } = useMind()
     const [spaceSession, setSpaceSession] = useState<any[]>([])
     const [loadingSpace, setLoadingSpace] = useState(false)
     const [moreSpace, setMoreSpace] = useState(true)
@@ -152,17 +155,22 @@ const Space = ({ setCurrentSpace, parent,setTab }: SpaceProps) => {
                                                 </div>
                                             </PopoverContent>
                                             </Popover>
-                                            
+                                        
+                                        
                                         <div className="overflow-hidden overflow-x-auto whitespace-nowrap scrollbar-hide" >
-                                            <div
+                                            {/* <div
                                                 onClick={() => {
                                                     handleSpaceSelect(space.id);
                                                     setCurrentSpace(space.id);
-                                                    setTab('chat')
+                                                    // setTab('chat')
                                                 }}
                                             >
                                                 {space.topic}
-                                            </div>
+                                            </div> */}
+                                            <Link to={`/space?id=${space.id}`}>
+                                                {space.topic}
+                                            </Link>
+                                            
                                             </div>
                                         </div>
                                     </div>
@@ -183,16 +191,19 @@ const Space = ({ setCurrentSpace, parent,setTab }: SpaceProps) => {
                                 // console.log(space.id)
                                 handleSpaceSelect(space.id);
                                 setCurrentSpace(space.id);
-                                setTab("chat")
+                                // setTab("chat")
                             }}
                             >
-                                <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
-                                    <LibraryBig className='text-white w-4 h-4'/>
-                                </div>
-                                <div className="mt-auto">
-                                    <h3 className="font-medium text-sm">{space.topic}</h3>
-                                    <p className="text-gray-500 text-xs mt-1"><DateFormat utcTime={space.created_at} /></p>
-                                </div> 
+                                <Link to={`/space?id=${space.id}`}>
+                                    <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
+                                        <LibraryBig className='text-white w-4 h-4'/>
+                                    </div>
+                                    <div className="mt-auto">
+                                        <h3 className="font-medium text-sm">{space.topic}</h3>
+                                        <p className="text-gray-500 text-xs mt-1"><DateFormat utcTime={space.created_at} /></p>
+                                    </div> 
+                                </Link>
+
                             </div>
                         )
                     })}

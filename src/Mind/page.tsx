@@ -55,7 +55,7 @@ export default function Dashboard() {
   const [currentTab, setCurrentTab ] = useState<string | null>("home")
   const [currentSpace, setCurrentSpace] = useState<string | null>(null);
 
-
+  setCurrentSpace('1111')
 
 //   const isDesktop = useMediaQuery("(min-width: 1024px)")
 
@@ -134,7 +134,7 @@ export default function Dashboard() {
                 //   setCurrentTab("chat")
                 // }}
               >
-                <Space setCurrentSpace={setCurrentSpace} parent={"dash"} setTab={setCurrentTab}/>
+                <Space parent="dash" />
               </div>
 
             </li>
@@ -357,27 +357,13 @@ export default function Dashboard() {
                   
                   Where your knowleagde begin
                   
-                  </h2>
-                
-                
-                {/* <div className="flex gap-2">
+                </h2>
 
-                    <Button variant="outline" size="icon" className="rounded-full">
-                      <Camera className="h-5 w-5" />
-                    </Button>
-                  
-
-                  <Button className="rounded-full">
-                    <Plus className="h-5 w-5 mr-2" />
-                    Temp chat
-                  </Button>
-                </div> */}
-                
               </div>
               <h1 className="text-sm block mb-5">Support up to 1GB per space</h1>
               
               <div className="mt-5 mb-10">
-                <Upload setTab={setCurrentTab}/>
+                <Upload />
               </div>
               {/* <div className="mb-5 mt-5">
                 {isYoutube ?
@@ -403,7 +389,7 @@ export default function Dashboard() {
                 Your Spaces
               </h2>
               <h1 className="text-sm block mb-5">Keep learning everyday !</h1>
-              <Space parent="homescreen" setCurrentSpace={setCurrentSpace} setTab={setCurrentTab} />
+              <Space parent="homescreen" />
               
               {/* <div 
               className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
