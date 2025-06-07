@@ -6,7 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import DateFormat from '../DateFormat';
 import BeatLoader from 'react-spinners/BeatLoader';
 import supabase from '@/services/Supabase/ConnectSupabase';
-import { useMind } from '@/context/MindProvider';
+// import { useMind } from '@/context/MindProvider';
 // import { useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 type SpaceProps = {
@@ -17,7 +17,7 @@ type SpaceProps = {
 const Space = ({ parent }: SpaceProps) => {
     const { user } = useUser()
     // const navigate =  useNavigate()
-    const { setCurrentSpace } = useMind()
+    // const { setCurrentSpace } = useMind()
     const [spaceSession, setSpaceSession] = useState<any[]>([])
     const [loadingSpace, setLoadingSpace] = useState(false)
     const [moreSpace, setMoreSpace] = useState(true)
@@ -69,7 +69,7 @@ const Space = ({ parent }: SpaceProps) => {
 
     const [selectBackground, setSelectBackground] = useState<string>('');
     const handleSpaceSelect = (id: string) => {
-        setCurrentSpace(id); // Cập nhật currentSpace khi chọn
+        // setCurrentSpace(id); // Cập nhật currentSpace khi chọn
         setSelectBackground(id);
         
     };
@@ -190,11 +190,11 @@ const Space = ({ parent }: SpaceProps) => {
                                 // console.log('click')
                                 // console.log(space.id)
                                 handleSpaceSelect(space.id);
-                                setCurrentSpace(space.id);
+                                // setCurrentSpace(space.id);
                                 // setTab("chat")
                             }}
                             >
-                                <Link to={`/space?id=${space.id}`}>
+                                <Link to={`/space?id=${space.spaceID}`}>
                                     <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
                                         <LibraryBig className='text-white w-4 h-4'/>
                                     </div>

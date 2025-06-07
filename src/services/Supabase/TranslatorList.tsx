@@ -1,9 +1,12 @@
 import supabase from "./ConnectSupabase";
+// import { useUser } from "@clerk/clerk-react";
 
-const TranslatorList = async (spaceID: string,cursor = null): Promise<any[]> => {
+const TranslatorList = async (userID : string ,spaceID: string,cursor = null): Promise<any[]> => {
+    // const {user} = useUser()
     let query = supabase
         .from('translator')
         .select('*')
+        .eq('userid',userID)
         .eq('spaceid', spaceID)
         .order("created_at", { ascending: false })
         // .order("id", { ascending: false })
@@ -23,11 +26,11 @@ const TranslatorList = async (spaceID: string,cursor = null): Promise<any[]> => 
 
 export default TranslatorList;
 
-export const TranslatorNew = async (clerkId: any,listImages: any,GeminiRespone: any):Promise<any[]> => {
+export const TranslatorNew = async (userID: any,listImages: any,LLMsRespone: any):Promise<any[]> => {
 
     let query = supabase
         .from('translator')
-        .insert({userid : clerkId,photos_prompt_url :listImages,api_respone_content :GeminiRespone})
+        .insert({userid : userID,photos_prompt_url :listImages,api_respone_content :LLMsRespone})
     const { data,error } =  await query
     if (error) {
         console.log("new translator error",error)

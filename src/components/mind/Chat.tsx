@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import BeatLoader from 'react-spinners/BeatLoader';
 import parse from 'html-react-parser';
 import DateFormat from './DateFormat';
+// import { useUser } from '@clerk/clerk-react';
 
 const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
     const { user } = useUser();
@@ -31,9 +32,9 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
 
     },[user,currentSpace,isHave,setMoreChat])
 
-    async function CallTranslatorList(spaceID : string,cursor = null) {
+    async function CallTranslatorList(userID: string,spaceID : string,cursor = null) {
 
-        TranslatorList(spaceID,cursor).then((data) => {
+        TranslatorList(userID,spaceID,cursor).then((data) => {
 
             // if (!moreChat || loadingChat) {
             //     console.log("morechat false , loading false")
@@ -71,8 +72,8 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
         setMoreChat(true);   // Reset moreChat để có thể load thêm
         setLastCreatedAt(null); // Reset lastCreatedAt
 
-        if (currentSpace) {
-            CallTranslatorList(currentSpace);
+        if (currentSpace && user) {
+            CallTranslatorList(user.id,currentSpace);
         }
 
   
@@ -89,24 +90,18 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
                 observer.observe(lastChatRef.current)
                 // console.log(loadingChat)
             } 
-            if (loadingChat && currentSpace ) {
-                // const clerkUserId = user?.id
+            if (loadingChat && currentSpace && user ) {
                 const spaceID = currentSpace;
                 if (!moreChat) {
-                    // console.log("No more chat")
                     return
                 }
                 else {
-                    CallTranslatorList(spaceID,lastCreatedAt)
+                    CallTranslatorList(user?.id,spaceID,lastCreatedAt)
                 }
-                
-                // console.log(clerkUserId)
-                // console.log(loadingChat)
+
             }
             return () => {
-                // if (lastChatRef.current) {
-                //     observer.unobserve(lastChatRef.current)
-                // }
+
             }
         }
     },[observerOptions,loadingChat,user,isHave]);

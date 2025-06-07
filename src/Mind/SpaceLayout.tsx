@@ -1,22 +1,29 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 // import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Menu, X, ScrollText, Shapes } from "lucide-react"
 import { useMind } from "@/context/MindProvider"
-import Chat from "@/components/mind/Chat"
+// import Chat from "@/components/mind/Chat"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useSearchParams } from "react-router-dom"
+import ChatScreen from "./Tab/ChatScreen"
+import { isOwnerSpace } from "@/services/Supabase/SpaceList"
+import { useUser } from "@clerk/clerk-react"
 
 export default function TwoSectionLayout() {
-const {currentTab,setCurrentTab,currentSpace} = useMind()
+  const {user} = useUser()
+  const {currentTab,setCurrentTab,currentSpace,setCurrentSpace} = useMind()
+  const [searchParams] =  useSearchParams()
+  const spaceID = searchParams.get('id')
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
-
+  const [isOwner, setIsOwner] = useState<boolean | null>(null);
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed)
   }
@@ -24,6 +31,50 @@ const {currentTab,setCurrentTab,currentSpace} = useMind()
   const toggleMobileSidebar = () => {
     setIsMobileSidebarOpen(!isMobileSidebarOpen)
   }
+
+  useEffect(() => {
+      const checkOwner = async() => {
+        if ( user && spaceID ) {
+          const data = await isOwnerSpace(user.id,spaceID)
+          if ( data ) {
+            setCurrentSpace(spaceID)
+            setIsOwner(true)
+          }
+
+          if(!data) {
+            setIsOwner(false)
+            console.log(data)
+          }
+        }
+      } 
+      checkOwner()
+    
+  },[currentSpace,spaceID])
+
+  if (isOwner === false) {
+  return (
+    <div className="h-full flex flex-col items-center justify-center text-black">
+      <div className="text-center">
+        <div className="flex items-center justify-center">
+          We can't find the space ID:
+          <span className="font-bold text-red ml-2">
+            {spaceID ?? 'Undefined'}
+          </span>
+        </div>
+        <div className="mt-2 font-bold text-sm">
+          Please ensure that you are the owner of this space.
+        </div>
+
+      </div>
+    </div>
+
+
+  );
+}
+
+if (isOwner === null) {
+  return null
+}
 
   return (
     <div className="flex h-full w-full">
@@ -195,13 +246,9 @@ const {currentTab,setCurrentTab,currentSpace} = useMind()
 
             </div>
             {/* <h2 className="text-lg font-semibold text-gray-800">Chat</h2> */}
-            
-                
-                
-
           </div>
         </div>
-
+{/* 
         <div className="flex-1 p-4 space-y-4 min-h-0 overflow-y-auto">
             { currentTab == "chat" ? 
             <div>
@@ -209,16 +256,25 @@ const {currentTab,setCurrentTab,currentSpace} = useMind()
                     <div className="items-center justify-content-center lg:w-[50%] lg:mx-auto"> 
 
                         <Chat currentSpace={currentSpace}/>
-
+                        <div className="sticky bottom-0 p-4">
+                          fff
+                        </div>
                     </div>
                 </div>
-                {/* <Chat currentSpace={currentSpace}/> */}
             </div> : <div></div>
             }
 
-            {currentTab == ""}
-        </div>
+        </div> */}
 
+        {/* Tab section */}
+
+        <div>
+          {currentTab == "chat" &&
+          <div>
+            <ChatScreen/>
+          </div>
+          }
+        </div>
         {/* <div className="flex-1 p-4 space-y-4 min-h-0 overflow-y-auto">
           {messages.map((message) => (
             <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
@@ -237,21 +293,6 @@ const {currentTab,setCurrentTab,currentSpace} = useMind()
           ))}
         
 
-        </div> */}
-
-        {/* Message Input - Sticky bottom */}
-        {/* <div className="sticky bottom-0 p-4 border-t border-gray-200 bg-white">
-          <form onSubmit={handleSendMessage} className="flex space-x-2">
-            <Input
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              placeholder="Type your message..."
-              className="flex-1"
-            />
-            <Button type="submit" size="icon" disabled={!newMessage.trim()}>
-              <Send size={18} />
-            </Button>
-          </form>
         </div> */}
       </div>
     </div>

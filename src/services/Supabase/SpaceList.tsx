@@ -2,11 +2,11 @@
 
 import supabase from './ConnectSupabase'
 
-const SpaceList = async(clerkUserId: string, cursor = null):Promise<any[]> => {
+const SpaceList = async(userID: string, cursor = null):Promise<any[]> => {
     let query = supabase
         .from("space")
         .select("*")
-        .eq("userid",clerkUserId)
+        .eq("userid",userID)
         .order("created_at", {ascending : false})
         .limit(20)
     if (cursor) {
@@ -20,6 +20,20 @@ const SpaceList = async(clerkUserId: string, cursor = null):Promise<any[]> => {
     return data || [];
 }
 export default SpaceList
+
+export const isOwnerSpace = async(userID:string, spaceID: string) => {
+    const { data, error } = await supabase
+    .from("space")
+    .select("userid")
+    .eq("spaceID",spaceID)
+    .maybeSingle()
+
+    if ( error ) {
+        return false
+    }
+
+    return data?.userid ===  userID
+}
 
 // const SpaceNew = async(clerkUserId : string, topic : string,spaceID : number):Promise<any[]> => {
 //     const { data, error } = await supabase
