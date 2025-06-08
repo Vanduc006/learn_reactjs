@@ -1,14 +1,14 @@
-import TranslatorList, { isHaveTranslator } from '@/services/Supabase/TranslatorList';
+import ChatList, { isHaveChat } from '@/services/Supabase/ChatList';
 import { useUser } from '@clerk/clerk-react';
 import { ScanText, ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react'
 import BeatLoader from 'react-spinners/BeatLoader';
 import parse from 'html-react-parser';
-import DateFormat from './DateFormat';
+import DateFormat from '../DateFormat';
 import '@/styles/markdown.css'
 // import { useUser } from '@clerk/clerk-react';
 
-const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
+const ChatHistory = ({ currentSpace }: { currentSpace: string | null }) => {
     const { user } = useUser();
     const [chatSession, setChatSession] = useState<any[]>([]);
     const [isHave, setIsHave ] = useState(true)
@@ -31,14 +31,14 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
 
     useEffect(() => {
         if (currentSpace) {
-            isHaveTranslator(currentSpace).then((data) => {
+            isHaveChat(currentSpace).then((data) => {
                 setIsHave(data)
             })
         }  
     },[user,currentSpace,isHave,setMoreChat])
 
     async function CallTranslatorList(userID: string,spaceID : string,cursor = null) {
-        TranslatorList(userID,spaceID,cursor).then((data) => {
+        ChatList(userID,spaceID,cursor).then((data) => {
             setLoadingChat(true)
             if (data.length < 10 ) {
                 setMoreChat(false)
@@ -149,4 +149,4 @@ const Chat = ({ currentSpace }: { currentSpace: string | null }) => {
     )
 }
 
-export default Chat
+export default ChatHistory

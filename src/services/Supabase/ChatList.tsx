@@ -1,10 +1,10 @@
 import supabase from "./ConnectSupabase";
 // import { useUser } from "@clerk/clerk-react";
 
-const TranslatorList = async (userID : string ,spaceID: string,cursor = null): Promise<any[]> => {
+const ChatList = async (userID : string ,spaceID: string,cursor = null): Promise<any[]> => {
     // const {user} = useUser()
     let query = supabase
-        .from('translator')
+        .from('chat')
         .select('*')
         .eq('userid',userID)
         .eq('spaceid', spaceID)
@@ -24,9 +24,9 @@ const TranslatorList = async (userID : string ,spaceID: string,cursor = null): P
     return data || [];
 }
 
-export default TranslatorList;
+export default ChatList;
 
-export const TranslatorNew = async (userID: any,listImages: any,LLMsRespone: any):Promise<any[]> => {
+export const sendingChat = async (userID: any,listImages: any,LLMsRespone: any):Promise<any[]> => {
 
     let query = supabase
         .from('translator')
@@ -39,9 +39,9 @@ export const TranslatorNew = async (userID: any,listImages: any,LLMsRespone: any
   
 }
 
-export const isHaveTranslator = async(spaceID:string):Promise<boolean> => {
+export const isHaveChat = async(spaceID:string):Promise<boolean> => {
     const { count, error } = await supabase
-        .from("translator")
+        .from("chat")
         .select("*", { count: "exact", head: true })
         .eq("spaceid",spaceID)
     if (error) {

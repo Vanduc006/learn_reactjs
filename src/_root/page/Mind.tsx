@@ -63,8 +63,8 @@ import 'swiper/css/effect-cards';
 import Marquee from 'react-fast-marquee';
 
 //services
-import { UploadImages } from '@/services/Cloudinary/UploadImages';
-import { TranslatorNew } from '@/services/Supabase/TranslatorList';
+// import { UploadImages } from '@/services/Cloudinary/UploadImages';
+// import { TranslatorNew } from '@/services/Supabase/ChatList';
 import VideoPlayer from '@/components/mind/VideoRender';
 // import Chat from '@/components/mind/Chat';
 import PreviewVoice from '@/components/mind/PreviewVoice';
@@ -669,18 +669,18 @@ const Mind = () => {
                     </div>
                 ) : (
                     <div className='ml-5 mr-5 mt-2 mb-1 bg-slate-500 p-1 rounded-xl cursor-pointer'
-                    onClick={() => {
-                        const lisst = '{https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg,https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg}'
-                        console.log('photos.length < 0')
-                        TranslatorNew(user?.id,lisst,'<p>Test insert row supabase</p>').then((data) => {
-                            console.log(data)
-                        })
-                        UploadImages(photos).then((result) => {
-                            console.log(result)
-                        })
+                    // onClick={() => {
+                    //     const lisst = '{https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg,https://images.pexels.com/photos/29680707/pexels-photo-29680707/free-photo-of-c-ng-vom-ki-n-truc-thanh-l-ch-v-i-cac-hoa-van-l-p-l-i.jpeg}'
+                    //     console.log('photos.length < 0')
+                    //     TranslatorNew(user?.id,lisst,'<p>Test insert row supabase</p>').then((data) => {
+                    //         console.log(data)
+                    //     })
+                    //     UploadImages(photos).then((result) => {
+                    //         console.log(result)
+                    //     })
                         
 
-                    }}                    
+                    // }}                    
                     > 
                         <p className='text-center'>Thực hiện</p>                     
                     </div>
