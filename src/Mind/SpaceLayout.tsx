@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 // import { Input } from "@/components/ui/input"
@@ -175,7 +174,6 @@ if (isOwner === null) {
 
 
       <div className="flex-1 flex flex-col bg-white min-h-full">
-
         <div className="sticky top-0 z-10 flex items-center justify-between p-2.5 border-b border-gray-200 bg-white">
           <div className="flex items-center w-full">
             <Button variant="ghost" size="icon" onClick={toggleMobileSidebar} className="md:hidden flex-shrink-0">
@@ -248,52 +246,22 @@ if (isOwner === null) {
             {/* <h2 className="text-lg font-semibold text-gray-800">Chat</h2> */}
           </div>
         </div>
-{/* 
-        <div className="flex-1 p-4 space-y-4 min-h-0 overflow-y-auto">
-            { currentTab == "chat" ? 
-            <div>
-                <div className="overflow-y-auto h-[75%] rounded-xl">
-                    <div className="items-center justify-content-center lg:w-[50%] lg:mx-auto"> 
-
-                        <Chat currentSpace={currentSpace}/>
-                        <div className="sticky bottom-0 p-4">
-                          fff
-                        </div>
-                    </div>
-                </div>
-            </div> : <div></div>
-            }
-
-        </div> */}
 
         {/* Tab section */}
-
-        <div>
+        <div className="flex-1 overflow-hidden">
           {currentTab == "chat" &&
-          <div>
+          <div className="h-full">
             <ChatScreen/>
           </div>
           }
         </div>
-        {/* <div className="flex-1 p-4 space-y-4 min-h-0 overflow-y-auto">
-          {messages.map((message) => (
-            <div key={message.id} className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
-              <div
-                className={`max-w-[80%] md:max-w-[70%] px-4 py-2 rounded-lg ${
-                  message.sender === "user"
-                    ? "bg-blue-500 text-white"
-                    : message.sender === "system"
-                      ? "bg-gray-200 text-gray-800"
-                      : "bg-gray-100 text-gray-800"
-                }`}
-              >
-                <p className="text-sm">{message.text}</p>
-              </div>
-            </div>
-          ))}
+
+
+
+        
         
 
-        </div> */}
+
       </div>
     </div>
   )

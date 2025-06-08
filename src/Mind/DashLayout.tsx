@@ -14,7 +14,7 @@ const DashLayout = () => {
             <Link to={'/'}>
 
               <h2 className="text-2xl text-black cursor-pointer flex items-center justify-content-center" >
-                <img src="/favicon.svg" className="w-8 h-8 rounded-md mr-2"/>
+                {/* <img src="/favicon.svg" className="w-8 h-8 rounded-md mr-2"/> */}
                 MIND
               </h2>
             </Link>
