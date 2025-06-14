@@ -25,7 +25,7 @@ export const isOwnerSpace = async(userID:string, spaceID: string) => {
     const { data, error } = await supabase
     .from("space")
     .select("userid")
-    .eq("spaceID",spaceID)
+    .eq("spaceid",spaceID)
     .maybeSingle()
 
     if ( error ) {
@@ -35,15 +35,14 @@ export const isOwnerSpace = async(userID:string, spaceID: string) => {
     return data?.userid ===  userID
 }
 
-// const SpaceNew = async(clerkUserId : string, topic : string,spaceID : number):Promise<any[]> => {
-//     const { data, error } = await supabase
-//     .from('space')
-//     .insert({ spaceID: spaceID, topic : topic, userid: clerkUserId})  
-//     .select()
-//     if (error) {
-//         console.log("Create new space fail")
-//         return []
-//     }
-
-//     return data || []
-// }
+export const newSpace = async(userID : string | undefined, topic : string, spaceID : string):Promise<any[]> => {
+    const { data, error } = await supabase
+    .from('space')
+    .insert({ spaceid: spaceID, topic : topic, userid: userID, icon : "LibraryBig"})  
+    .select()
+    if (error) {
+        console.log("Create new space fail")
+        return []
+    }
+    return data || []
+}

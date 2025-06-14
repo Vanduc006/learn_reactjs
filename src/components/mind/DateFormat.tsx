@@ -24,10 +24,10 @@ const DateFormat = ({ utcTime }: { utcTime: string }) => {
         month: "short",
         hour: "2-digit",
         minute: "2-digit",
-        second: "2-digit",
+        // second: "2-digit",
         hour12: false,
       })
-      .replace(",", ""); // Định dạng theo yêu cầu
+      
 
     setFormattedDate(vietnamTime);
   };

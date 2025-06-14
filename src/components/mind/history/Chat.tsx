@@ -111,7 +111,13 @@ const ChatHistory = ({ currentSpace }: { currentSpace: string | null }) => {
                                         <div className=' items-center justify-content-center gap-2'>
                                             <img src="/favicon.svg" className="w-6 h-6 rounded-md mb-auto"/>
                                             <div className='markdown overflow-auto'>
-                                                {parse(chat.respone)}
+                                                {chat.respone == '' ? 
+                                                <div>
+                                                    {parse(chat.respone)}
+                                                </div> 
+                                                : 
+                                                <div className='markdown'>Unable to load this respone</div>
+                                                }
                                             </div>
                                         </div>
                                         
@@ -137,7 +143,7 @@ const ChatHistory = ({ currentSpace }: { currentSpace: string | null }) => {
                             </p>
                         }
                     </div>
-                    <div ref={chatContainerRef} />
+                    {/* <div ref={chatContainerRef} /> */}
                 </div>    
                 : 
                 <div className='bg-gray-200 text-black text-sm font-bold p-2 rounded-xl text-center mt-2'>

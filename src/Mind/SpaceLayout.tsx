@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 // import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
 import { ChevronLeft, ChevronRight, Menu, X, ScrollText, Shapes } from "lucide-react"
 import { useMind } from "@/context/MindProvider"
 // import Chat from "@/components/mind/Chat"
@@ -14,6 +13,8 @@ import { useSearchParams } from "react-router-dom"
 import ChatScreen from "./Tab/ChatScreen"
 import { isOwnerSpace } from "@/services/Supabase/SpaceList"
 import { useUser } from "@clerk/clerk-react"
+import FileHistory from "@/components/mind/history/File"
+
 
 export default function TwoSectionLayout() {
   const {user} = useUser()
@@ -23,6 +24,17 @@ export default function TwoSectionLayout() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false)
   const [isOwner, setIsOwner] = useState<boolean | null>(null);
+
+  const [sidebarSize,setSidebarSize] = useState<string>('20%')
+  const handleIsSelectedFile = ( value:boolean) => {
+      console.log(value)
+      if (value) {
+        setSidebarSize('35%')
+      } else {
+        setSidebarSize('20%')
+      }
+  }
+
   const toggleSidebar = () => {
     setIsSidebarCollapsed(!isSidebarCollapsed)
   }
@@ -47,8 +59,8 @@ export default function TwoSectionLayout() {
         }
       } 
       checkOwner()
-    
   },[currentSpace,spaceID])
+
 
   if (isOwner === false) {
   return (
@@ -95,7 +107,7 @@ if (isOwner === null) {
             ? "4rem"
             : typeof window !== "undefined" && window.innerWidth < 768
               ? "20rem"
-              : "20%",
+              : `${sidebarSize}`,
         }}
       >
         {/* Sidebar Header */}
@@ -112,63 +124,8 @@ if (isOwner === null) {
         </div>
 
         {/* Sidebar Content - Scrollable */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          {!isSidebarCollapsed ? (
-            <div className="space-y-3">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Analytics</h3>
-                  <p className="text-sm text-gray-600 mt-1">View your statistics</p>
-                </CardContent>
-              </Card>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Reports</h3>
-                  <p className="text-sm text-gray-600 mt-1">Generate reports</p>
-                </CardContent>
-              </Card>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Settings</h3>
-                  <p className="text-sm text-gray-600 mt-1">Configure your app</p>
-                </CardContent>
-              </Card>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Users</h3>
-                  <p className="text-sm text-gray-600 mt-1">Manage users</p>
-                </CardContent>
-              </Card>
-              {/* Add more items to test scrolling */}
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Projects</h3>
-                  <p className="text-sm text-gray-600 mt-1">Manage projects</p>
-                </CardContent>
-              </Card>
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-4">
-                  <h3 className="font-medium text-gray-800">Tasks</h3>
-                  <p className="text-sm text-gray-600 mt-1">View your tasks</p>
-                </CardContent>
-              </Card>
-            </div>
-          ) : (
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-blue-500 rounded"></div>
-              </div>
-              <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-green-500 rounded"></div>
-              </div>
-              <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-purple-500 rounded"></div>
-              </div>
-              <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-                <div className="w-4 h-4 bg-orange-500 rounded"></div>
-              </div>
-            </div>
-          )}
+        <div className="flex-1 p-2 overflow-y-auto">
+          <FileHistory currentSpace={currentSpace} isSidebarCollapsed={isSidebarCollapsed} handleIsSelectedFile={handleIsSelectedFile}/>
         </div>
       </div>
 
@@ -188,7 +145,7 @@ if (isOwner === null) {
                   setCurrentTab("chat")
                 }}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 mr-2 lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg> Chat 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4 mr-2 lucide lucide-message-circle-more-icon lucide-message-circle-more"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/></svg> Chat 
                 </div>
                 
                 <div className={`text-gray-500 hover:scale-[1.05] lg:hidden flex hover:bg-gray-50 items-center transition-all duration-200 px-2 py-1 lg:px-5 lg:py-2 rounded-xl shadow-sm border-gray-100 dark:border-gray-800`}
@@ -255,11 +212,6 @@ if (isOwner === null) {
           </div>
           }
         </div>
-
-
-
-        
-        
 
 
       </div>

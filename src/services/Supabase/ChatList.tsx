@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import supabase from "./ConnectSupabase";
 // import { useUser } from "@clerk/clerk-react";
 
@@ -8,7 +9,7 @@ const ChatList = async (userID : string ,spaceID: string,cursor = null): Promise
         .select('*')
         .eq('userid',userID)
         .eq('spaceid', spaceID)
-        .order("created_at", { ascending: false })
+        .order("created_at", { ascending: true})
         // .order("id", { ascending: false })
         .limit(10)
     if ( cursor ) {
@@ -49,6 +50,83 @@ export const isHaveChat = async(spaceID:string):Promise<boolean> => {
         return false;
     }    
     return (count ?? 0) > 0
+}
+
+export interface Chat {
+    id : string,
+    messageid : string,
+    userid : string,
+    message : string,
+    respone : string,
+    created_at : string,
+    spaceid : string,
+    moderation : string,
+    status : string,
+}
+
+export const useRealtimeChat = (userID : string | undefined,spaceID: string) => {
+    const [chatList,setChatList] = useState<Chat[]>([]) 
+
+    useEffect(() => {
+        const fetchChatHistory = async() => {
+            const {data} = await supabase
+                .from('chat')
+                .select('*')
+                .eq('userid',userID)
+                .eq('spaceid', spaceID)
+                .order("created_at", { ascending: true })
+                // .order("id", { ascending: true })
+                // .limit(10)
+            if (data) {
+                setChatList(data as Chat[])
+            }
+
+        }
+        fetchChatHistory()
+    },[])
+
+    // update realtime
+    useEffect(() => {
+    const channel = supabase
+      .channel('realtime:chat')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'chat',
+        },
+        (payload) => {
+          console.log(payload)
+          const { eventType, new: newData, old: oldData } = payload;
+
+          setChatList((prev) => {
+            switch (eventType) {
+              case 'INSERT':
+                return [...prev, newData as Chat];
+
+              case 'UPDATE':
+                return prev.map((r) =>
+                  r.id === (newData as Chat).id ? (newData as Chat) : r
+                );
+
+              case 'DELETE':
+                return prev.filter((r) => r.id !== (oldData as Chat).id);
+
+              default:
+                return prev;
+            }
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  return chatList
 }
 
 // import { useEffect, useState, useRef } from "react";

@@ -1,27 +1,19 @@
-// import supabase from "./ConnectSupabase";
+import supabase from "./ConnectSupabase";
 
-// const FileList = async (spaceID: string,cursor = null): Promise<any[]> => {
-//     let query = supabase
-//         .from('file')
-//         .select('*')
-//         .eq('spaceid', spaceID)
-//         .order("created_at", { ascending: false })
-//         // .order("id", { ascending: false })
-//         .limit(10)
-//     if ( cursor ) {
-//         query = query.lt("created_at", cursor);
-//     }
-//     const { data, error } = await query
+const FileList = async (spaceID: string): Promise<any[]> => {
+    const {data, error} = await supabase
+        .from('file')
+        .select('*')
+        .eq('spaceid', spaceID)
+        .order("id", { ascending: false })
+    if (error) {
+        return []
+    }
+    return data || []
 
-//     if (error) {
-//         console.error("Lỗi khi lấy dữ liệu:", error.message);
-//         return [];
-//     }
+}
 
-//     return data || [];
-// }
-
-// export default FileList;
+export default FileList;
 
 
 // export const FileNew = async(spaceID : string, key : string, status? : string,type? : string):Promise<any[]> => {

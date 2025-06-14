@@ -1,17 +1,24 @@
 // import Chat from "@/components/mind/history/Chat"
-import ChatHistory from "@/components/mind/history/Chat"
+// import ChatHistory from "@/components/mind/history/Chat"
 import { Textarea } from "@/components/ui/textarea"
 import { useMind } from "@/context/MindProvider"
 import { useUser } from "@clerk/clerk-react"
 import { Send, ArrowDown, ThumbsUp, ThumbsDown, ScanText } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
+import parse from 'html-react-parser';
 import BeatLoader from "react-spinners/BeatLoader"
-// import { Button } from "@/components/ui/button"
+import '@/styles/markdown.css'
 
+// import { Button } from "@/components/ui/button"
+import { useRealtimeChat } from "@/services/Supabase/ChatList"
+import DateFormat from "@/components/mind/DateFormat"
 const ChatScreen = () => {
     const { currentSpace} = useMind()
     const { user } = useUser()
+    const realtimeChat = useRealtimeChat(user?.id,currentSpace)
+    // console.log(realtimeChat)
+
     const [message, setMessage] = useState("")
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const [textareaHeight, setTextareaHeight] = useState(40)
@@ -47,28 +54,45 @@ const ChatScreen = () => {
     }
 
     interface Message {
-      userid : string,
-      spaceid : string,
-      message : string,
-      
+      // userid : string,
+      // spaceid : string,
+      // message : string,
+      // collectionName : string | '',
+      userID : string,
+      spaceID : string,
+      prompt : string,
+      collectionName : string,
     }
 
-    const [currentMessageList,setCurrentMessageList] = useState<Message[]>([])
-    const handleSendingMessage = () => {
+    // const [currentMessageList,setCurrentMessageList] = useState<Message[]>([])
+    const [sending,setSending] = useState(false)
+    const handleSendingMessage = async() => {
       // setGapSize(200)
-      const newMessage : Message = {
-        userid : `${user?.id}`,
-        spaceid : `${currentSpace}`,
-        message : `${message}`,
-        // res
-        
+      setSending(true)
+      try {
+        const newMessage : Message = {
+          userID : `${user?.id}`,
+          spaceID : `${currentSpace}`,
+          prompt : `${message}`,
+          collectionName : 'pdf',
+        }
+        setMessage('')
+        scrollToBottom()
+        const data = await fetch('https://api.imasis.id.vn/llm/embeddingPrompt',{
+          method : 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body : JSON.stringify(newMessage)
+        })
+        console.log(data)
+        setSending(false)
+      } 
+      catch (error) {
+        console.log(error)
+        setSending(false)
       }
-      setCurrentMessageList((prev) => [
-        ...prev,
-        newMessage,
-      ])
-      setMessage('')
-      scrollToBottom()
+
     }
 
     useEffect(() => {
@@ -76,7 +100,7 @@ const ChatScreen = () => {
         scrollToBottom();
       }, 0);
       return () => clearTimeout(timeout);
-    }, [currentMessageList]);
+    }, [realtimeChat]);
 
 
     useEffect(() => {
@@ -92,9 +116,65 @@ const ChatScreen = () => {
             >
                 <div className="md:max-w-3xl max-w-xs mx-auto overflow-hidden">
                     <div className="pb-4">
-                        <ChatHistory currentSpace={currentSpace}/>
 
                         {
+                          realtimeChat.map((chat) => {
+                            return (
+                              <div key={chat.id}>
+                                <div className='ml-auto text-sm font-mono w-fit font-semibold mb-1 bg-green-200 rounded-md p-1'>
+                                  {/* {dayjs().format('DD MMM HH:mm:ss')} */}
+                                  <DateFormat utcTime={chat.created_at}/>
+                                </div>
+                                <div className='mb-5 flex items-center justify-content-center gap-2 '>
+                                    <img
+                                        src={user?.imageUrl}
+                                        alt="User Avatar"
+                                        className="w-6 h-6 rounded-md"
+                                    />
+
+                                    <div className='mt-2.5'>
+                                        {/* {chat.message} */}
+                                        {parse(chat.message)}
+                                    </div>
+                                    
+                                </div>
+                                <div className='mb-5'>
+                                  <div className=' items-center justify-content-center gap-2'>
+                                      <img src="/favicon.svg" className="w-6 h-6 rounded-md mb-auto"/>
+                                      <div className='markdown overflow-auto'>
+                                        {
+                                          chat.status == "processing" && 
+                                          <p className="flex items-center justify-content-center">
+                                            Waiting respone <BeatLoader size={10} className='ml-2' color='#4871f7'/>
+                                          </p>
+                                        }
+
+                                        {
+                                          chat.status == "complete" && <div> {parse(chat.respone)} </div>
+                                        }
+                                          {/* Waiting respone <BeatLoader size={10} color='#4871f7'/> */}
+                                            {/* {parse(chat.respone)}           */}
+                                      </div>
+                                  </div>
+                                  
+                                  <div className='flex mt-2'>
+                                      <ThumbsUp className='h-4 w-4 mr-1 ml-1'/> 
+                                      <ThumbsDown className='h-4 w-4 mr-1 ml-1'/>
+                                      <ScanText className='h-4 w-4 mr-1 ml-1'/>
+                                  </div>
+                                  
+                              </div>
+
+
+
+
+                              </div>
+                            )
+                          })
+                        }
+                        {/* <ChatHistory currentSpace={currentSpace}/> */}
+                        
+                        {/* {
                           currentMessageList && 
                           <div>
                             {currentMessageList.map((message,id) => {
@@ -102,7 +182,6 @@ const ChatScreen = () => {
                                 <div key={id}>
                                     <div className='ml-auto text-sm font-mono w-fit font-semibold mb-1 bg-green-200 rounded-md p-1'>
                                         {dayjs().format('DD MMM HH:mm:ss')}
-                                        {/* <DateFormat utcTime={chat.created_at}/> */}
                                     </div>
 
                                     <div className='mb-5 flex items-center justify-content-center gap-2 '>
@@ -112,7 +191,7 @@ const ChatScreen = () => {
                                             className="w-6 h-6 rounded-md"
                                         />
                                         <div className='mt-2.5'>
-                                            {message.message}
+                                            {message.prompt}
                                         </div>
                                         
                                     </div>
@@ -121,7 +200,6 @@ const ChatScreen = () => {
                                         <div className=' items-center justify-content-center gap-2'>
                                             <img src="/favicon.svg" className="w-6 h-6 rounded-md mb-auto"/>
                                             <div className='markdown overflow-auto'>
-                                                {/* {parse(chat.respone)} */}
                                                 <div className="gap-2 flex items-center justify-content-center">
                                                 Waiting respone <BeatLoader size={10} color='#4871f7'/>
 
@@ -141,7 +219,7 @@ const ChatScreen = () => {
                               )
                             })}
                           </div>
-                        }
+                        } */}
                         {/* New chat section */}
                     </div>
                     <div style={{ height: `${textareaHeight + 80}px` }} />
@@ -149,7 +227,10 @@ const ChatScreen = () => {
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 border-gray-200 md:px-2 px-0">
-                <div className="md:max-w-3xl mx-auto ">
+                <div className="md:max-w-3xl mx-auto flex">
+                  {
+                    sending && <div>Calling to Mind ...</div>
+                  }
                   {showScrollButton && 
                     <ArrowDown 
                     onClick={scrollToBottom}

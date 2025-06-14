@@ -194,7 +194,7 @@ const Space = ({ parent }: SpaceProps) => {
                                 // setTab("chat")
                             }}
                             >
-                                <Link to={`/space?id=${space.spaceID}`}>
+                                <Link to={`/space?id=${space.spaceid}`}>
                                     <div className="bg-black rounded-full w-10 h-10 flex items-center justify-center mb-2">
                                         <LibraryBig className='text-white w-4 h-4'/>
                                     </div>
