@@ -53,7 +53,7 @@ const Upload = (
     const [uploadDialog,setUploadDialog] = useState<boolean>(false)
 
     const handleUpload = (type : string) => {
-        // handleNewSpace()
+        handleNewSpace()
         if (fileInputRef.current) {
             let accept = ""
             switch (type) {
@@ -177,11 +177,11 @@ const Upload = (
         return Math.floor(10000000 + Math.random() * 90000000);
     }
 
-    // const handleNewSpace = async() => {
-    //     const newID = genSpaceID()
-    //     await newSpace(user?.id,"United Space",`${newID}`)
-    //     setCurrentSpace(`${newID}`)
-    // }
+    const handleNewSpace = async() => {
+        const newID = genSpaceID()
+        await newSpace(user?.id,"United Space",`${newID}`)
+        setCurrentSpace(`${newID}`)
+    }
 
   return (
     <div>
@@ -383,6 +383,8 @@ const Upload = (
                 </div>
             }
         </div>
+
+
 
         <Dialog open={uploadDialog} onOpenChange={() => {handleUploadDialogChange()}}>
             <DialogContent className="mx-auto bg-white text-black max-h-[50%] overflow-auto scrollbar-hide">
