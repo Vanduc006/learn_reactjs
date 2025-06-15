@@ -1,4 +1,4 @@
-                                                                                import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const DateFormat = ({ utcTime }: { utcTime: string }) => {
   const [formattedDate, setFormattedDate] = useState("");

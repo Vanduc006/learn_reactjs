@@ -62,6 +62,17 @@ const FileHistory = ({ currentSpace,isSidebarCollapsed,handleIsSelectedFile } : 
 
   return (
     <div className="h-full">
+        {
+            !selectedFile && !isSidebarCollapsed &&
+            <Card className="hover:shadow-md transition-shadow cursor-pointer my-2">
+                <CardContent className="p-2 w-full">
+                    <div className="flex items-center justify-content-center">
+                        <h3 className="font-medium text-gray-800 overflow-x-auto">Add Object</h3>
+                        <Plus className="w-4 h-4 ml-auto"/>
+                    </div>
+                </CardContent>
+            </Card>
+        }
     {
         currentFileList.map((file) => {
             let text = file.extract
@@ -171,17 +182,7 @@ const FileHistory = ({ currentSpace,isSidebarCollapsed,handleIsSelectedFile } : 
             )
         })
     }
-        {
-            !selectedFile && !isSidebarCollapsed &&
-            <Card className="hover:shadow-md transition-shadow cursor-pointer mt-5">
-                <CardContent className="p-2 w-full">
-                    <div className="flex items-center justify-content-center">
-                        <h3 className="font-medium text-gray-800 overflow-x-auto">Add Object</h3>
-                        <Plus className="w-4 h-4 ml-auto"/>
-                    </div>
-                </CardContent>
-            </Card>
-        }
+        
     </div>
   )
 }

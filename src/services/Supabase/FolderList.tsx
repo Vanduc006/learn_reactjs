@@ -1,22 +1,15 @@
 import supabase from "./ConnectSupabase";
 
-const FolderList = async(clearkUserId: string,cursor = null):Promise<any[]> => {
-    
-    let query = supabase
-        .from("folderspace")
-        .select("*")
-        .eq("userid",clearkUserId)
-        .order("created_at", {ascending : false})
-        .limit(10)
-    if (cursor) {
-        query = query.lt("created_at", cursor);
+const FolderList = async(userID : string | null):Promise<any[]> => {
+    const {data, error} = await supabase
+        .from('folderspace')
+        .select('*')
+        .eq('userid', userID)
+        .order("id", { ascending: false })
+    if (error) {
+        return []
     }
-    const { data, error } = await query
-    if ( error) {
-        console.log("query folder")
-        return [];
-    }
-    return data || [];
+    return data || []
 }
 
 export default FolderList
