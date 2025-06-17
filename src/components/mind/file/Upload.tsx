@@ -23,6 +23,7 @@ import DotLoader from 'react-spinners/DotLoader'
 import { Plus } from "lucide-react";
 import { newSpace } from "@/services/Supabase/SpaceList";
 import { useMind } from "@/context/MindProvider";
+import { useNavigate } from "react-router-dom";
 // import ProgressBar from "@ramonak/react-progress-bar";
 // type UploadProps = {
 //     setTab: React.Dispatch<React.SetStateAction<string | null>>;
@@ -31,7 +32,8 @@ const Upload = (
     // {setTab} : UploadProps
 ) => {
     const { user } = useUser()
-    const { setCurrentSpace } = useMind()
+    const navigate = useNavigate()
+    const { setCurrentSpace,currentSpace } = useMind()
     // const animatedComponents = makeAnimated();
     // const list_languages_sp = [
     //     {"value":"Auto","label":'🤖 MIND detect'},
@@ -53,7 +55,7 @@ const Upload = (
     const [uploadDialog,setUploadDialog] = useState<boolean>(false)
 
     const handleUpload = (type : string) => {
-        handleNewSpace()
+        // handleNewSpace(`${genSpaceID()}`)
         if (fileInputRef.current) {
             let accept = ""
             switch (type) {
@@ -113,7 +115,17 @@ const Upload = (
         
     }
     // const [uploadStatus, setUploadStatus] = useState<string>('waiting respone')
-    const handleFormdata = () => {
+    const handleFormdata = async() => {
+        try {
+            const generatedID = `${genSpaceID()}`;
+            setCurrentSpace(generatedID)
+            await handleNewSpace(generatedID);     
+        } catch (error) {
+            console.log('Create new space fail !')
+            return
+        }
+        // set current space to new ID
+
         setUploadDialog(true)
         selectedFiles.forEach(async (file,index) => {
             // n = n + 1
@@ -123,7 +135,11 @@ const Upload = (
             let fileKey = user?.id + '/' + uuidv4() + '-' + file.name
             fileKey = fileKey.replace(/\s/g, '')
             
-            const data = await S3Storage(fileKey,formatFileSize(file.size),"60")
+            const data = await S3Storage(currentSpace,fileKey,formatFileSize(file.size),"60")
+            if (!data) {
+                console.log('Presigned post fail')
+                return
+            }
             Object.entries(data.url.fields).forEach(([key, value]) => {
                 if (typeof value === 'string') {
                     formData.append(key, value);  // value is guaranteed to be a string now
@@ -177,11 +193,17 @@ const Upload = (
         return Math.floor(10000000 + Math.random() * 90000000);
     }
 
-    const handleNewSpace = async() => {
-        const newID = genSpaceID()
-        await newSpace(user?.id,"United Space",`${newID}`)
-        setCurrentSpace(`${newID}`)
+    const handleNewSpace = async(id : string) => {
+        // const newID = genSpaceID()
+        await newSpace(user?.id,"United Space",`${id}`)
+        // setCurrentSpace(`${newID}`)
     }
+
+    // const handleOpenSpace = () => {
+    //     if (currentSpace) {
+    //         navigate(`/space?id=${currentSpace}`)
+    //     }
+    // }
 
   return (
     <div>
@@ -422,13 +444,20 @@ const Upload = (
                     })}
                 </div>
             }
-
+            
             <div className="px-5 pt-2 pb-2 bg-gray-200 text-sm font-bold w-fit rounded-md cursor-pointer hover:bg-gray-500 hover:text-white hover:scale-[1.09]"
-            onClick={() => {
-                handleUploadDialogChange()
+            onClick={(e:any) => {
+                console.log('Navigate to:', currentSpace)
+                e.stopPropagation()
+                navigate(`/space?id=${currentSpace}`)
+                // handleUploadDialogChange()
+                // handleOpenSpace()
+                
                 // setTab('chat')
             }}
             >Open Space</div>
+            
+
             </DialogContent>
         </Dialog>
 

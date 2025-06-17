@@ -21,6 +21,7 @@ const SpaceList = async(userID: string, cursor = null):Promise<any[]> => {
 }
 export default SpaceList
 
+
 export const isOwnerSpace = async(userID:string, spaceID: string) => {
     const { data, error } = await supabase
     .from("space")
@@ -46,3 +47,11 @@ export const newSpace = async(userID : string | undefined, topic : string, space
     }
     return data || []
 }
+
+export const deleteSpace = async(spaceID : string) => {
+    await supabase
+    .from('space')
+    .delete()
+    .eq('spaceid',spaceID)
+}
+

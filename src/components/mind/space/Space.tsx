@@ -1,5 +1,5 @@
-import { LibraryBig } from 'lucide-react'
-import SpaceList from '@/services/Supabase/SpaceList'
+import { LibraryBig, Plus, X } from 'lucide-react'
+import SpaceList, { deleteSpace } from '@/services/Supabase/SpaceList'
 import { useEffect, useRef, useState } from 'react'
 import { useUser } from '@clerk/clerk-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -10,6 +10,16 @@ import supabase from '@/services/Supabase/ConnectSupabase';
 // import { useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import FolderList from '@/services/Supabase/FolderList';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import BounceLoader from 'react-spinners/BounceLoader';
 type SpaceProps = {
 
     parent: string;
@@ -106,11 +116,36 @@ const Space = ({ parent }: SpaceProps) => {
 
     }, [])
 
+    // const [dialogDeleteSpace,setDialogDeleteSpace] = useState<boolean>(false)
+    const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+    const [loadingDeleteSpace,setLoadingDeleteSpace] = useState<boolean>(false)
+    const handleDeleteSpace = async() => {
+        if (!deleteTarget) return
+        setLoadingDeleteSpace(true)
+        try {
+            await deleteSpace(deleteTarget)
+            // alert(`Delete space ID : ${spaceID} sucess`)
+        } catch (error) {
+            console.log('Delete space fail')
+            // return
+        }       
+        setLoadingDeleteSpace(false) 
+        // setDialogDeleteSpace(false)
+        setDeleteTarget(null)
+    }
+
 
 
     return (
         <div className='mt-2'>
             <div className="text-sm mb-2 font-bold flex items-center gap-2 overflow-x-auto whitespace-nowrap">
+
+                <div
+                    className={`rounded-xl p-2 cursor-pointer bg-gray-100`}
+                >
+                    <Plus className='w-4 h-4'/>
+                </div>
+
                 <div
                     className={`rounded-xl px-5 py-2 cursor-pointer ${currentFolder === 'all' ? 'bg-black text-white' : 'bg-gray-100'
                         }`}
@@ -129,6 +164,7 @@ const Space = ({ parent }: SpaceProps) => {
                         {folder.foldername}
                     </div>
                 ))}
+
             </div>
 
 
@@ -145,8 +181,59 @@ const Space = ({ parent }: SpaceProps) => {
                                     // onClick={() => handleSpaceSelect(space.id)}
                                 >   
 
-                                    <div className='w-full flex text-sm gap-2'>
+                                    <div className='flex text-sm gap-2 ml-auto'>
+                                        {/* Delete */}
+                                        {/* <div className='p-1 bg-red text-white rounded-md'
+                                        onClick={() => {
+                                            handleDeleteSpace(space.spaceid)
+                                        }}
+                                        >
+                                            <X className='w-4 h-4'/>
+                                        </div> */}
+                                        <Dialog 
+                                        open={deleteTarget === space.spaceid}
+                                        onOpenChange={(open) => {
+                                            if (!open) setDeleteTarget(null);
+                                        }}
+                                        >
+                                            <DialogTrigger
+                                                // onClick={() => {
+                                                //     handleDeleteSpace(space.spaceid)
+                                                // }}
+                                                asChild
+                                            >
+                                                <div className='p-1 bg-red text-white rounded-md'
+                                                onClick={() => setDeleteTarget(space.spaceid)}
+                                                >
+                                                    <X className='w-4 h-4'/>
+                                                </div>
+                                            </DialogTrigger>
+                                            <DialogContent className='bg-white text-black'>
+                                                <DialogHeader>
+                                                    <DialogTitle className='flex gap-2'>
+                                                        Are you absolutely sure to delete space 
+                                                        <div className='text-red font-bold'>{deleteTarget}</div> ?</DialogTitle>
+                                                    <DialogDescription>
+                                                        This action cannot be undone. This will permanently delete your space from our servers.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <div className='flex items-center justify-content-center gap-2 text-white'>
+                                                    <button 
+                                                    onClick={() => handleDeleteSpace()}
+                                                    disabled={loadingDeleteSpace} 
+                                                    className='gap-2 bg-red px-5 py-1 rounded-md shadow-md flex items-center justify-content-center'>
+                                                        Yes delete it !
+                                                        { loadingDeleteSpace && <BounceLoader size={15}/> }
+                                                    </button>
+                                                    <DialogClose asChild>
+                                                        <button className='bg-green-500 px-5 py-1 rounded-md shadow-md'>Cancel</button>
 
+                                                    </DialogClose>
+                                                </div>
+                                            </DialogContent>
+                                        </Dialog>
+
+                                        {/* Change */}
                                         <Popover
                                             open={openPopover === space.id}
                                             onOpenChange={(open) => {
@@ -156,8 +243,8 @@ const Space = ({ parent }: SpaceProps) => {
                                             
                                         >
                                             <PopoverTrigger asChild >
-                                                <div className='bg-white p-1 rounded-md ml-auto'>
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="w-4 h-4 lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>        
+                                                <div className='bg-white p-1 rounded-md'>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-4 h-4 lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>        
                                                 </div>
                                             </PopoverTrigger>
 

@@ -36,7 +36,8 @@ const DateFormat = ({ utcTime }: { utcTime: string }) => {
     convertToVietnamTime();
   }, [utcTime]); // Cập nhật khi `utcTime` thay đổi
 
-  return <div>{formattedDate}</div>;
+  return <span>{formattedDate}</span>
+
 };
 
 export default DateFormat;
