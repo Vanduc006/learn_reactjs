@@ -9,12 +9,13 @@ import supabase from '@/services/Supabase/ConnectSupabase';
 // import { useMind } from '@/context/MindProvider';
 // import { useNavigate} from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import FolderList from '@/services/Supabase/FolderList';
+import FolderList, { newFolder } from '@/services/Supabase/FolderList';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -100,22 +101,6 @@ const Space = ({ parent }: SpaceProps) => {
         }
     };
 
-    const [currentFolder, setCurrentFolder] = useState<string>('all')
-    const [currentFolderList, setCurrentFolderList] = useState<any[]>([])
-
-    useEffect(() => {
-        if (user) {
-            const getFolderList = async () => {
-                const data = await FolderList(user.id)
-
-                setCurrentFolderList(data)
-            }
-
-            getFolderList()
-        }
-
-    }, [])
-
     // const [dialogDeleteSpace,setDialogDeleteSpace] = useState<boolean>(false)
     const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
     const [loadingDeleteSpace,setLoadingDeleteSpace] = useState<boolean>(false)
@@ -134,17 +119,106 @@ const Space = ({ parent }: SpaceProps) => {
         setDeleteTarget(null)
     }
 
+    const [currentFolder, setCurrentFolder] = useState<string>('all')
+    const [currentFolderList, setCurrentFolderList] = useState<any[]>([])
+    const [newFolderName,setNewFolderName] = useState<string>('')
+    const [loandingNewFolder,setLoadingNewFolder] = useState<boolean>(false)
+    const [newFolderColor,setNewFolderColor] = useState<string>('white')
+
+    const colorList = [
+        { name: 'white', class: 'bg-white' },
+        { name: 'black', class: 'bg-black' },
+        { name: 'yellow-200', class: 'bg-yellow-200' },
+        { name: 'slate-500', class: 'bg-slate-500' },
+        { name: 'blue-500', class: 'bg-blue-500' },
+        { name: 'rose-500', class: 'bg-rose-500' },
+        { name: 'pink-500', class: 'bg-pink-500' },
+    ];
+
+    const handleNewFolder = async() => {
+        // setLoadingNewFolder(true)
+        try {
+            if (newFolderName == '') {
+                alert('Please type name for new folder')
+            }
+            else {
+                await newFolder(user?.id,newFolderName,newFolderColor)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        setLoadingNewFolder(true)
+    }
+
+    useEffect(() => {
+        if (user) {
+            const getFolderList = async () => {
+                const data = await FolderList(user.id)
+                setCurrentFolderList(data)
+            }
+            getFolderList()
+        }
+
+    }, [loandingNewFolder])
 
 
     return (
         <div className='mt-2'>
             <div className="text-sm mb-2 font-bold flex items-center gap-2 overflow-x-auto whitespace-nowrap">
 
-                <div
-                    className={`rounded-xl p-2 cursor-pointer bg-gray-100`}
-                >
-                    <Plus className='w-4 h-4'/>
-                </div>
+                <Dialog>
+                    <DialogTrigger 
+                    className="rounded-xl p-2 cursor-pointer bg-gray-100"
+                    >
+                        <Plus className='w-4 h-4'/>
+                    </DialogTrigger>
+                    <DialogContent className='bg-white text-black'>
+                        <DialogHeader>
+                            <DialogTitle>
+                                Create new folder
+                            </DialogTitle>
+                            
+                        </DialogHeader>
+                        <div>
+                            <input value={newFolderName} type="text" placeholder='Type name new folder here ...' className='outline-none focus:ring-2 focus:ring-blue-500 rounded-md p-1 w-full' onChange={(e) => setNewFolderName(e.target.value)}/>
+                            <div className='bg-gray-200 p-2 rounded-md mt-3'>
+                                <div className='text-sm font-bold'>Select color</div>
+                                <div className="flex mt-1 gap-3">
+                                    {colorList.map((color) => (
+                                    <div
+                                        key={color.name}
+                                        className={`
+                                        w-5 h-5 rounded-md shadow-md cursor-pointer ${color.class}
+                                        ${newFolderColor === color.class ? 'outline outline-2 outline-blue-500' : ''}
+                                        `}
+                                        onClick={() => setNewFolderColor(color.class)}
+                                    ></div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        <DialogFooter className='flex gap-2'>
+                            {
+                                loandingNewFolder ? 
+                                <DialogClose 
+                                onClick={() => setLoadingNewFolder(false)}
+                                className='bg-red px-5 py-1 rounded-md text-white'>
+                                    Close
+                                </DialogClose>
+                                :
+                                <button 
+                                onClick={() => handleNewFolder()}
+                                className='bg-black px-5 py-1 rounded-md text-white' disabled={loandingNewFolder} 
+                                >
+                                    Create
+                                </button> 
+                            }
+                        </DialogFooter>
+
+
+                    </DialogContent>
+                </Dialog>
 
                 <div
                     className={`rounded-xl px-5 py-2 cursor-pointer ${currentFolder === 'all' ? 'bg-black text-white' : 'bg-gray-100'
@@ -157,7 +231,7 @@ const Space = ({ parent }: SpaceProps) => {
                 {currentFolderList.map((folder) => (
                     <div
                         key={folder.id}
-                        className={`rounded-xl px-5 py-2 cursor-pointer ${currentFolder === folder.foldername ? 'bg-black text-white' : 'bg-gray-100'
+                        className={`rounded-xl px-5 py-2 cursor-pointer ${currentFolder === folder.foldername ? 'bg-black text-white' : `${folder.customize}`
                             }`}
                         onClick={() => setCurrentFolder(folder.foldername)}
                     >

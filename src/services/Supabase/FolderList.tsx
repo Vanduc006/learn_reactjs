@@ -13,3 +13,13 @@ const FolderList = async(userID : string | null):Promise<any[]> => {
 }
 
 export default FolderList
+
+export const newFolder = async(userID : string | undefined,folderName : string,customize : string) => {
+    await supabase
+    .from('folderspace')
+    .insert({
+        userid : userID,
+        foldername : folderName,
+        customize : customize,
+    })
+}
