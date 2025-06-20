@@ -20,6 +20,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+
+import {
+  Select1,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 import BounceLoader from 'react-spinners/BounceLoader';
 type SpaceProps = {
 
@@ -40,6 +50,8 @@ const Space = ({ parent }: SpaceProps) => {
         rootMargin: "0px",
         threshold: 1.0
     }
+
+
     async function CallSpaceList(clerkUserrId: string, cursor = null) {
         SpaceList(clerkUserrId, cursor).then((data) => {
             // setLoadingSpace(true)
@@ -77,28 +89,49 @@ const Space = ({ parent }: SpaceProps) => {
     // const inputRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
     const [openPopover, setOpenPopover] = useState<number | null>(null);
     const [editingValue, setEditingValue] = useState<string>(''); // lưu value đang sửa
-
-    const handleSave = async (id: number) => {
+    const [addToFolder,setAddToFolder] = useState<string>('')
+    const handleSave = async(id: number) => {
+        console.log(addToFolder)
         const inputValue = editingValue.trim();
-        if (!inputValue) return;
 
-        const { error } = await supabase
+        if (inputValue) {
+            const { error } = await supabase
             .from('space')
             .update({ topic: inputValue })
             .eq('id', id);
 
-        if (!error) {
-            // 🔥 Thêm đoạn cập nhật state tại đây
-            setSpaceSession((prevSpaces) =>
-                prevSpaces.map((space) =>
-                    space.id === id ? { ...space, topic: inputValue } : space
-                )
-            );
+        
+            if (!error) {
+                // 🔥 Thêm đoạn cập nhật state tại đây
+                setSpaceSession((prevSpaces) =>
+                    prevSpaces.map((space) =>
+                        space.id === id ? { ...space, topic: inputValue } : space
+                    )
+                );
 
-            setOpenPopover(null);
-        } else {
-            console.error(error);
+                setOpenPopover(null);
+            } else {
+                console.error(error);
+            }
         }
+
+        if (addToFolder) {
+            const {error} = await supabase
+            .from('space')
+            .update({folder : addToFolder})
+            .eq('id',id)
+            if (!error) {
+                setSpaceSession((prevSpaces) => 
+                    prevSpaces.map((space) => 
+                        space.id === id ? {...space, folder: addToFolder} : space
+                    )
+                )
+            }
+
+
+        }
+
+
     };
 
     // const [dialogDeleteSpace,setDialogDeleteSpace] = useState<boolean>(false)
@@ -148,6 +181,20 @@ const Space = ({ parent }: SpaceProps) => {
             console.log(error)
         }
         setLoadingNewFolder(true)
+    }
+
+    const handleRemoveFolderToSpace = async(id: number) => {
+        const {error} = await supabase
+        .from('space')
+        .update({folder : null})
+        .eq('id',id)
+        if(!error) {
+            setSpaceSession((prevSpaces) => 
+                prevSpaces.map((space) => 
+                    space.id === id ? {...space, folder: null} : space
+                )
+            )
+        }
     }
 
     useEffect(() => {
@@ -323,20 +370,72 @@ const Space = ({ parent }: SpaceProps) => {
                                             </PopoverTrigger>
 
                                             <PopoverContent className="mx-auto lg:w-[90%]">
-                                                <div className="text-black text-sm flex">
-                                                    <div className="font-bold">Time :</div>
-                                                    <DateFormat utcTime={space.created_at} />
-                                                </div>
 
                                                 <div className="mt-2">
-                                                    <div className="text-black text-sm flex font-bold mb-1">Change name</div>
+                                                    <div className="text-black text-sm flex font-bold my-2">Change name</div>
                                                     <input
                                                         type="text"
                                                         value={editingValue}
                                                         onChange={(e) => setEditingValue(e.target.value)}
                                                         className="border-2 border-black rounded-md p-1 w-full"
                                                     />
+                                                    <div className="text-black text-sm flex font-bold my-2">Add/Change Folder</div>
+                                                    <Select1 
+                                                        onValueChange={(value) => {
+                                                            // console.log("Selected folder:", value)
+                                                            setAddToFolder(value)
+                                                        }}
+                                                        // onValueChange={(value) => setAddToFolder(value)}
+                                                        // value={space.folder ?? ""}
+                                                    >
+                                                        <SelectTrigger className="w-full">
+                                                            {
+                                                                space.folder == null ? 
+                                                                <SelectValue placeholder='Add to folder'/> 
+                                                                :
+                                                                <SelectValue placeholder={space.folder} />
+
+
+                                                            }
+                                                        </SelectTrigger>
+                                                        <SelectContent className='bg-white text-black w-full'>
+                                                            <SelectGroup>
+                                                            {/* <SelectLabel>{space.folder}</SelectLabel> */}
+                                                            {
+                                                                currentFolderList.map((folder) => {
+                                                                    return (
+                                                                        <SelectItem 
+                                                                        key={folder.id}
+                                                                        
+                                                                        value={folder.foldername}>{folder.foldername}</SelectItem>
+
+                                                                    )
+                                                                })
+                                                            }
+                                                            </SelectGroup>
+                                                        </SelectContent>
+                                                    </Select1>
+                                                {/* {
+                                                    space.folder !== null ? 
+                                                    <div className='ml-auto bg-gray-500 text-white px-2 rounded-md'>
+                                                        {space.folder}
+                                                    </div> 
+                                                    :
+                                                    <div className='ml-auto text-black '>
+                                                        Add to folder
+                                                    </div>
+                                                } */}
                                                 </div>
+                                                {
+                                                    space.folder && 
+                                                    <div
+                                                        className="text-center mt-2 cursor-pointer bg-red p-1 rounded-md hover:bg-red-500 text-white transition"
+                                                        onClick={() => handleRemoveFolderToSpace(space.id)}
+                                                    >
+                                                        Remove from {space.folder}
+                                                    </div>
+                                                }
+
 
                                                 <div
                                                     className="text-center mt-2 cursor-pointer bg-gray-200 p-1 rounded-md hover:bg-gray-300 transition"
@@ -357,9 +456,10 @@ const Space = ({ parent }: SpaceProps) => {
 
                                         <div className="mt-6">
                                             <h3 className="font-medium text-sm">{space.topic}</h3>
-                                            <p className="text-gray-500 text-xs mt-1">
+                                            <div className="text-gray-500 text-xs mt-1">
                                                 <DateFormat utcTime={space.created_at} />
-                                            </p>
+
+                                            </div>
                                         </div>
                                     </Link>
                                 </div>
