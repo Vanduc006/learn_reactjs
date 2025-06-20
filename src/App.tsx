@@ -14,6 +14,7 @@ import TestGift from './_root/page/TestGift'
 import DashLayout from './Mind/DashLayout'
 import HomeSreen from './Mind/HomeSreen'
 import SpaceLayout from './Mind/SpaceLayout'
+import Icloud from './_root/page/Icloud'
 // import PhotoBooth from './_root/page/PhotoBooth'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -41,6 +42,8 @@ const App = () => {
   <main className=''> 
 
     <Routes>
+      <Route path='/icloud' element={<Icloud/>}></Route>
+
       <Route path="/phatnguoi" element={<PhatNguoi />} />
       <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
       <Route path="/mind" element={<Mind/>}> </Route>
