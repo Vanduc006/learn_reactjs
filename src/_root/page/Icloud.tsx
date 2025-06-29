@@ -46,7 +46,7 @@ const Icloud = () => {
                  className='bg-black p-1 rounded-md text-white ml-2'>Save</button>
             </div>
             }
-            Mat khau hien tai
+            Danh sach pass
 
             <div>
                 {
@@ -55,7 +55,7 @@ const Icloud = () => {
                             <div key={pass.id} >
                                 {
                                     index == 0 ? 
-                                    <div className='flex items-center justify-content-center'>
+                                    <div className=' items-center justify-content-center'>
                                         <div className='gap-2 flex items-center justify-content-center'>
                                             <div className='bg-green-400 px-3 rounded-md'>
                                                 Moi nhat
@@ -65,7 +65,7 @@ const Icloud = () => {
 
                                             </div>
                                         </div>
-                                        <div className='ml-auto bg-black text-white px-5 py-1 rounded-md'>
+                                        <div className='text-sm text-gray-500'>
                                             <DateFormat utcTime={pass.created_at}/>
 
                                         </div> 
