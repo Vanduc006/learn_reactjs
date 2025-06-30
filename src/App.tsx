@@ -1,4 +1,3 @@
-
 import './global.css'
 import { Route, Routes } from 'react-router-dom'
 
@@ -6,6 +5,7 @@ import PhatNguoi from './_root/page/PhatNguoi'
 import FetchPhatNguoi from './_root/page/FetchPhatNguoi'
 import Mind from './_root/page/Mind'
 import NotFound from './_root/page/NotFound'
+import Hanhchinh from './_root/page/Hanhchinh'
 // import Dashboard from './Mind/page'
 import { useUser } from '@clerk/clerk-react'
 import MindAuth from './_auth/mind/MindAuth'
@@ -43,6 +43,7 @@ const App = () => {
 
     <Routes>
       <Route path='/icloud' element={<Icloud/>}></Route>
+      <Route path='/hanhchinh' element={<Hanhchinh/>}></Route>
 
       <Route path="/phatnguoi" element={<PhatNguoi />} />
       <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
