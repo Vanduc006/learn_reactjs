@@ -60,7 +60,7 @@ const ChatScreen = () => {
       // collectionName : string | '',
       userID : string,
       spaceID : string,
-      prompt : string,
+      message : string,
       collectionName : string,
     }
 
@@ -73,7 +73,7 @@ const ChatScreen = () => {
         const newMessage : Message = {
           userID : `${user?.id}`,
           spaceID : `${currentSpace}`,
-          prompt : `${message}`,
+          message : `${message}`,
           collectionName : 'pdf',
         }
         setMessage('')
@@ -234,19 +234,23 @@ const ChatScreen = () => {
                   {showScrollButton && 
                     <ArrowDown 
                     onClick={scrollToBottom}
-                    className="ml-auto w-4 h-4 bg-gray-200 rounded-full mb-2 "/>
+                    className="mx-auto w-4 h-4 bg-gray-200 rounded-full mb-2 "/>
                   }
                 </div>
                 <div className="md:max-w-3xl mx-auto bg-gray-200 rounded-md shadow-md p-2">
-                    <div className="mb-2">
-                        Recommend
-                    </div>
+                    {/* <div className="mb-2 text-sm text-gray-500 font-bold flex gap-1">
+                        Chat with {currentSourceLenght}
+                        {currentSourceLenght == 1 || currentSourceLenght == 0 ?
+                        <div>source</div> : <div>sources</div>
+                        }
+                    </div> */}
+                    Recommend
                     <div className="relative">
                         <Textarea 
                             ref={textareaRef}
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}
-                            placeholder="Your message..." 
+                            placeholder="What i can help you ?" 
                             className="resize-none border-none outline-none pr-10 min-h-[40px] max-h-[150px] overflow-y-auto"
                             style={{ height: 'auto' }}
                             onKeyDown={(e) => {

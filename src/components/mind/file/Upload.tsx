@@ -135,7 +135,13 @@ const Upload = (
             let fileKey = user?.id + '/' + uuidv4() + '-' + file.name
             fileKey = fileKey.replace(/\s/g, '')
             
-            const data = await S3Storage(currentSpace,fileKey,formatFileSize(file.size),"60")
+            // const data = await S3Storage(currentSpace,fileKey,formatFileSize(file.size),"60")
+            // if (!data) {
+            //     console.log('Presigned post fail')
+            //     return
+            // }
+
+            const data = await S3Storage(file,user?.id,'pdf',currentSpace,fileKey,file.name)    
             if (!data) {
                 console.log('Presigned post fail')
                 return
