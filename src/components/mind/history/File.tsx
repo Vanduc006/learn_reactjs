@@ -243,7 +243,7 @@ const FileHistory = ({ currentSpace,isSidebarCollapsed,handleIsSelectedFile,
     },[selectedFiles])
     
     const [allType,setAllType] = useState<boolean>(true)
-    const [sourceList,setSourceList] = useState<any[]>([])
+    // const [sourceList,setSourceList] = useState<any[]>([])
     // const filterSource = () => {
     //     currentFileList.map((file) => {
     //         {
