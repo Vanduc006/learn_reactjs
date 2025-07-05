@@ -75,7 +75,7 @@ const S3Storage = async(
         }
 
         formData.append('data',JSON.stringify(newEmbeddingObject))
-        const respone = await fetch('https://api.imasis.id.vn/upload',{
+        const respone = await fetch(import.meta.env.VITE_WEBSERVICE_URL + '/upload',{
             method : 'POST',
             body : formData
         })

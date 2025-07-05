@@ -78,7 +78,7 @@ const ChatScreen = () => {
         }
         setMessage('')
         scrollToBottom()
-        const data = await fetch('https://api.imasis.id.vn/llm/embeddingPrompt',{
+        const data = await fetch(import.meta.env.VITE_WEBSERVICE_URL + '/llm/embeddingPrompt',{
           method : 'POST',
           headers: {
               'Content-Type': 'application/json'

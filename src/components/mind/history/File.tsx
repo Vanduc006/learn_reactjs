@@ -476,7 +476,7 @@ const FileHistory = ({ currentSpace,isSidebarCollapsed,handleIsSelectedFile,
                                     </p> */}
                                     {
                                         file.id == selectedFile && 
-                                    <div className="mt-2 whitespace-pre-line bg-gray-200 p-2 rounded-md max-h-">
+                                    <div className="mt-2 whitespace-pre-line bg-gray-200 p-2 rounded-md max-h-200 markdown overflow-x-auto">
                                         {formattedText}
                                     </div>
                                     }
