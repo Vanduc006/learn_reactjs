@@ -1,0 +1,451 @@
+{
+  "metadata": {
+    "title": "Địa chỉ Hành chính cấp Phường/Xã mới sau Sáp nhập tại Việt Nam",
+    "effective_date": "2025-07-01",
+    "total_provinces": 34,
+    "merged_provinces": 23,
+    "non_merged_provinces": 11
+  },
+  "provinces": [
+    {
+      "id": 1,
+      "name": "Thành phố Hà Nội",
+      "type": "thành phố trực thuộc trung ương",
+      "merged": false,
+      "headquarters": "Số 12 Lê Lai, phường Hoàn Kiếm, thành phố Hà Nội",
+      "wards": [
+        {
+          "name": "Hai Bà Trưng",
+          "type": "đơn vị hành chính cơ sở",
+          "merged_from": ["Hai Bà Trưng", "Bạch Mai", "Vĩnh Tuy"]
+        },
+        {
+          "name": "Thanh Xuân",
+          "type": "đơn vị hành chính cơ sở",
+          "merged_from": ["Thanh Xuân", "Khương Đình", "Phương Liệt"]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Tỉnh Cao Bằng",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Khu đô thị mới, phường Đề Thám, thành phố Cao Bằng, tỉnh Cao Bằng"
+    },
+    {
+      "id": 3,
+      "name": "Tỉnh Tuyên Quang",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Tuyên Quang", "Tỉnh Hà Giang"],
+      "headquarters": "Số 160, đường Trần Hưng Đạo, phường Minh Xuân, thành phố Tuyên Quang, tỉnh Tuyên Quang",
+      "total_wards": 124,
+      "wards": [
+        {
+          "name": "Minh Xuân",
+          "type": "phường",
+          "merged_from": ["Ỷ La", "Tân Hà", "Phan Thiết", "Minh Xuân", "Tân Quang", "Trung Môn", "Kim Phú"]
+        },
+        {
+          "name": "Thượng Lâm",
+          "type": "xã",
+          "merged_from": ["Khuôn Hà", "Thượng Lâm"]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Tỉnh Điện Biên",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 851 - Đường Võ Nguyên Giáp - Phường Mường Thanh, TP. Điện Biên Phủ, Điện Biên",
+      "wards": [
+        {"name": "Điện Biên Phủ", "type": "phường"},
+        {"name": "Thanh Nưa", "type": "xã"},
+        {"name": "Na Sang", "type": "xã"}
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Tỉnh Lào Cai",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Lào Cai", "Tỉnh Yên Bái"],
+      "headquarters": "phường Đồng Tâm, TP Yên Bái, tỉnh Yên Bái",
+      "wards": [
+        {
+          "name": "Lào Cai",
+          "type": "phường",
+          "merged_from": ["Duyên Hải", "Cốc Lếu", "Kim Tân", "Lào Cai", "Vạn Hòa", "Bản Phiệt"]
+        },
+        {
+          "name": "Khao Mang",
+          "type": "xã",
+          "merged_from": ["Hồ Bốn", "Khao Mang"]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Tỉnh Lạng Sơn",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Đường Hùng Vương, Chi Lăng, thành phố Lạng Sơn, tỉnh Lạng Sơn",
+      "wards": [
+        {"name": "Đông Kinh", "type": "phường", "address": "Số 02 đường Lê Lợi, phường Đông Kinh, tỉnh Lạng Sơn"},
+        {"name": "Kỳ Lừa", "type": "phường", "address": "Khối 6 phường Kỳ Lừa, tỉnh Lạng Sơn"},
+        {"name": "Lương Văn Tri", "type": "phường", "address": "Số 10, đường Hoàng Văn Thụ, Lương Văn Tri, tỉnh Lạng Sơn"},
+        {"name": "Tam Thanh", "type": "phường", "address": "Số 759, đường Trần Đăng Ninh, phường Tam Thanh, tỉnh Lạng Sơn"},
+        {"name": "Ba Sơn", "type": "xã", "address": "Thôn Bản Vàng, xã Ba Sơn, tỉnh Lạng Sơn"},
+        {"name": "Công Sơn", "type": "xã", "address": "Thôn Tồng Riền, xã Công Sơn, tỉnh Lạng Sơn"},
+        {"name": "Cao Lộc", "type": "xã", "address": "Thôn Bản Héc, xã Cao Lộc, tỉnh Lạng Sơn"},
+        {"name": "Đồng Đăng", "type": "xã", "address": "Số 22, đường Hoàng Văn Thụ, khu Nam Quan, xã Đồng Đăng, tỉnh Lạng Sơn"},
+        {"name": "Vạn Linh", "type": "xã", "address": "Thôn Phố Mới, xã Vạn Linh, tỉnh Lạng Sơn"},
+        {"name": "Bằng Mạc", "type": "xã", "address": "Thôn Làng Giang, xã Bằng Mạc, tỉnh Lạng Sơn"},
+        {"name": "Nhân Lý", "type": "xã", "address": "Thôn Lạng Giai A, xã Nhân Lý, tỉnh Lạng Sơn"},
+        {"name": "Chiến Thắng", "type": "xã", "address": "Thôn Làng Thành, xã Chiến Thắng, tỉnh Lạng Sơn"},
+        {"name": "Quan Sơn", "type": "xã", "address": "Thôn Làng Hăng, xã Quan Sơn, tỉnh Lạng Sơn"},
+        {"name": "Chi Lăng", "type": "xã", "address": "Số 02 Đường Khu Ga, xã Chi Lăng mới (thị trấn Đồng Mỏ cũ), tỉnh Lạng Sơn"},
+        {"name": "Cai Kinh", "type": "xã", "address": "Thôn Đồng Ngầu, xã Cai Kinh, tỉnh Lạng Sơn"},
+        {"name": "Hữu Liên", "type": "xã", "address": "Thôn Gò Mãm, xã Hữu Liên, tỉnh Lạng Sơn"},
+        {"name": "Yên Bình", "type": "xã", "address": "Thôn Vĩnh Yên, xã Yên Bình, tỉnh Lạng Sơn"},
+        {"name": "Thiện Tân", "type": "xã", "address": "Thôn Lân Luông, xã Thiện Tân, tỉnh Lạng Sơn"},
+        {"name": "Vân Nham", "type": "xã", "address": "Thôn Nhị Liên, xã Vân Nham, tỉnh Lạng Sơn"},
+        {"name": "Tân Thành", "type": "xã", "address": "Thôn Đồng Liên, xã Tân Thành, tỉnh Lạng Sơn"},
+        {"name": "Tuấn Sơn", "type": "xã", "address": "Thôn Keo, xã Tuấn Sơn, tỉnh Lạng Sơn"},
+        {"name": "Hữu Lũng", "type": "xã", "address": "Số 3 Đường 19/8 - Khu An Ninh - Thị trấn Hữu Lũng, tỉnh Lạng Sơn"},
+        {"name": "Kiên Mộc", "type": "xã", "address": "Thôn Bản Phục, xã Kiên Mộc, tỉnh Lạng Sơn"},
+        {"name": "Châu Sơn", "type": "xã", "address": "Thôn Thống Nhất, xã Châu Sơn, tỉnh Lạng Sơn"},
+        {"name": "Thái Bình", "type": "xã", "address": "Khu Đoàn Kết, xã Thái Bình, tỉnh Lạng Sơn"},
+        {"name": "Đình Lập", "type": "xã", "address": "Khu 3, xã Đình Lập, tỉnh Lạng Sơn"},
+        {"name": "Khuất Xá", "type": "xã", "address": "Thôn Bản Chu A, xã Khuất Xá, tỉnh Lạng Sơn"},
+        {"name": "Xuân Dương", "type": "xã", "address": "Thôn Háng Van, xã Xuân Dương, tỉnh Lạng Sơn"},
+        {"name": "Thống Nhất", "type": "xã", "address": "Thôn Khòn Nà, xã Thống Nhất, tỉnh Lạng Sơn"},
+        {"name": "Lợi Bác", "type": "xã", "address": "Thôn Nà U, xã Lợi Bác, tỉnh Lạng Sơn"}
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Tỉnh Quảng Ninh",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Phường Hồng Hà, Thành phố Hạ Long, Quảng Ninh"
+    },
+    {
+      "id": 8,
+      "name": "Tỉnh Bắc Ninh",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Bắc Ninh", "Tỉnh Bắc Giang"],
+      "headquarters": "Số 82 Hùng Vương - TP. Bắc Giang",
+      "wards": [
+        {
+          "name": "Chi Lăng",
+          "type": "xã",
+          "merged_from": ["Yên Giả", "Chi Lăng"]
+        },
+        {
+          "name": "Phù Lãng",
+          "type": "xã",
+          "merged_from": ["Châu Phong", "Đức Long", "Phù Lãng"]
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Tỉnh Phú Thọ",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Vĩnh Phúc", "Tỉnh Phú Thọ", "Tỉnh Hòa Bình"],
+      "headquarters": "Đường Trần Phú, Tân Dân, Việt Trì, Phú Thọ",
+      "total_wards": 148,
+      "wards": [
+        {
+          "name": "Hy Cương",
+          "type": "xã",
+          "merged_from": ["Thanh Đình", "Chu Hóa", "Hy Cương"]
+        },
+        {
+          "name": "Việt Trì",
+          "type": "phường",
+          "merged_from": ["Tân Dân", "Gia Cẩm", "Minh Nông", "Dữu Lâu", "Trưng Vương"]
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Thành phố Hải Phòng",
+      "type": "thành phố trực thuộc trung ương",
+      "merged": true,
+      "merged_from": ["Tỉnh Hải Dương", "Thành phố Hải Phòng"],
+      "headquarters": "Số 18 Hoàng Diệu, Hồng Bàng, Hải Phòng"
+    },
+    {
+      "id": 11,
+      "name": "Tỉnh Hưng Yên",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Hưng Yên", "Tỉnh Thái Bình"],
+      "headquarters": "Số 2, Đường Chùa Chuông, Phường Hiến Nam, Thành phố Hưng Yên, Tỉnh Hưng Yên"
+    },
+    {
+      "id": 12,
+      "name": "Tỉnh Ninh Bình",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Hà Nam", "Tỉnh Ninh Bình", "Tỉnh Nam Định"],
+      "headquarters": "Số 3 Lê Hồng Phong, thành phố Ninh Bình, tỉnh Ninh Bình"
+    },
+    {
+      "id": 13,
+      "name": "Tỉnh Thanh Hóa",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "35 Đại lộ Lê Lợi, phường Hạc Thành, tỉnh Thanh Hóa"
+    },
+    {
+      "id": 14,
+      "name": "Tỉnh Nghệ An",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 3 đường Trường Thi, thành phố Vinh, tỉnh Nghệ An"
+    },
+    {
+      "id": 15,
+      "name": "Tỉnh Hà Tĩnh",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường Nguyễn Tất Thành - TP Hà Tĩnh"
+    },
+    {
+      "id": 16,
+      "name": "Tỉnh Quảng Trị",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Quảng Bình", "Tỉnh Quảng Trị"],
+      "headquarters": "Số 06 Hùng Vương, TP. Đồng Hới, Quảng Bình"
+    },
+    {
+      "id": 17,
+      "name": "Thành phố Huế",
+      "type": "thành phố trực thuộc trung ương",
+      "merged": false,
+      "headquarters": "Số 16 Lê Lợi, Huế"
+    },
+    {
+      "id": 18,
+      "name": "Thành phố Đà Nẵng",
+      "type": "thành phố trực thuộc trung ương",
+      "merged": true,
+      "merged_from": ["Tỉnh Quảng Nam", "Thành phố Đà Nẵng"],
+      "headquarters": "Số 24 Trần Phú, quận Hải Châu, thành phố Đà Nẵng"
+    },
+    {
+      "id": 19,
+      "name": "Tỉnh Quảng Ngãi",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Kon Tum", "Tỉnh Quảng Ngãi"],
+      "headquarters": "Số 52 Hùng Vương, thành phố Quảng Ngãi, tỉnh Quảng Ngãi"
+    },
+    {
+      "id": 20,
+      "name": "Tỉnh Gia Lai",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Gia Lai", "Tỉnh Bình Định"],
+      "headquarters": "1 Trần Phú, phường Quy Nhơn, tỉnh Gia Lai",
+      "wards": [
+        {
+          "name": "Quy Nhơn",
+          "type": "phường",
+          "merged_from": ["Hải Cảng", "Thị Nại", "Trần Phú", "Đống Đa"],
+          "address": "trụ sở Thành ủy Quy Nhơn hiện nay"
+        },
+        {
+          "name": "Quy Nhơn Nam",
+          "type": "phường",
+          "merged_from": ["Ngô Mây", "Nguyễn Văn Cừ", "Quang Trung", "Ghềnh Ráng"],
+          "address": "phường Nguyễn Văn Cừ hiện nay"
+        },
+        {
+          "name": "Quy Nhơn Bắc",
+          "type": "phường",
+          "merged_from": ["Trần Quang Diệu", "Nhơn Phú"],
+          "address": "phường Nhơn Phú hiện nay"
+        },
+        {
+          "name": "Quy Nhơn Tây",
+          "type": "phường",
+          "merged_from": ["Bùi Thị Xuân", "Phước Mỹ"],
+          "address": "phường Bùi Thị Xuân hiện nay"
+        },
+        {
+          "name": "Quy Nhơn Đông",
+          "type": "phường",
+          "merged_from": ["Nhơn Hội", "Nhơn Lý", "Nhơn Hải", "Nhơn Bình"],
+          "address": "Ban Quản lý khu kinh tế tỉnh"
+        },
+        {
+          "name": "Nhơn Châu",
+          "type": "xã",
+          "merged_from": [],
+          "address": "Giữ nguyên"
+        },
+        {
+          "name": "Bình Định",
+          "type": "phường",
+          "merged_from": ["Bình Định", "Nhơn Khánh", "Nhơn Phúc"],
+          "address": "Thị ủy, HĐND & UBND thị xã An Nhơn"
+        },
+        {
+          "name": "An Nhơn",
+          "type": "phường",
+          "merged_from": ["Đập Đá", "Nhơn Mỹ", "Nhơn Hậu"],
+          "address": "phường Đập Đá hiện nay"
+        },
+        {
+          "name": "An Nhơn Đông",
+          "type": "phường",
+          "merged_from": ["Nhơn Hưng", "Nhơn An"],
+          "address": "phường Nhơn Hưng hiện nay"
+        },
+        {
+          "name": "An Nhơn Bắc",
+          "type": "phường",
+          "merged_from": ["Nhơn Thành", "Nhơn Phong", "Nhơn Hạnh"]
+        },
+        {
+          "name": "An Nhơn Nam",
+          "type": "phường",
+          "merged_from": ["Nhơn Hòa", "Nhơn Lộc"]
+        },
+        {
+          "name": "An Nhơn Tây",
+          "type": "xã",
+          "merged_from": ["Nhơn Tân", "Nhơn Thọ"]
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "name": "Tỉnh Khánh Hòa",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Ninh Thuận", "Tỉnh Khánh Hòa"],
+      "headquarters": "Số 1, đường Trần Phú, thành phố Nha Trang, tỉnh Khánh Hòa"
+    },
+    {
+      "id": 22,
+      "name": "Tỉnh Đắk Lắk",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Đắk Lắk", "Tỉnh Phú Yên"],
+      "headquarters": "09 Lê Duẩn - Buôn Ma Thuột - Đắk Lắk"
+    },
+    {
+      "id": 23,
+      "name": "Tỉnh Lâm Đồng",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Lâm Đồng", "Tỉnh Đắk Nông", "Tỉnh Bình Thuận"],
+      "headquarters": "Số 4 Trần Hưng Đạo, thành phố Đà Lạt, tỉnh Lâm Đồng"
+    },
+    {
+      "id": 24,
+      "name": "Tỉnh Đồng Nai",
+      "type": "tỉnh",
+      "merged": true,
+      "merged_from": ["Tỉnh Đồng Nai", "Tỉnh Bình Phước"],
+      "headquarters": "Số 02 đường Nguyễn Văn Trị, phường Trung Dũng, thành phố Biên Hòa, tỉnh Đồng Nai",
+      "wards": [
+        {"name": "Biên Hòa", "type": "phường", "address": "Số 277, đường Nguyễn Tri Phương, Khu phố 2, phường Biên Hòa"},
+        {"name": "Trấn Biên", "type": "phường", "address": "Số 63, đường Võ Thị Sáu, Khu phố 11, Phường Trấn Biên"},
+        {"name": "Trảng Dài", "type": "phường", "address": "Số 462, đường Bùi Trọng Nghĩa, phường Trảng Dài"},
+        {"name": "Tam Hiệp", "type": "phường", "address": "Đường Trần Quốc Toản, Khu phố 3, phường Tam Hiệp"},
+        {"name": "Long Bình", "type": "phường", "address": "Số 68, Thân Nhân Trung, khu phố 8, phường Long Bình"},
+        {"name": "Hố Nai", "type": "phường", "address": "Số 386, Quốc lộ 1A, khu phố 1, phường Hố Nai"},
+        {"name": "Long Hưng", "type": "phường", "address": "Đường Nguyễn Văn Tỏ, khu phố Thái Hoà, phường Long Hưng"},
+        {"name": "Phước Tân", "type": "phường", "address": "Số 1393, quốc lộ 51, khu phố Hương Phước, phường Phước Tân"},
+        {"name": "Tam Phước", "type": "phường", "address": "Quốc lộ 51, khu phố Long Đức 3, phường Tam Phước"},
+        {"name": "Bình Lộc", "type": "phường", "address": "Đường N5, phường Bình Lộc"},
+        {"name": "Long Khánh", "type": "phường", "address": "Đường Cách Mạng Tháng Tám, phường Long Khánh"},
+        {"name": "Bảo Vinh", "type": "phường", "address": "Đường Duy Tân, khu phố Ruộng Hời, phường Bảo Vinh"},
+        {"name": "Xuân Lập", "type": "phường", "address": "Quốc lộ 1, Khu phố Bàu Sen, phường Xuân Lập"},
+        {"name": "Hàng Gòn", "type": "phường", "address": "Quốc lộ 56, phường Hàng Gòn"},
+        {"name": "Tân Triều", "type": "phường", "address": "Đường 768, ấp 2, xã Thạnh Phú"}
+      ]
+    },
+    {
+      "id": 25,
+      "name": "Tỉnh Bà Rịa - Vũng Tàu",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 01 Đường 27/4, phường Phước Trung, thành phố Bà Rịa, tỉnh Bà Rịa - Vũng Tàu"
+    },
+    {
+      "id": 26,
+      "name": "Thành phố Hồ Chí Minh",
+      "type": "thành phố trực thuộc trung ương",
+      "merged": false,
+      "headquarters": "Số 86 Lê Thánh Tôn, phường Bến Nghé, quận 1, thành phố Hồ Chí Minh"
+    },
+    {
+      "id": 27,
+      "name": "Tỉnh Tây Ninh",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường 30/4, phường 1, thành phố Tây Ninh, tỉnh Tây Ninh"
+    },
+    {
+      "id": 28,
+      "name": "Tỉnh Bình Dương",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 4 đường 30/4, phường Chánh Nghĩa, thành phố Thủ Dầu Một, tỉnh Bình Dương"
+    },
+    {
+      "id": 29,
+      "name": "Tỉnh Bình Phước",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 899 đường Quốc lộ 14, phường Tân Bình, thành phố Đồng Xoài, tỉnh Bình Phước"
+    },
+    {
+      "id": 30,
+      "name": "Tỉnh Long An",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường Võ Văn Tần, phường 1, thành phố Tân An, tỉnh Long An"
+    },
+    {
+      "id": 31,
+      "name": "Tỉnh Tiền Giang",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 63 đường Ấp Bắc, phường 1, thành phố Mỹ Tho, tỉnh Tiền Giang"
+    },
+    {
+      "id": 32,
+      "name": "Tỉnh Bến Tre",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường Đồng Văn Cống, phường 6, thành phố Bến Tre, tỉnh Bến Tre"
+    },
+    {
+      "id": 33,
+      "name": "Tỉnh Trà Vinh",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường 19/5, phường 1, thành phố Trà Vinh, tỉnh Trà Vinh"
+    },
+    {
+      "id": 34,
+      "name": "Tỉnh Sóc Trăng",
+      "type": "tỉnh",
+      "merged": false,
+      "headquarters": "Số 1 đường Lê Hồng Phong, phường 1, thành phố Sóc Trăng, tỉnh Sóc Trăng"
+    }
+  ]
+} 
