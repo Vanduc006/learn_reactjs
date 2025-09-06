@@ -13,6 +13,7 @@ import '@/styles/markdown.css'
 // import { Button } from "@/components/ui/button"
 import { useRealtimeChat } from "@/services/Supabase/ChatList"
 import DateFormat from "@/components/mind/DateFormat"
+
 const ChatScreen = () => {
     const { currentSpace} = useMind()
     const { user } = useUser()
@@ -25,7 +26,6 @@ const ChatScreen = () => {
     // const [gapSize,setGapSize] = useState(0)
     const chatContainerRef = useRef<HTMLDivElement>(null)
     const [showScrollButton, setShowScrollButton] = useState(false)
-
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current
         if (textarea) {
@@ -96,6 +96,8 @@ const ChatScreen = () => {
     }
 
     useEffect(() => {
+      setShowScrollButton(false)
+
       const timeout = setTimeout(() => {
         scrollToBottom();
       }, 0);

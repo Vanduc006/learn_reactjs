@@ -18,6 +18,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   const [recordingTime, setRecordingTime] = useState(0);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
+  console.log(audioBlob)
   const [audioLevels, setAudioLevels] = useState<number[]>(new Array(20).fill(0));
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
