@@ -15,6 +15,9 @@ import DashLayout from './Mind/DashLayout'
 import HomeSreen from './Mind/HomeSreen'
 import SpaceLayout from './Mind/SpaceLayout'
 import Icloud from './_root/page/Icloud'
+import RealtimeAPI from './_root/page/RealtimeAPI'
+import RetrieveNotion from './_root/page/RetrieveNotion'
+// import Render from './_root/page/Notion'
 // import PhotoBooth from './_root/page/PhotoBooth'
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -44,7 +47,8 @@ const App = () => {
     <Routes>
       <Route path='/icloud' element={<Icloud/>}></Route>
       <Route path='/hanhchinh' element={<Hanhchinh/>}></Route>
-
+      <Route path='realtime' element={<RealtimeAPI></RealtimeAPI>} />
+      <Route path='/notion' element={<RetrieveNotion/>} />
       <Route path="/phatnguoi" element={<PhatNguoi />} />
       <Route path="/fetch" element={<FetchPhatNguoi/>}> </Route>
       <Route path="/mind" element={<Mind/>}> </Route>

@@ -14,6 +14,8 @@ import ChatScreen from "./Tab/ChatScreen"
 import { isOwnerSpace } from "@/services/Supabase/SpaceList"
 import { useUser } from "@clerk/clerk-react"
 import FileHistory from "@/components/mind/history/File"
+import FLashCard from "@/components/mind/FlashCard"
+import Quizz from "@/components/mind/Quizz"
 
 
 export default function TwoSectionLayout() {
@@ -207,9 +209,21 @@ if (isOwner === null) {
         {/* Tab section */}
         <div className="flex-1 overflow-hidden">
           {currentTab == "chat" &&
-          <div className="h-full">
-            <ChatScreen/>
-          </div>
+            <div className="h-full">
+              <ChatScreen/>
+            </div>
+          }
+
+          {currentTab == "flashcard" && 
+            <div>
+              <FLashCard/>
+            </div>
+          }
+
+          {currentTab == "quizz" && 
+            <div className="h-full overflow-auto px-4 py-2">
+              <Quizz/>
+            </div>
           }
         </div>
 

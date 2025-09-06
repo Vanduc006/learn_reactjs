@@ -45,13 +45,13 @@ const ChatScreen = () => {
         }
     }
 
-    const handleScroll = () => {
-        if (chatContainerRef.current) {
-            const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current
-            // Show button when scrolled up more than 100px from bottom
-            setShowScrollButton(scrollHeight - scrollTop - clientHeight > 500)
-        }
-    }
+    // const handleScroll = () => {
+    //     if (chatContainerRef.current) {
+    //         const { scrollTop, scrollHeight, clientHeight } = chatContainerRef.current
+    //         // Show button when scrolled up more than 100px from bottom
+    //         setShowScrollButton(scrollHeight - scrollTop - clientHeight > 500)
+    //     }
+    // }
 
     interface Message {
       // userid : string,
@@ -112,7 +112,7 @@ const ChatScreen = () => {
             <div 
                 ref={chatContainerRef}
                 className="flex-1 overflow-y-auto"
-                onScroll={handleScroll}
+                // onScroll={handleScroll}
             >
                 <div className="md:max-w-3xl max-w-xs mx-auto overflow-hidden">
                     <div className="pb-4">
@@ -247,6 +247,7 @@ const ChatScreen = () => {
                     Recommend
                     <div className="relative">
                         <Textarea 
+                            onFocus={() => textareaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
                             ref={textareaRef}
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}

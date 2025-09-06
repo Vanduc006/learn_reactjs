@@ -77,7 +77,7 @@ const Quizz = () => {
             <div className=''>
                 {QuizzSession.map((quizz,index) => {
                     return (
-                        <div className='mb-2 rounded-xl p-2 cursor-pointer drop-shadow-xl bg-[#4871f7]' key={index}> 
+                        <div className='mb-2 rounded-xl p-2 cursor-pointer drop-shadow-xl bg-blue-500' key={index}> 
 
                             <div className='flex'>
                                 <p className='bg-slate-300 pl-3 pr-3 p-1 rounded-xl mr-2'>{quizz.major}</p>
